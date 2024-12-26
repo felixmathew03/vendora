@@ -1,0 +1,279 @@
+// src/Login.scss
+$secondary-color: #a1c9cb;  // Light color for background
+$primary-color: #094432;  // Dark color for elements
+$accent-color: #044733;  // Accent color for buttons and highlights
+$black: #333;
+$light-gray: #f1f1f1;
+$dark-gray: #333;
+$error-color: #319275;  // Red for error messages
+
+// Global Body Styling
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: $primary-color;
+  color: $dark-gray;
+}
+
+// Main Login Container
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, $primary-color, #a1d4d8);
+
+  .login-box {
+    background-color: $secondary-color;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-10px);
+    }
+
+    .logo {
+      margin-bottom: 1rem;
+      img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+    }
+
+    h2 {
+      color: $black;
+      font-size: 28px;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .tagline {
+      color: $black;
+      font-size: 14px;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+
+      label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 5px;
+        color: $black;
+        opacity: 0.8;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid $light-gray;
+        background-color: #fff;
+        font-size: 16px;
+        color: $secondary-color;
+        outline: none;
+        transition: all 0.3s ease;
+
+        &:focus {
+          border-color: $accent-color;
+          box-shadow: 0 0 8px rgba($accent-color, 0.4);
+        }
+
+        &.error {
+          border-color: $error-color;
+        }
+      }
+    }
+
+    .error-message {
+      color: $error-color;
+      font-size: 14px;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: $accent-color;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+
+      &:hover {
+        background-color: lighten($accent-color, 10%);
+      }
+
+      &:active {
+        background-color: lighten($accent-color, 15%);
+        transform: scale(0.98);
+      }
+    }
+
+    .extra-links {
+      margin-top: 1rem;
+      font-size: 14px;
+      color: $black;
+
+      .forgot-password {
+        margin-bottom: 0.5rem;
+      }
+
+      a {
+        color: $accent-color;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: darken($accent-color, 15%);
+          text-decoration: underline;
+        }
+      }
+    }
+
+    // src/Login.scss
+.social-login {
+    margin-top: 2rem;
+    p {
+      font-size: 14px;
+      color: $black;
+      margin-bottom: 1rem;
+    }
+  
+    .social-icons {
+      display: flex;
+      justify-content: center;
+  
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px;
+        background-color: $light-gray;
+        transition: all 0.3s ease;
+  
+        &:hover {
+          transform: scale(1.1);
+          background-color: darken($light-gray, 10%);
+        }
+  
+        &.facebook {
+          background-color: #3b5998;
+        }
+  
+        &.google {
+          background-color: #db4437;
+        }
+      }
+    }
+  }
+  
+
+    .signup-link {
+      margin-top: 1.5rem;
+      font-size: 14px;
+      color: $black;
+    }
+  }
+}
+
+// Media Queries for Responsiveness
+@media (max-width: 768px) {
+  .login-container {
+    padding: 1rem;
+  }
+
+  .login-box {
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 350px;
+    h2 {
+      font-size: 24px;
+    }
+
+    .tagline {
+      font-size: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group {
+      label {
+        font-size: 13px;
+      }
+
+      input {
+        font-size: 14px;
+      }
+    }
+
+    .login-btn {
+      font-size: 14px;
+      padding: 0.8rem;
+    }
+
+    .social-icons .social-icon {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 1rem;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem;
+
+    h2 {
+      font-size: 22px;
+    }
+
+    .tagline {
+      font-size: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .input-group {
+      label {
+        font-size: 12px;
+      }
+
+      input {
+        font-size: 13px;
+      }
+    }
+
+    .login-btn {
+      font-size: 14px;
+      padding: 0.8rem;
+    }
+
+    .social-icons .social-icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}

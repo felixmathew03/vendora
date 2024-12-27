@@ -22,7 +22,7 @@ const Login = () => {
     <div className="login-container">
       <div className="login-box">
         <div className="logo">
-          <img src="/logo.jpg" alt="Logo" />
+          <img src="/images/logo.jpg" alt="Logo" />
         </div>
         <h2>Welcome Back!</h2>
         <p className="tagline">Please sign in to continue.</p>

@@ -1,0 +1,108 @@
+// src/components/Navbar.scss
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=Oswald:wght@200..700&family=Pacifico&family=Squada+One&family=Ultra&display=swap');
+$primary-color: #09203d;
+$accent-color: #210776;
+$secondary-color: #c1d0e8;
+$light-gray: #f1f1f1;
+$dark-gray: #333;
+$white: #fff;
+$error-color: #319275;
+
+// Navbar container
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: $secondary-color;
+  padding: 10px 50px;
+  margin: 0 auto;
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+
+    .logo-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .website-name {
+      font-size: 1.5rem;
+      color: $primary-color;
+      font-weight: 600;
+      letter-spacing: 1px;
+      font-family: "Pacifico", serif;
+    }
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .login-btn,
+  .seller-btn {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid $accent-color;
+    background-color: $accent-color;
+    color: $white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: lighten($accent-color, 10%);
+      color: $white;
+    }
+  }
+
+  .profile-container {
+    position: relative;
+
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .profile-popover {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background-color: $white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 9999;  /* Ensure it's on top of other elements */
+
+      .popover-btn {
+        background: transparent;
+        border: none;
+        color: $dark-gray;
+        cursor: pointer;
+        text-align: left;
+        font-size: 14px;
+        padding: 8px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: $light-gray;
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
 $secondary-color: #a1c9cb;  // Light color for background
 $primary-color: #094432;  // Dark color for elements
 $accent-color: #044733;  // Accent color for buttons and highlights
-$black: #333;
+$black: #121111;
 $light-gray: #f1f1f1;
 $dark-gray: #333;
 $error-color: #319275;  // Red for error messages
@@ -12,7 +12,6 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: $primary-color;
   color: $dark-gray;
 }
 
@@ -22,10 +21,13 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, $primary-color, #a1d4d8);
+  background-image: url('/images/bg.avif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   .login-box {
-    background-color: $secondary-color;
+    background-color: rgba(161, 201, 203, 0.596); 
     padding: 2.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);

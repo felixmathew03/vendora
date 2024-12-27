@@ -5,21 +5,23 @@ import Email from './Components/email/Email';
 import Signup from './Components/signup/Signup';
 import Navbar from './Components/nav/Navbar';
 import Home from './Components/home/Home';
+import Profile from './Components/profile/Profile';
 import './App.css'
 
 
 const App = () => {
-    const [user,setUser]=useState("");
-  // const [profile,setProfile]=useState("")
+    const [id,setId]=useState("");
+    const [role,setRole]=useState("");
+    const [loggedIn,setLoggedIn]=useState(false);
   return (
     <BrowserRouter>
-      {user&&<Navbar  />}
+      {id&&<Navbar id={id} role={role} loggedIn={loggedIn}/>}
       <Routes>
-        <Route path='/' Component={Home}/>
+        <Route path='/' element={<Home  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/login' Component={Login}/>
         <Route path='/email' Component={Email}/>
-        <Route path='/register' Component={Signup}/>
-        {/* <Route path='/profile' element={<Profile  setUser={setUser} setProfile={setProfile}/>}/> */}
+        <Route path='/signup' Component={Signup}/>
+        <Route path='/profile/:id' Component={Profile}/>
         {/* <Route path='/addprodetails' element={<AddPro  setUser={setUser} setProfile={setProfile}/>}/>
         <Route path='/addpost' element={<Post  setUser={setUser} setProfile={setProfile}/>}/>
         <Route path='/postdetails/:id' element={<PostD  setUser={setUser} setProfile={setProfile}/>}/> */}

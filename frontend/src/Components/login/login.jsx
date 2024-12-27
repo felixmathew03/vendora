@@ -1,22 +1,37 @@
 // src/Login.js
 
 import React, { useState } from 'react';
+import {Link,useNavigate} from "react-router-dom";
+import axios from 'axios';
+import route from '../route';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
 import './Login.scss';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const handleLogin = () => {
-    if (email === '' || password === '') {
-      setError('Please fill in both fields');
-    } else {
-      // Add your login functionality here
-      console.log('Logging in...');
+  const navigate=useNavigate();
+  const [loginDetails,setDetails]=useState({
+    email:"",
+    password:""
+  });
+  const handleSubmit =async (e) => {
+    e.preventDefault();
+    try {
+      const {status,data}=await axios.post(`${route()}signin`,loginDetails,{Headers:{"Content-Type":"application/json"}});
+    if(status===200){
+      localStorage.setItem("Auth",data.token)
+      alert(data.msg)
+      navigate('/')
+    }
+    else{
+      alert(data.msg)
+    }
+    } catch (error) {
+      alert("error occured")
     }
   };
+  const handleChange=(e)=>{
+    setDetails((pre)=>({...pre,[e.target.name]:e.target.value}))
+  }
 
   return (
     <div className="login-container">
@@ -27,15 +42,13 @@ const Login = () => {
         <h2>Welcome Back!</h2>
         <p className="tagline">Please sign in to continue.</p>
 
-        {error && <p className="error-message">{error}</p>}
-
         <div className="input-group">
           <label htmlFor="email">Email</label>
           <input
             id="email"
+            name='email'
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleChange}
           />
         </div>
 
@@ -44,21 +57,19 @@ const Login = () => {
           <input
             id="password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name='password'
+            onChange={handleChange}
           />
         </div>
 
-        <button className="login-btn" onClick={handleLogin}>
+        <button className="login-btn" onClick={handleSubmit}>
           Login
         </button>
 
         <div className="extra-links">
-          <div className="forgot-password">
-            <a href="#">Forgot Password?</a>
-          </div>
+          
           <div className="signup-link">
-            Don't have an account? <a href="#">Sign Up</a>
+            Don't have an account? <Link to={"/email"}>Sign Up</Link>
           </div>
         </div>
 

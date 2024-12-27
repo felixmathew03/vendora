@@ -1,21 +1,24 @@
 // src/components/Navbar.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import './Navbar.scss'; // Import SCSS for styling
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);  // Track if the user is logged in
-  const [isSeller, setIsSeller] = useState(true);      // Track if the user is a seller
+const Navbar = ({ id, role, loggedIn }) => {
+  const [isSeller, setIsSeller] = useState(false);      // Track if the user is a seller
   const [isPopoverVisible, setIsPopoverVisible] = useState(false); // Track visibility of popover
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+  
+  // Check if the user is a seller upon initial render
+  useEffect(() => {
+    if (role === "seller") {
+      setIsSeller(true);
+    }
+  }, [role]);
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    setIsSeller(false); // Clear seller status on logout
-    setIsPopoverVisible(false); // Close the popover on logout
+    localStorage.removeItem('Auth');
+    setIsSeller(false);
+    setIsPopoverVisible(false);
   };
 
   const handleSellerClick = () => {
@@ -28,24 +31,27 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
+      {/* Logo Section */}
       <div className="navbar-logo">
         <img src="/images/logo.jpg" alt="Logo" className="logo-image" />
         <span className="website-name">Vendora</span>
       </div>
 
+      {/* Right Side of Navbar */}
       <div className="navbar-right">
-        {isLoggedIn ? (
+        {loggedIn ? (
           <>
+            {/* Profile Icon & Popover */}
             <div className="profile-container">
               <FaUserCircle 
                 className="profile-icon" 
                 onClick={togglePopover} 
-                size={30}  // You can adjust the size as needed
+                size={30} 
               />
               {isPopoverVisible && (
                 <div className="profile-popover">
-                  <button className="popover-btn" onClick={() => alert('Profile clicked!')}>
-                    Profile
+                  <button className="popover-btn">
+                    <Link to={`/profile/${id}`}>Profile</Link>
                   </button>
                   <button className="popover-btn" onClick={handleLogout}>
                     Logout
@@ -54,6 +60,7 @@ const Navbar = () => {
               )}
             </div>
 
+            {/* Seller Dashboard Button */}
             {isSeller && (
               <button className="seller-btn" onClick={handleSellerClick}>
                 Seller Dashboard
@@ -61,7 +68,7 @@ const Navbar = () => {
             )}
           </>
         ) : (
-          <button className="login-btn" onClick={handleLogin}>Login</button>
+          <button className="login-btn"><Link to={'/login'}>Login</Link></button>
         )}
       </div>
     </div>

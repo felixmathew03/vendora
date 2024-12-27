@@ -1,27 +1,39 @@
 // src/components/Signup.js
 import React, { useState } from 'react';
+import {useNavigate,Link} from 'react-router-dom';
+import axios from 'axios';
+import route from '../route';
 import './Signup.scss'; // Importing the SCSS file for styling
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('buyer'); // New state for role (Buyer/Seller)
-  const [error, setError] = useState('');
-
-  const handleSubmit = (e) => {
+  const navigate=useNavigate();
+  const email=localStorage.getItem('email');
+    const [user,setUser]=useState({
+      email:email,
+      username:"",
+      password:"",
+      cpassword:"",
+      role:"",
+    })
+  const handleChange=(e)=>{
+    setUser((pre)=>({...pre,[e.target.name]:e.target.value}))
+  }
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
-    // Basic validation for required fields and matching passwords
-    if (!email || !username || !password || !confirmPassword) {
-      setError('All fields are required');
-    } else if (password !== confirmPassword) {
-      setError('Passwords do not match');
-    } else {
-      // Proceed with the signup process (e.g., make API request)
-      console.log('Signup successful', { role });
-      setError('');
+    try {
+      const {data,status}=await axios.post(`${route()}signup`,user,{headers:{"Content-Type":"application/json"}});
+    console.log("res");
+    
+    if(status===201){
+      localStorage.removeItem('email');
+      alert(data.msg);
+      navigate('/login')
+    }
+    else{
+      alert(data.msg)
+    }
+    } catch (error) {
+      alert("error occured")
     }
   };
 
@@ -41,9 +53,8 @@ const Signup = () => {
               type="text"
               id="username"
               name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className={error ? 'error' : ''}
+              onChange={handleChange}
+              
             />
           </div>
 
@@ -53,21 +64,19 @@ const Signup = () => {
               type="password"
               id="password"
               name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={error ? 'error' : ''}
+              onChange={handleChange}
+              
             />
           </div>
 
           <div className="input-group">
-            <label htmlFor="confirm-password">Confirm Password</label>
+            <label htmlFor="cpassword">Confirm Password</label>
             <input
               type="password"
-              id="confirm-password"
-              name="confirm-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className={error ? 'error' : ''}
+              id="cpassword"
+              name="cpassword"
+              onChange={handleChange}
+              
             />
           </div>
 
@@ -77,23 +86,22 @@ const Signup = () => {
             <select
               id="role"
               name="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className={error ? 'error' : ''}
+              onChange={handleChange}
+              
             >
+              <option value="">Select one option</option>
               <option value="buyer">Buyer</option>
               <option value="seller">Seller</option>
             </select>
           </div>
 
-          {error && <div className="error-message">{error}</div>}
 
           <button type="submit" className="signup-btn">Sign Up</button>
         </form>
 
         <div className="extra-links">
           <p className="login-link">
-            Already have an account? <a href="/login">Login here</a>
+            Already have an account? <Link to={"/login"}>Login here</Link>
           </p>
         </div>
 

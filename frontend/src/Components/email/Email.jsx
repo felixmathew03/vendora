@@ -1,6 +1,6 @@
 // src/components/VerifyEmail.js
 import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import route from '../route';
 import './Email.scss'; // Importing the SCSS file for styling
@@ -14,18 +14,17 @@ const Email = () => {
   };
   const handleSubmit = async(event) => {
     event.preventDefault(); 
-    const res=await axios.post(`${route()}verifyemail`,{email},{Headers:{"Content-Type":"application/json"}});
-    console.log(res);
+    const {status,data}=await axios.post(`${route()}verifyemail`,{email},{Headers:{"Content-Type":"application/json"}});
     
-    if(res.status===201){
+    if(status===201){
       localStorage.setItem('email',email);
-      alert(res.data.msg);
+      alert(data.msg);
       navigate('/login')
-    }else if(res.status===403){
-      alert(res.data.msg)
+    }else if(status===403){
+      alert(data.msg)
     }
     else{
-      alert(res.data.msg)
+      alert(data.msg)
     }
   };
 
@@ -35,7 +34,7 @@ const Email = () => {
         <div className="logo">
           <img src="/images/logo.jpg" alt="Logo" />
         </div>
-        <h2>Email Addres</h2>
+        <h2>Email Confirmation</h2>
         <p className="tagline">Please enter your email address.</p>
 
         <form onSubmit={handleSubmit}>
@@ -49,12 +48,12 @@ const Email = () => {
             />
           </div>
 
-          <button type="submit" className="btn">Verify</button>
+          <button type="submit" className="btn">Send</button>
         </form>
 
         <div className="extra-links">
           <p className="back-to-login">
-            <a href="#">Back to Login</a>
+            <Link to={'/login'}>Back to Login</Link>
           </p>
         </div>
       </div>

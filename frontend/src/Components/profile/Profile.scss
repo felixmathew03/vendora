@@ -11,14 +11,13 @@
   .profile-header {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     align-items: center;
     margin-right: 30px;
     border-right: 2px solid #e4e9f2;
     padding-bottom: 20px;
     width: 25%;
     padding: 2% 2.8%;
-  
     .profile-pic {
       margin-right: 20px;
     }
@@ -32,58 +31,43 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         gap: 25px; // Space between input fields
-      
-      .input-wrapper {
-        position: relative;
-        width: 100%; // Fixed width for input fields
-      }
-      
-      .profile-input {
-        width: 100%;
-        padding: 10px ;
-        border: 1px solid #ccc;
-        border-bottom: 2px solid #ccc; // Bottom border for the input
-        background-color: white   ;
-        font-size: 16px;
-        color: #333;
-        transition: border-color 0.3s, padding-top 0.3s;
-      
-        &:focus {
-          border-color: #560e06; // Blue border on focus
-          outline: none;
-          padding-top: 20px; // Raise text on focus
-        }
-        &:disabled {
-          background-color: #f5f5f5;
-          border-color: #ddd;
-        }
-      }
-      
-      .input-label {
-        position: absolute;
-        left: 2%;
-        top: 12px; // Initial label position inside the input
-        font-size: 16px;
-        color: #544d4d; // Label color when idle
-        pointer-events: none; // Allow interaction with the input field, not the label
-        transition: all 0.3s ease; // Smooth transition for label movement
-      
-        &.focused {
-          font-size: 12px;
-          top: -8px; // Move the label above the input on focus
-          color: #7b081e; // Change color when input is focused
+        .input-wrapper {
+          width: 100%;
+          position: relative;
+          margin-bottom: 1em;
+          .input {
+            width: 90%;
+            border: none;
+            outline: none;
+            border-radius: 4px;
+            padding: 1em;
+            background-color: #ccc;
+            box-shadow: inset 2px 5px 10px rgba(114, 114, 114, 0.3);
+            transition: 300ms ease-in-out;
+            &:focus {
+              background-color: white;
+              transform: scale(1.05);
+              box-shadow: 13px 13px 100px #969696, -13px -13px 100px #ffffff;
+            }
+          }
+          .input-label {
+            position: absolute;
+            top: -15px;
+            left: 8px;
+            font-size: 12px;
+            color: #555;
+            transition: all 0.3s ease;
+          }
+          .input:focus + .input-label,
+          .input:not(:placeholder-shown) + .input-label {
+              top: -20px;
+              left: 10px;
+              font-size: 10px;
+              color: #0099ff;
+          }
         }
       }
-      
-      .profile-input:focus + .input-label {
-        font-size: 12px;
-        top: -14px;
-        color: #450404; // Blue label color when input is focused
-      }
-      
-    }
       .gender {
         display: flex;
         gap: 15px;
@@ -176,11 +160,11 @@
       button{
         margin: auto;
         width: 50%;
-        height: 30px;
+        height: 38px;
         margin-top: 10px;
         background-color: #06135e;
         border: none;
-        border-radius: 4px;
+        border-radius: 8px;
         color: white;
         font-size: 16px;
       }

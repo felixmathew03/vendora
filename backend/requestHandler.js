@@ -42,6 +42,23 @@ export async function profile(req,res) {
         res.status(404).send({msg:"error"})
     }
 }
+
+export async function editUser(req,res) {
+    try {
+    const {...user}=req.body;
+    const id=req.user.userId
+    const check=await userSchema.findOne({userId:id})
+    if(check){
+        const data=await userSchema.updateOne({userId:user.userId},{$set:{...user}});
+    }else{
+        const data=await userSchema.create({userId:id,...user});
+    }
+    return res.status(201).send({msg:"updated"});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
 export async function verifyEmail(req,res) {
   const {email}=req.body;
   

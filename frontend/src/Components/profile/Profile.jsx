@@ -10,7 +10,6 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingAddresses, setIsEditingAddresses] = useState(false);
   const [addresses, setAddresses] = useState([
-    { houseNumber: "", houseName: "", place: "", pincode: "", postOffice: "" },
   ]);
   const [profile, setProfile] = useState({});
   useEffect(()=>{
@@ -19,14 +18,11 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
   const getEssentials=async()=>{
     try {
       
-      const {status,data}=await axios.get(`${route()}profile`,{headers:{"Authorization":`Bearer ${value}`}})
-      console.log("hai");
+      const {status,data}=await axios.get(`${route()}profile`,{headers:{"Authorization":`Bearer ${value}`}});
       if (status==200) {
-        
         setId(data.id);
         setRole(data.role);
-        setLoggedIn(true)
-        console.log(data);
+        setLoggedIn(true);
           setProfile({...data.profile});
       }
     }
@@ -41,7 +37,20 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
       [name]: value,
     }));
   };
-
+  const handleSubmitProfile=async()=>{
+    if(isEditingProfile){
+      const {status,data}=await axios.post("http://localhost:3000/api/edituser",profile,{headers:{"Authorization":`Bearer ${value}`}});
+      if (status===201) {
+        alert(data.msg)
+      }else{
+        alert("error")
+      }
+      setIsEditingProfile(!isEditingProfile);
+    }
+    else{
+      setIsEditingProfile(!isEditingProfile);
+    }
+  }
   const handleAddressChange = (index, e) => {
     const { name, value } = e.target;
     const updatedAddresses = [...addresses];
@@ -63,40 +72,41 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
     <div className="profile-container">
       {/* Profile Section */}
       <div className="profile-header">
+        <h1>User Details</h1>
         <div className="profile-pic">
           <FaUserCircle size={120} />
         </div>
         <div className="profile-info">
-          <div class="input-container">
-            <div class="input-wrapper">
+          <div className="input-container">
+            <div className="input-wrapper">
               <input
                 type="text"
-                name="firstName"
-                id="firstName"
-                value={profile.firstName}
+                name="fname"
+                id="fname"
+                value={profile.fname}
                 onChange={handleProfileChange}
                 disabled={!isEditingProfile}
                 placeholder=" "
-                class="profile-input"
+                className="input"
               />
-              <label for="firstName" class="input-label">First Name</label>
+              <label htmlFor="fname" className="input-label">First Name</label>
             </div>
 
-            <div class="input-wrapper">
+            <div className="input-wrapper">
               <input
                 type="text"
-                name="lastName"
-                id="lastName"
-                value={profile.lastName}
+                name="lname"
+                id="lname"
+                value={profile.lname}
                 onChange={handleProfileChange}
                 disabled={!isEditingProfile}
                 placeholder=" "
-                class="profile-input"
+                className="input"
               />
-              <label for="lastName" class="input-label">Last Name</label>
+              <label htmlFor="lname" className="input-label">Last Name</label>
             </div>
 
-            <div class="input-wrapper">
+            <div className="input-wrapper">
               <input
                 type="text"
                 name="phone"
@@ -105,11 +115,12 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
                 onChange={handleProfileChange}
                 disabled={!isEditingProfile}
                 placeholder=" "
-                class="profile-input"
+                className="input"
               />
-              <label for="phone" class="input-label">Phone Number</label>
+              <label htmlFor="phone" className="input-label">Phone Number</label>
             </div>
           </div>
+
 
           <div className="gender">
               <label>
@@ -119,8 +130,8 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
               <input
                 type="radio"
                 name="gender"
-                value="Male"
-                checked={profile.gender === "Male"}
+                value="male"
+                checked={profile.gender === "male"}
                 onChange={handleProfileChange}
                 disabled={!isEditingProfile}
               />
@@ -130,15 +141,15 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
               <input
                 type="radio"
                 name="gender"
-                value="Female"
-                checked={profile.gender === "Female"}
+                value="female"
+                checked={profile.gender === "female"}
                 onChange={handleProfileChange}
                 disabled={!isEditingProfile}
               />
               Female
             </label>
           </div>
-          <button onClick={() => setIsEditingProfile(!isEditingProfile)}>
+          <button onClick={handleSubmitProfile}>
             {isEditingProfile ? "Save Profile" : "Edit Profile"}
           </button>
         </div>
@@ -148,24 +159,16 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
       <div className="address-section">
         <div className="title">
         <h3>Addresses</h3>
-        <button onClick={handleAddAddress} class="add-button" title="Add New Address">
-          <svg class="add-icon" viewBox="0 0 24 24" height="30px" width="30px" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-width="1.5" d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"></path>
-            <path stroke-width="1.5" d="M8 12H16"></path>
-            <path stroke-width="1.5" d="M12 16V8"></path>
+        <button onClick={handleAddAddress} className="add-button" title="Add New Address">
+          <svg className="add-icon" viewBox="0 0 24 24" height="30px" width="30px" xmlns="http://www.w3.org/2000/svg">
+            <path strokeWidth="1.5" d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"></path>
+            <path strokeWidth="1.5" d="M8 12H16"></path>
+            <path strokeWidth="1.5" d="M12 16V8"></path>
           </svg>
         </button>
         </div>
         {addresses.map((address, index) => (
           <div key={index} className="address-container">
-            <input
-              type="text"
-              name="houseNumber"
-              placeholder="House Number"
-              value={address.houseNumber}
-              onChange={(e) => handleAddressChange(index, e)}
-              disabled={!isEditingAddresses}
-            />
             <input
               type="text"
               name="houseName"
@@ -195,6 +198,14 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
               name="postOffice"
               placeholder="Post Office"
               value={address.postOffice}
+              onChange={(e) => handleAddressChange(index, e)}
+              disabled={!isEditingAddresses}
+            />
+            <input
+              type="text"
+              name="landmark"
+              placeholder="Landmark"
+              value={address.landmark}
               onChange={(e) => handleAddressChange(index, e)}
               disabled={!isEditingAddresses}
             />

@@ -5,7 +5,7 @@ import {Link,useNavigate} from "react-router-dom";
 import axios from 'axios';
 import route from '../route';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
-import './Login.scss';
+import './login.scss';
 
 const Login = () => {
   const navigate=useNavigate();

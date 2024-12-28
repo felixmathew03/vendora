@@ -15,8 +15,7 @@ $error-color: #319275;
   justify-content: space-around;  // Spacing between logo and right-side content
   align-items: center;
   background-color: $secondary-color;
-  width: 100%;
-  height: 15vh;
+  padding: 20px 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   
   // Logo Section
@@ -48,6 +47,7 @@ $error-color: #319275;
 
     .login-btn,
     .seller-btn {
+      margin: 0;
       font-size: 14px;
       font-weight: 500;
       padding: 8px 15px;
@@ -66,7 +66,7 @@ $error-color: #319275;
   }
   
   // Profile Icon Section (Popover Menu)
-  .profile-container {
+  .profile-containerr {
     position: relative;
     padding: 0;
     background: none;

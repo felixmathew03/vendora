@@ -15,7 +15,7 @@ const App = () => {
     const [loggedIn,setLoggedIn]=useState(false);
   return (
     <BrowserRouter>
-      {id&&<Navbar id={id} role={role} loggedIn={loggedIn}/>}
+      <Navbar id={id} role={role} loggedIn={loggedIn}/>
       <Routes>
         <Route path='/' element={<Home  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/login' Component={Login}/>

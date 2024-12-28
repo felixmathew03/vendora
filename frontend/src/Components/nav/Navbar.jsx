@@ -42,7 +42,7 @@ const Navbar = ({ id, role, loggedIn }) => {
         {loggedIn ? (
           <>
             {/* Profile Icon & Popover */}
-            <div className="profile-container">
+            <div className="profile-containerr">
               <FaUserCircle 
                 className="profile-icon" 
                 onClick={togglePopover} 
@@ -50,9 +50,9 @@ const Navbar = ({ id, role, loggedIn }) => {
               />
               {isPopoverVisible && (
                 <div className="profile-popover">
-                  <button className="popover-btn">
-                    <Link to={`/profile/${id}`}>Profile</Link>
-                  </button>
+                    <Link to={`/profile/${id}`}>
+                    <button className="popover-btn">Profile</button>
+                    </Link>
                   <button className="popover-btn" onClick={handleLogout}>
                     Logout
                   </button>
@@ -68,7 +68,7 @@ const Navbar = ({ id, role, loggedIn }) => {
             )}
           </>
         ) : (
-          <button className="login-btn"><Link to={'/login'}>Login</Link></button>
+          <Link to={'/login'}><button className="login-btn">Login</button></Link>
         )}
       </div>
     </div>

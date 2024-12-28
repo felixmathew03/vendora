@@ -1,120 +1,193 @@
 .profile-container {
     width: 100%;
-    max-width: 800px;
     margin: 0 auto;
-    padding: 40px;
+    height: 77vh;
+    padding: 40px 0;
     background-color: #f4f7fc;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  }
-  
+    display: flex;
+    justify-content: space-around;
   .profile-header {
     display: flex;
+    flex-direction: column;
+    gap: 15px;
     align-items: center;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #e4e9f2;
+    margin-right: 30px;
+    border-right: 2px solid #e4e9f2;
     padding-bottom: 20px;
-  }
+    width: 25%;
+    padding: 2% 2.8%;
   
-  .profile-pic {
-    margin-right: 20px;
-  }
-  
-  .profile-info {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .profile-info input {
-    margin: 10px 0;
-    padding: 15px;
-    font-size: 16px;
-    border: 1px solid #e4e9f2;
-    border-radius: 10px;
-    background-color: #fff;
-    box-sizing: border-box;
-  }
-  
-  .gender {
-    display: flex;
-    margin-top: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .gender label {
-    margin-right: 20px;
-    font-size: 16px;
-  }
-  
-  button {
-    padding: 12px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 15px;
-  
-    &:hover {
-      background-color: #0056b3;
+    .profile-pic {
+      margin-right: 20px;
     }
-  
-    &:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
+    
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%;
+      .input-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 25px; // Space between input fields
+      
+      .input-wrapper {
+        position: relative;
+        width: 100%; // Fixed width for input fields
+      }
+      
+      .profile-input {
+        width: 100%;
+        padding: 10px ;
+        border: 1px solid #ccc;
+        border-bottom: 2px solid #ccc; // Bottom border for the input
+        background-color: white   ;
+        font-size: 16px;
+        color: #333;
+        transition: border-color 0.3s, padding-top 0.3s;
+      
+        &:focus {
+          border-color: #560e06; // Blue border on focus
+          outline: none;
+          padding-top: 20px; // Raise text on focus
+        }
+        &:disabled {
+          background-color: #f5f5f5;
+          border-color: #ddd;
+        }
+      }
+      
+      .input-label {
+        position: absolute;
+        left: 2%;
+        top: 12px; // Initial label position inside the input
+        font-size: 16px;
+        color: #544d4d; // Label color when idle
+        pointer-events: none; // Allow interaction with the input field, not the label
+        transition: all 0.3s ease; // Smooth transition for label movement
+      
+        &.focused {
+          font-size: 12px;
+          top: -8px; // Move the label above the input on focus
+          color: #7b081e; // Change color when input is focused
+        }
+      }
+      
+      .profile-input:focus + .input-label {
+        font-size: 12px;
+        top: -14px;
+        color: #450404; // Blue label color when input is focused
+      }
+      
+    }
+      .gender {
+        display: flex;
+        gap: 15px;
+
+        label {
+          margin-right: 20px;
+          font-size: 16px;
+          display: contents;
+          input{
+            margin: 0;
+          }
+        }
+      }
+      button {
+        padding: 12px 20px;
+        font-size: 16px;
+        background-color: #06135e;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 15px;
+      
+        &:hover {
+          background-color: #025cbd;
+        }
+      
+        &:disabled {
+          background-color: #ccc;
+          cursor: not-allowed;
+        }
+      }
     }
   }
-  
   .address-section {
-    margin-top: 40px;
-  }
-  
-  .address-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  }
-  
-  .address-container input {
-    margin: 8px 0;
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #e4e9f2;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  h3 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
-  
-  button.add-address-btn {
-    padding: 12px 20px;
-    font-size: 16px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-  
-    &:hover {
-      background-color: #218838;
+    margin-right: 40px;
+    width: 50%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    .title{
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+      h3 {
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .add-button {
+        cursor: pointer;
+        outline: none;
+        border:  none;
+        transition: transform 0.3s ease; // Smooth rotation
+        background:none;
+        &:hover {
+          transform: rotate(90deg); // Rotate on hover
+        }
+        .add-icon {
+          stroke: #009688; // Teal stroke color
+          fill: none;
+          transition: fill 0.3s ease, stroke 0.3s ease; // Smooth transition on hover
+          &:active {
+            stroke: #80cbc4; // Light teal stroke when active
+            fill: #004d40;  // Darker teal when active
+            transition-duration: 0s; // Instant transition on active state
+          }
+        }
+      }
+    }
+    .address-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      width: 90%;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      input {
+        margin: 8px 0;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #e4e9f2;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+      }
+      button{
+        margin: auto;
+        width: 50%;
+        height: 30px;
+        margin-top: 10px;
+        background-color: #06135e;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+      }
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
     }
   }
-  
+}

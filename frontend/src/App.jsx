@@ -21,7 +21,7 @@ const App = () => {
         <Route path='/login' Component={Login}/>
         <Route path='/email' Component={Email}/>
         <Route path='/signup' Component={Signup}/>
-        <Route path='/profile/:id' Component={Profile}/>
+        <Route path='/profile' element={<Profile  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>} />
         {/* <Route path='/addprodetails' element={<AddPro  setUser={setUser} setProfile={setProfile}/>}/>
         <Route path='/addpost' element={<Post  setUser={setUser} setProfile={setProfile}/>}/>
         <Route path='/postdetails/:id' element={<PostD  setUser={setUser} setProfile={setProfile}/>}/> */}

@@ -50,7 +50,7 @@ const Navbar = ({ id, role, loggedIn }) => {
               />
               {isPopoverVisible && (
                 <div className="profile-popover">
-                    <Link to={`/profile/${id}`}>
+                    <Link to={`/profile`}>
                     <button className="popover-btn">Profile</button>
                     </Link>
                   <button className="popover-btn" onClick={handleLogout}>

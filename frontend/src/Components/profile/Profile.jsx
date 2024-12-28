@@ -1,20 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
+import axios from "axios";
+import { AiOutlinePlus } from 'react-icons/ai'; 
+import route from "../route";
 import './Profile.scss';
 
-const Profile = () => {
+const Profile = ({setId,setRole,setLoggedIn}) => {
+  const value=localStorage.getItem('Auth');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingAddresses, setIsEditingAddresses] = useState(false);
   const [addresses, setAddresses] = useState([
     { houseNumber: "", houseName: "", place: "", pincode: "", postOffice: "" },
   ]);
-  const [profile, setProfile] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    phone: "1234567890",
-    gender: "Male",
-  });
-
+  const [profile, setProfile] = useState({});
+  useEffect(()=>{
+    getEssentials();
+  },[])
+  const getEssentials=async()=>{
+    try {
+      
+      const {status,data}=await axios.get(`${route()}profile`,{headers:{"Authorization":`Bearer ${value}`}})
+      console.log("hai");
+      if (status==200) {
+        
+        setId(data.id);
+        setRole(data.role);
+        setLoggedIn(true)
+        console.log(data);
+          setProfile({...data.profile});
+      }
+    }
+     catch (error) {
+      console.log("error");
+    }
+  }
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     setProfile((prev) => ({
@@ -48,33 +67,55 @@ const Profile = () => {
           <FaUserCircle size={120} />
         </div>
         <div className="profile-info">
-          <input
-            type="text"
-            name="firstName"
-            value={profile.firstName}
-            onChange={handleProfileChange}
-            disabled={!isEditingProfile}
-            placeholder="First Name"
-          />
-          <input
-            type="text"
-            name="lastName"
-            value={profile.lastName}
-            onChange={handleProfileChange}
-            disabled={!isEditingProfile}
-            placeholder="Last Name"
-          />
-          <input
-            type="text"
-            name="phone"
-            value={profile.phone}
-            onChange={handleProfileChange}
-            disabled={!isEditingProfile}
-            placeholder="Phone Number"
-          />
+          <div class="input-container">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                name="firstName"
+                id="firstName"
+                value={profile.firstName}
+                onChange={handleProfileChange}
+                disabled={!isEditingProfile}
+                placeholder=" "
+                class="profile-input"
+              />
+              <label for="firstName" class="input-label">First Name</label>
+            </div>
+
+            <div class="input-wrapper">
+              <input
+                type="text"
+                name="lastName"
+                id="lastName"
+                value={profile.lastName}
+                onChange={handleProfileChange}
+                disabled={!isEditingProfile}
+                placeholder=" "
+                class="profile-input"
+              />
+              <label for="lastName" class="input-label">Last Name</label>
+            </div>
+
+            <div class="input-wrapper">
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                value={profile.phone}
+                onChange={handleProfileChange}
+                disabled={!isEditingProfile}
+                placeholder=" "
+                class="profile-input"
+              />
+              <label for="phone" class="input-label">Phone Number</label>
+            </div>
+          </div>
+
           <div className="gender">
-            <label>
+              <label>
               Gender:
+              </label>
+            <label>
               <input
                 type="radio"
                 name="gender"
@@ -105,7 +146,16 @@ const Profile = () => {
 
       {/* Addresses Section */}
       <div className="address-section">
+        <div className="title">
         <h3>Addresses</h3>
+        <button onClick={handleAddAddress} class="add-button" title="Add New Address">
+          <svg class="add-icon" viewBox="0 0 24 24" height="30px" width="30px" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-width="1.5" d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"></path>
+            <path stroke-width="1.5" d="M8 12H16"></path>
+            <path stroke-width="1.5" d="M12 16V8"></path>
+          </svg>
+        </button>
+        </div>
         {addresses.map((address, index) => (
           <div key={index} className="address-container">
             <input
@@ -153,7 +203,6 @@ const Profile = () => {
             </button>
           </div>
         ))}
-        <button onClick={handleAddAddress}>Add New Address</button>
       </div>
     </div>
   );

@@ -28,6 +28,20 @@ export async function home(req,res) {
         res.status(404).send({msg:"error"})
     }
 }
+
+export async function profile(req,res) {
+    try {
+        const _id=req.user.userId;
+        const user=await loginSchema.findOne({_id});
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const profile=await userSchema.findOne({userId:_id})
+        res.status(200).send({id:_id,role:user.role,profile})
+        
+    } catch (error) {
+        res.status(404).send({msg:"error"})
+    }
+}
 export async function verifyEmail(req,res) {
   const {email}=req.body;
   

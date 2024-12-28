@@ -8,5 +8,6 @@ router.route("/verifyemail").post(user.verifyEmail);
 router.route("/signup").post(user.signUp); 
 router.route("/signin").post(user.signIn);
 router.route("/home").get(Auth,user.home);
+router.route("/profile").get(Auth,user.profile);
 
 export default router;

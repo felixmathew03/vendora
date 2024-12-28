@@ -24,7 +24,7 @@ const Home = ({setId,setRole,setLoggedIn}) => {
   }
   return (
     <div className='home'>
-      <h1>HHAAII</h1>
+      <h1>Home</h1>
     </div>
   )
 }

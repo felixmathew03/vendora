@@ -35,8 +35,10 @@ export async function profile(req,res) {
         const user=await loginSchema.findOne({_id});
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
-        const profile=await userSchema.findOne({userId:_id})
-        res.status(200).send({id:_id,role:user.role,profile})
+        const profile=await userSchema.findOne({userId:_id});
+        const address=await addressSchema.findOne({userId:_id},{addresses:1});
+        
+        res.status(200).send({id:_id,role:user.role,profile,address})
         
     } catch (error) {
         res.status(404).send({msg:"error"})
@@ -49,9 +51,27 @@ export async function editUser(req,res) {
     const id=req.user.userId
     const check=await userSchema.findOne({userId:id})
     if(check){
-        const data=await userSchema.updateOne({userId:user.userId},{$set:{...user}});
+        const data=await userSchema.updateOne({userId:id},{$set:{...user}});
     }else{
         const data=await userSchema.create({userId:id,...user});
+    }
+    return res.status(201).send({msg:"updated"});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function editAddress(req,res) {
+    try {
+    const address=req.body;
+    console.log(address);
+    
+    const id=req.user.userId
+    const check=await addressSchema.findOne({userId:id})
+    if(check){
+        const data=await addressSchema.updateOne({userId:id},{$set: { addresses: address }  });
+    }else{
+        const data=await addressSchema.create({userId:id,addresses:address});
     }
     return res.status(201).send({msg:"updated"});
     } catch (error) {

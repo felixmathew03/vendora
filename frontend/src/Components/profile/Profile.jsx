@@ -23,7 +23,8 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
         setId(data.id);
         setRole(data.role);
         setLoggedIn(true);
-          setProfile({...data.profile});
+        setProfile({...data.profile});
+        setAddresses(data.address.addresses)
       }
     }
      catch (error) {
@@ -39,7 +40,7 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
   };
   const handleSubmitProfile=async()=>{
     if(isEditingProfile){
-      const {status,data}=await axios.post("http://localhost:3000/api/edituser",profile,{headers:{"Authorization":`Bearer ${value}`}});
+      const {status,data}=await axios.post(`${route()}edituser`,profile,{headers:{"Authorization":`Bearer ${value}`}});
       if (status===201) {
         alert(data.msg)
       }else{
@@ -67,7 +68,20 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
       { houseNumber: "", houseName: "", place: "", pincode: "", postOffice: "" },
     ]);
   };
-
+  const handleSubmitAddress=async()=>{
+    if(isEditingAddresses){
+      const {status,data}=await axios.post(`${route()}editaddress`,addresses,{headers:{"Authorization":`Bearer ${value}`}});
+      if (status===201) {
+        alert(data.msg)
+      }else{
+        alert("error")
+      }
+      setIsEditingAddresses(!isEditingAddresses);
+    }
+    else{
+      setIsEditingAddresses(!isEditingAddresses);
+    }
+  }
   return (
     <div className="profile-container">
       {/* Profile Section */}
@@ -209,7 +223,7 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
               onChange={(e) => handleAddressChange(index, e)}
               disabled={!isEditingAddresses}
             />
-            <button onClick={() => setIsEditingAddresses(!isEditingAddresses)}>
+            <button onClick={handleSubmitAddress}>
               {isEditingAddresses ? "Save Address" : "Edit Address"}
             </button>
           </div>

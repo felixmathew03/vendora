@@ -11,11 +11,13 @@ const Home = ({setId,setRole,setLoggedIn}) => {
   const getDetails=async()=>{
     try {
       if(value!==null){
-      const {status,data}=await axios.get(`http://localhost:3000/api/home`,{headers:{"Authorization":`Bearer ${value}`}})
-      if (status==200) {
-        setId(data.id)
-        setRole(data.role);
+      const res=await axios.get(`http://localhost:3000/api/home`,{headers:{"Authorization":`Bearer ${value}`}})
+      if (res.status==200) {
+        setId(res.data.id)
+        setRole(res.data.role);
         setLoggedIn(true)
+      }else if(res.status==403){
+        localStorage.removeItem("Auth")
       }
     }}
      catch (error) {

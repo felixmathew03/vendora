@@ -3,8 +3,9 @@ import axios from 'axios';
 import { FaBuilding, FaMapMarkerAlt, FaEdit, FaPlus } from 'react-icons/fa';
 import route from "../route";
 import './Company.scss';
+import { Link } from 'react-router-dom';
 
-const Company = ({ setRole, setLoggedIn }) => {
+const Company = ({setId, setRole, setLoggedIn }) => {
   const value = localStorage.getItem("Auth");
   // Managing state for company name, location, categories, and product form
   const [company, setCompany] = useState({
@@ -22,10 +23,13 @@ const Company = ({ setRole, setLoggedIn }) => {
     try {
       const { status, data } = await axios.get(`${route()}company`, { headers: { "Authorization": `Bearer ${value}` } });
       if (status === 200) {
+        setId(data.id)
         setRole(data.role);
         setLoggedIn(true);
-        if (data.company) setCompany(data.company);
-        if (data.category.length > 0) setCategories(data.category.categories);
+        if (data.company) 
+          setCompany(data.company);
+        if (data.category.length > 0) 
+          setCategories(data.category[0].categories);
       }
     } catch (error) {
       console.log("error");
@@ -102,13 +106,17 @@ const Company = ({ setRole, setLoggedIn }) => {
         <div className="header">
         <h3>Categories</h3>
         {/* Add Product Button */}
-        <button className="add-product-btn" onClick={() => setShowProductForm(!showProductForm)}>
-          <FaPlus /> Add Product
-        </button>
+        <Link to={'/addproduct'} className="add-product-link">
+          <button className="add-product-btn">
+            <FaPlus /> Add Product
+          </button>
+        </Link>
         </div>
         <ul>
           {categories.map((category, index) => (
-            <li key={index}>{category}</li>
+            <Link to={`/product/${category}`}>
+              <li key={index}>{category}</li>
+            </Link>
           ))}
         </ul>
       </div>

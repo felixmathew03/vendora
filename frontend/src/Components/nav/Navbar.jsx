@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ id, role, loggedIn }) => {
   const [isSeller, setIsSeller] = useState(false);      // Track if the user is a seller
   const [isPopoverVisible, setIsPopoverVisible] = useState(false); // Track visibility of popover
-  
   // Check if the user is a seller upon initial render
   useEffect(() => {
     if (role === "seller") {
@@ -20,11 +19,7 @@ const Navbar = ({ id, role, loggedIn }) => {
     setIsSeller(false);
     setIsPopoverVisible(false);
   };
-
-  const handleSellerClick = () => {
-    alert("Seller dashboard clicked!");
-  };
-
+  
   const togglePopover = () => {
     setIsPopoverVisible(!isPopoverVisible);
   };
@@ -62,9 +57,9 @@ const Navbar = ({ id, role, loggedIn }) => {
 
             {/* Seller Dashboard Button */}
             {isSeller && (
-              <button className="seller-btn" onClick={handleSellerClick}>
-                Seller Dashboard
-              </button>
+              <Link to={'/company'}><button className="seller-btn">
+              Seller Dashboard
+            </button></Link>
             )}
           </>
         ) : (

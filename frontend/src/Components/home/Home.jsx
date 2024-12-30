@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import route from '../route';
 import axios from 'axios';
 import './Home.scss';
 
@@ -11,9 +11,9 @@ const Home = ({setId,setRole,setLoggedIn}) => {
   const getDetails=async()=>{
     try {
       if(value!==null){
-      const {status,data}=await axios.get("http://localhost:3000/api/home",{headers:{"Authorization":`Bearer ${value}`}})
+      const {status,data}=await axios.get(`http://localhost:3000/api/home`,{headers:{"Authorization":`Bearer ${value}`}})
       if (status==200) {
-        setId(data.id);
+        setId(data.id)
         setRole(data.role);
         setLoggedIn(true)
       }

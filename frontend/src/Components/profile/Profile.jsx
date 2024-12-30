@@ -23,8 +23,10 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
         setId(data.id);
         setRole(data.role);
         setLoggedIn(true);
-        setProfile({...data.profile});
-        setAddresses(data.address.addresses)
+        if(data.profile)
+          setProfile({...data.profile});
+        if(data.address)
+          setAddresses(data.address.addresses)
       }
     }
      catch (error) {

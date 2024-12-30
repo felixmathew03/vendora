@@ -22,10 +22,13 @@ export async function home(req,res) {
         const user=await loginSchema.findOne({_id});
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
-        res.status(200).send({id:_id,role:user.role})
+        const products=await productSchema.find({
+            sellerId: { $not: { $eq: _id} }
+          })
+        return res.status(200).send({id:_id,role:user.role,products})
         
     } catch (error) {
-        res.status(404).send({msg:"error"})
+        return res.status(404).send({msg:"error"})
     }
 }
 
@@ -136,6 +139,67 @@ export async function addProduct(req,res) {
         const id=req.user.userId;
         const data=await productSchema.create({sellerId:id,...product});
     return res.status(201).send({msg:"Adding complete"});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function products(req,res) {
+    try {
+        const {category}=req.params;
+        const _id=req.user.userId;
+        
+        const user=await loginSchema.findOne({_id});
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const products=await productSchema.find({$and:[{sellerId:_id},{category}]});
+        return res.status(200).send({id:_id,role:user.role,products})
+        
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function getproduct(req,res) {
+    try {
+        const {_id}=req.params;
+        const id=req.user.userId;
+        
+        const user=await loginSchema.findOne({_id:id});
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const product=await productSchema.findOne({_id});
+        const category=await categorySchema.find();
+        return res.status(200).send({id,role:user.role,product,category})
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function editProduct(req,res) {
+    try {
+        const {...product}=req.body;
+        const id=req.user.userId;
+        const data=await productSchema.updateOne({_id:product._id},{...product});
+        return res.status(201).send({msg:"Updated"});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function product(req,res) {
+    try {
+        console.log("dfd");
+        
+        const {_id}=req.params;
+        const id=req.user.userId;
+        
+        const user=await loginSchema.findOne({_id:id});
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const product=await productSchema.findOne({_id});
+        return res.status(200).send({id:_id,role:user.role,product})
+        
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }

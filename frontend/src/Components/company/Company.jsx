@@ -114,7 +114,7 @@ const Company = ({setId, setRole, setLoggedIn }) => {
         </div>
         <ul>
           {categories.map((category, index) => (
-            <Link to={`/product/${category}`}>
+            <Link to={`/products/${category}`}>
               <li key={index}>{category}</li>
             </Link>
           ))}

@@ -140,41 +140,6 @@ $heading-font: 'Montserrat', sans-serif;
         }
       }
     }
-    // Button Styling
-    .edit-btn {
-      background-color: #00796b;    // Light Green for background
-      color: white;                 // White text for contrast
-      border: none;
-      padding: 12px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      display: inline-flex;
-      align-items: center;          // Align the text and icon
-      gap: 10px;                    // Add some space between the icon and text
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      text-decoration: none;        // Remove underline in Link component
-
-      &:hover {
-        background-color: darken(#00796b, 10%);  // Darken on hover for feedback
-        transform: translateY(-2px);             // Lift the button slightly
-      }
-
-      &:active {
-        background-color: darken(#00796b, 20%);  // Even darker on click
-        transform: translateY(0);                // Reset the lift effect
-      }
-
-      .edit-icon {
-        font-size: 18px;           // Make the icon a bit larger
-        transition: color 0.3s ease; // Smooth transition for the icon color
-      }
-
-      &:hover .edit-icon {
-        color: #ffffff;           // Change icon color to white on hover
-      }
-    }
 
   }
 }

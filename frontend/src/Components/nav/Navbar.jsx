@@ -1,12 +1,13 @@
 // src/components/Navbar.js
 import React, { useEffect, useState } from 'react';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaShoppingCart } from 'react-icons/fa'; // Import cart icon
 import './Navbar.scss'; // Import SCSS for styling
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ id, role, loggedIn }) => {
   const [isSeller, setIsSeller] = useState(false);      // Track if the user is a seller
   const [isPopoverVisible, setIsPopoverVisible] = useState(false); // Track visibility of popover
+
   // Check if the user is a seller upon initial render
   useEffect(() => {
     if (role === "seller") {
@@ -28,8 +29,10 @@ const Navbar = ({ id, role, loggedIn }) => {
     <div className="navbar">
       {/* Logo Section */}
       <div className="navbar-logo">
-        <img src="/images/logo.jpg" alt="Logo" className="logo-image" />
-        <span className="website-name">Vendora</span>
+        <Link to={'/'}>
+          <img src="/images/logo.jpg" alt="Logo" className="logo-image" />
+          <span className="website-name">Vendora</span>
+        </Link>
       </div>
 
       {/* Right Side of Navbar */}
@@ -45,9 +48,9 @@ const Navbar = ({ id, role, loggedIn }) => {
               />
               {isPopoverVisible && (
                 <div className="profile-popover">
-                    <Link to={`/profile`}>
+                  <Link to={`/profile`}>
                     <button className="popover-btn">Profile</button>
-                    </Link>
+                  </Link>
                   <button className="popover-btn" onClick={handleLogout}>
                     Logout
                   </button>
@@ -57,13 +60,22 @@ const Navbar = ({ id, role, loggedIn }) => {
 
             {/* Seller Dashboard Button */}
             {isSeller && (
-              <Link to={'/company'}><button className="seller-btn">
-              Seller Dashboard
-            </button></Link>
+              <Link to={'/company'}>
+                <button className="seller-btn">
+                  Seller Dashboard
+                </button>
+              </Link>
             )}
+
+            {/* Cart Icon */}
+            <Link to={'/cart'}> {/* Adjust to the correct route for the cart */}
+              <FaShoppingCart className="cart-icon" size={30} />
+            </Link>
           </>
         ) : (
-          <Link to={'/login'}><button className="login-btn">Login</button></Link>
+          <Link to={'/login'}>
+            <button className="login-btn">Login</button>
+          </Link>
         )}
       </div>
     </div>

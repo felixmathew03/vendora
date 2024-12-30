@@ -9,6 +9,9 @@ import Profile from './Components/profile/Profile';
 import Company from './Components/company/Company';
 import AddProduct from './Components/addProduct/AddProduct';
 import Products from './Components/products/Products';
+import EditProduct from './Components/editProduct/EditProduct';
+import Cart from './Components/cart/Cart';
+import DProd from './Components/dProd/DProd';
 import './App.css'
 
 
@@ -28,6 +31,9 @@ const App = () => {
         <Route path='/company' element={<Company  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/addproduct' element={<AddProduct  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/products/:category' element={<Products  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
+        <Route path='/editproduct/:_id' element={<EditProduct  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
+        <Route path='/cart' element={<Cart  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
+        <Route path='/product/:id' element={<DProd  setId={setId} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
       </Routes>
     </BrowserRouter>
   )

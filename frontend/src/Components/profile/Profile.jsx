@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
-import { AiOutlinePlus } from 'react-icons/ai'; 
 import route from "../route";
 import './Profile.scss';
 

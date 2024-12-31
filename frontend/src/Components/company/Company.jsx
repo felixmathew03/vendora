@@ -14,9 +14,11 @@ const Company = ({setId, setRole, setLoggedIn }) => {
   });
   const [categories, setCategories] = useState([]);
   const [isEditable, setIsEditable] = useState(false);
-
+  const [sellerCat,setSellerCat]=useState([]);
+  const [count,setCount]=useState({})
   useEffect(() => {
     getEssentials();
+    getCount();
   }, []);
 
   const getEssentials = async () => {
@@ -30,12 +32,13 @@ const Company = ({setId, setRole, setLoggedIn }) => {
           setCompany(data.company);
         if (data.category.length > 0) 
           setCategories(data.category[0].categories);
+        if(data.productCategory)
+          setSellerCat([...data.productCategory])
       }
     } catch (error) {
       console.log("error");
     }
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCompany((prev) => ({
@@ -43,11 +46,31 @@ const Company = ({setId, setRole, setLoggedIn }) => {
       [name]: value,
     }));
   };
-
+  
   const handleEditClick = () => {
     setIsEditable(true);
   };
-
+  const getCount = () => {
+    // Initialize a new object to store category counts
+    let categoryCounts = {};
+  
+    // Loop over the categories array
+    categories.forEach((category) => {
+      let count = 0;
+      // Loop over the sellerCategory array to count occurrences of each category
+      sellerCat.forEach((scategory) => {
+        if (scategory.category === category) {
+          count++;
+        }
+      });
+  
+      // Store the count for the category in the categoryCounts object
+      categoryCounts[category] = count;
+    });
+  
+    // Use setCount to update the state with the categoryCounts object
+    setCount(categoryCounts);
+  }
   const handleSave = async () => {
     if (isEditable) {
       const { status, data } = await axios.post(`${route()}editcompany`, company, { headers: { "Authorization": `Bearer ${value}` } });
@@ -108,14 +131,14 @@ const Company = ({setId, setRole, setLoggedIn }) => {
         {/* Add Product Button */}
         <Link to={'/addproduct'} className="add-product-link">
           <button className="add-product-btn">
-            <FaPlus /> Add Product
+            <FaPlus /> Product
           </button>
         </Link>
         </div>
         <ul>
           {categories.map((category, index) => (
-            <Link to={`/products/${category}`}>
-              <li key={index}>{category}</li>
+                <Link to={`/products/${category}`}key={index}>
+              <li >{category}</li>
             </Link>
           ))}
         </ul>

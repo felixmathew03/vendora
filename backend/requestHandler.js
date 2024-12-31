@@ -90,8 +90,10 @@ export async function company(req,res) {
             return res.status(403).send({msg:"Unauthorized acces"});
         const company=await companySchema.findOne({sellerId:_id});
         const category=await categorySchema.find();
+        const productCategory=await productSchema.find({sellerId:_id},{category:1})
+        console.log(productCategory);
         
-        return res.status(200).send({id:_id,role:user.role,company,category})
+        return res.status(200).send({id:_id,role:user.role,company,category,productCategory})
         
     } catch (error) {
         return res.status(404).send({msg:"error"})

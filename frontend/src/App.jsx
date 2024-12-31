@@ -11,7 +11,7 @@ import AddProduct from './Components/addProduct/AddProduct';
 import Products from './Components/products/Products';
 import EditProduct from './Components/editProduct/EditProduct';
 import Cart from './Components/cart/Cart';
-import DProd from './Components/dProd/DProd';
+import DProd from './Components/Dprod/DProd';
 import './App.css'
 
 

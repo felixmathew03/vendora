@@ -34,12 +34,6 @@ body {
     width: 100%;
     max-width: 400px;
     text-align: center;
-    transition: transform 0.3s ease-in-out;
-    
-    &:hover {
-      transform: translateY(-10px);
-    }
-
     .logo {
       margin-bottom: 1rem;
       img {

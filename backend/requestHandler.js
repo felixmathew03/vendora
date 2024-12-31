@@ -191,11 +191,8 @@ export async function editProduct(req,res) {
 
 export async function product(req,res) {
     try {
-        console.log("dfd");
-        
         const {_id}=req.params;
         const id=req.user.userId;
-        
         const user=await loginSchema.findOne({_id:id});
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});

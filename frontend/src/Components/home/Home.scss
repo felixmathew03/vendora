@@ -31,12 +31,7 @@ $heading-font: 'Montserrat', sans-serif;
   display: flex;
     flex-direction: column;
   border-radius: 12px;
-  box-shadow: 0 6px 12px $shadow-color;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  // Hover Effects
-  &:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
 
   // Product Image
   .product-images {
@@ -130,21 +125,29 @@ $heading-font: 'Montserrat', sans-serif;
         }
       }
     }
+    a{
+      text-decoration: none;
+    }
     .view-product-button {
-        background-color: #0e5f4b; /* Green background */
-        color: white; /* White text */
-        border: none; /* No border */
-        padding: 10px 20px; /* Padding inside the button */
-        font-size: 16px; /* Font size */
-        cursor: pointer; /* Pointer cursor on hover */
-        border-radius: 5px; /* Rounded corners */
-        transition: background-color 0.3s; /* Smooth transition for background color */
-        text-align: center; /* Center align text */
-      }
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      background-color: #047b6b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
       
-      .view-product-button:hover {
-        background-color: #218655; /* Darker green when hovered */
-      }
+    }
+    
+    .view-product-button .view-icon {
+      font-size: 18px; /* Adjust the size of the icon */
+    }
+    
+    .view-product-button:hover {
+      background-color: #046b5d;
+    }
       
   }
 }

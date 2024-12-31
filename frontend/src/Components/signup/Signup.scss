@@ -38,11 +38,6 @@ body {
     text-align: center;
     max-height: 600px;  // Max height for the signup box
     overflow-y: auto;  // Allows scrolling if content overflows
-    transition: transform 0.3s ease-in-out;
-
-    &:hover {
-      transform: translateY(-10px);
-    }
 
     .logo {
       margin-bottom: 1rem;

@@ -33,14 +33,7 @@ $heading-font: 'Montserrat', sans-serif;
   border-radius: 12px;
   box-shadow: 0 6px 12px $shadow-color;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 420px;
-  // Hover Effects
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-
   // Product Image
   .product-images {
     width: 300px;
@@ -153,17 +146,15 @@ $heading-font: 'Montserrat', sans-serif;
       display: inline-flex;
       align-items: center;          // Align the text and icon
       gap: 10px;                    // Add some space between the icon and text
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: background-color 0.3s ease;
       text-decoration: none;        // Remove underline in Link component
 
       &:hover {
-        background-color: darken(#00796b, 10%);  // Darken on hover for feedback
-        transform: translateY(-2px);             // Lift the button slightly
+        background-color: darken(#00796b, 10%);
       }
 
       &:active {
-        background-color: darken(#00796b, 20%);  // Even darker on click
-        transform: translateY(0);                // Reset the lift effect
+        background-color: darken(#00796b, 20%);  
       }
 
       .edit-icon {

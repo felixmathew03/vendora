@@ -3,6 +3,7 @@ import route from '../route';
 import axios from 'axios';
 import './Home.scss';
 import { Link } from 'react-router-dom';
+import { FaEye } from 'react-icons/fa';
 
 const Home = ({setId,setRole,setLoggedIn}) => {
   const value=localStorage.getItem('Auth');
@@ -65,7 +66,11 @@ const Home = ({setId,setRole,setLoggedIn}) => {
                   <strong>Price:</strong><span className='product-price'>${product.price.toFixed(2)}</span> 
                 </div>
               </div>
-              <Link to={`/product/${product._id}`}><button className="view-product-button">View Product</button></Link>
+              <Link to={`/product/${product._id}`}>
+  <button className="view-product-button" title='View Product'>
+    <FaEye className="view-icon" /> 
+  </button>
+</Link>
             </div>
           </div>
         ))

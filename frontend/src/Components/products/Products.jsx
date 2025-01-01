@@ -6,7 +6,7 @@ import './Products.scss';
 import { Link, useParams } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
 
-const Products = ({ setId, setRole, setLoggedIn }) => {
+const Products = ({ setUsername, setRole, setLoggedIn }) => {
   const {category}=useParams();
   const value=localStorage.getItem("Auth")
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ const Products = ({ setId, setRole, setLoggedIn }) => {
     try {
       const {status,data}=await axios.get(`${route()}products/${category}`,{headers:{"Authorization":`Bearer ${value}`}})
       if(status){
-        setId(data.id);
+        setUsername(data.username);
         setRole(data.role);
         setLoggedIn(true);
         setProducts(data.products);

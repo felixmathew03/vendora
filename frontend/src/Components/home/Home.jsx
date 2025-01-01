@@ -5,7 +5,7 @@ import './Home.scss';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 
-const Home = ({setId,setRole,setLoggedIn}) => {
+const Home = ({setUsername,setRole,setLoggedIn}) => {
   const value=localStorage.getItem('Auth');
     const [products, setProducts] = useState([]);
   useEffect(()=>{
@@ -16,7 +16,7 @@ const Home = ({setId,setRole,setLoggedIn}) => {
       if(value!==null){
       const res=await axios.get(`${route()}home`,{headers:{"Authorization":`Bearer ${value}`}})
       if (res.status==200) {
-        setId(res.data.id)
+        setUsername(res.data.username)
         setRole(res.data.role);
         setLoggedIn(true);
         setProducts(res.data.products)

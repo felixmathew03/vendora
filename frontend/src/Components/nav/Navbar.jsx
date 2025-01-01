@@ -4,7 +4,7 @@ import { FaUserCircle, FaShoppingCart } from 'react-icons/fa'; // Import cart ic
 import './Navbar.scss'; // Import SCSS for styling
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ id, role, loggedIn }) => {
+const Navbar = ({ username, role, loggedIn }) => {
   const [isSeller, setIsSeller] = useState(false);      // Track if the user is a seller
   const [isPopoverVisible, setIsPopoverVisible] = useState(false); // Track visibility of popover
 
@@ -39,6 +39,7 @@ const Navbar = ({ id, role, loggedIn }) => {
       <div className="navbar-right">
         {loggedIn ? (
           <>
+            
             {/* Profile Icon & Popover */}
             <div className="profile-containerr">
               <FaUserCircle 
@@ -57,7 +58,7 @@ const Navbar = ({ id, role, loggedIn }) => {
                 </div>
               )}
             </div>
-
+            <h4>{username}</h4>
             {/* Seller Dashboard Button */}
             {isSeller && (
               <Link to={'/company'}>

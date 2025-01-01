@@ -5,7 +5,7 @@ import route from "../route";
 import './Company.scss';
 import { Link } from 'react-router-dom';
 
-const Company = ({setId, setRole, setLoggedIn }) => {
+const Company = ({setUsername, setRole, setLoggedIn }) => {
   const value = localStorage.getItem("Auth");
   // Managing state for company name, location, categories, and product form
   const [company, setCompany] = useState({
@@ -25,7 +25,7 @@ const Company = ({setId, setRole, setLoggedIn }) => {
     try {
       const { status, data } = await axios.get(`${route()}company`, { headers: { "Authorization": `Bearer ${value}` } });
       if (status === 200) {
-        setId(data.id)
+        setUsername(data.username)
         setRole(data.role);
         setLoggedIn(true);
         if (data.company) 

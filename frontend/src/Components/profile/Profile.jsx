@@ -4,7 +4,7 @@ import axios from "axios";
 import route from "../route";
 import './Profile.scss';
 
-const Profile = ({setId,setRole,setLoggedIn}) => {
+const Profile = ({setUsername,setRole,setLoggedIn}) => {
   const value=localStorage.getItem('Auth');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingAddresses, setIsEditingAddresses] = useState(false);
@@ -19,7 +19,7 @@ const Profile = ({setId,setRole,setLoggedIn}) => {
       
       const {status,data}=await axios.get(`${route()}profile`,{headers:{"Authorization":`Bearer ${value}`}});
       if (status==200) {
-        setId(data.id);
+        setUsername(data.username);
         setRole(data.role);
         setLoggedIn(true);
         if(data.profile)

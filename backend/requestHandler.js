@@ -4,6 +4,8 @@ import productSchema from './models/product.model.js';
 import companySchema from './models/company.model.js';
 import categorySchema from './models/category.model.js';
 import addressSchema from './models/address.model.js';
+import cartSchema from './models/cart.model.js';
+import wishlistSchema from './models/wishlist.model.js';
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -20,12 +22,13 @@ export async function home(req,res) {
     try {
         const _id=req.user.userId;
         const user=await loginSchema.findOne({_id});
+        
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const products=await productSchema.find({
             sellerId: { $not: { $eq: _id} }
           })
-        return res.status(200).send({id:_id,role:user.role,products})
+        return res.status(200).send({username:user.username,role:user.role,products})
         
     } catch (error) {
         return res.status(404).send({msg:"error"})
@@ -41,7 +44,7 @@ export async function profile(req,res) {
         const profile=await userSchema.findOne({userId:_id});
         const address=await addressSchema.findOne({userId:_id},{addresses:1});
         
-        res.status(200).send({id:_id,role:user.role,profile,address})
+        res.status(200).send({username:user.username,role:user.role,profile,address})
         
     } catch (error) {
         res.status(404).send({msg:"error"})
@@ -93,7 +96,7 @@ export async function company(req,res) {
         const productCategory=await productSchema.find({sellerId:_id},{category:1})
         console.log(productCategory);
         
-        return res.status(200).send({id:_id,role:user.role,company,category,productCategory})
+        return res.status(200).send({username:user.username,role:user.role,company,category,productCategory})
         
     } catch (error) {
         return res.status(404).send({msg:"error"})
@@ -155,24 +158,23 @@ export async function products(req,res) {
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const products=await productSchema.find({$and:[{sellerId:_id},{category}]});
-        return res.status(200).send({id:_id,role:user.role,products})
+        return res.status(200).send({username:user.username,role:user.role,products})
         
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }
 }
 
-export async function getproduct(req,res) {
+export async function getProduct(req,res) {
     try {
         const {_id}=req.params;
         const id=req.user.userId;
-        
         const user=await loginSchema.findOne({_id:id});
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const product=await productSchema.findOne({_id});
         const category=await categorySchema.find();
-        return res.status(200).send({id,role:user.role,product,category})
+        return res.status(200).send({username:user.username,role:user.role,product,category})
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }
@@ -193,16 +195,48 @@ export async function product(req,res) {
     try {
         const {_id}=req.params;
         const id=req.user.userId;
+        let isOnCart;
         const user=await loginSchema.findOne({_id:id});
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const product=await productSchema.findOne({_id});
-        return res.status(200).send({id:_id,role:user.role,product})
+        const check=await cartSchema.findOne({$and:[{"product._id":_id},{buyerId:id}]});
+        if(check){
+            isOnCart=true;
+        }else{
+            isOnCart=false;
+        }
+        return res.status(200).send({username:user.username,role:user.role,product,isOnCart})
         
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }
 }
+
+export async function addToCart(req,res) {
+    try {
+        const cart=req.body;
+        const id=req.user.userId;
+        const data=await cartSchema.create({buyerId:id,...cart});
+        return res.status(201).send({msg:"Added to Cart"});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function getCart(req,res) {
+    try {
+        const id=req.user.userId;
+        const user=await loginSchema.findOne({_id:id});
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const cart=await cartSchema.find({buyerId:id});
+        return res.status(200).send({username:user.username,role:user.role,cart})
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
 
 export async function verifyEmail(req,res) {
   const {email}=req.body;

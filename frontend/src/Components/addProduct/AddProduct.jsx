@@ -4,7 +4,7 @@ import route from '../route';
 import './AddProduct.scss';
 import { useNavigate } from 'react-router-dom';
 
-const AddProduct = ({setId, setRole, setLoggedIn }) => {
+const AddProduct = ({setUsername, setRole, setLoggedIn }) => {
     const navigate=useNavigate();
     const value=localStorage.getItem("Auth")
   const [category, setCategory] = useState('');
@@ -36,7 +36,7 @@ const AddProduct = ({setId, setRole, setLoggedIn }) => {
     try {
       const { status, data } = await axios.get(`${route()}company`, { headers: { "Authorization": `Bearer ${value}` } });
       if (status === 200) {
-        setId(data.id)
+        setUsername(data.username)
         setRole(data.role);
         setLoggedIn(true);
         if (data.category.length > 0) 

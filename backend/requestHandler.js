@@ -237,6 +237,27 @@ export async function getCart(req,res) {
     }
 }
 
+export async function editQuantity(req,res) {
+    try {
+        const {id,quantity,type}=req.body;
+        let newQuantity=0;
+        const bid=req.user.userId;
+        const user=await loginSchema.findOne({_id:bid})
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        if(type==='increase'){
+            newQuantity=quantity+1;
+        }else if(type==='decrease' && quantity>0){
+            newQuantity=quantity-1
+        }else{
+            newQuantity=0;
+        }
+        const data=await cartSchema.updateOne({_id:id},{ $set: { quantity: newQuantity }} );
+        return res.status(201).send({msg:"Updated"});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
 
 export async function verifyEmail(req,res) {
   const {email}=req.body;

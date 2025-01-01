@@ -54,6 +54,9 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
       alert("Please select size")
     }
   }
+function changeImage(i){
+    
+}
   return (
     <div className="product-page">
       <div className="product-container">
@@ -63,7 +66,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
             {product.pimages && product.pimages.length > 0 ? (
               <>
                 <div className="main-image">
-                  <img src={product.pimages[0]} alt="Main Product" className="main-product-image" />
+                  <img src={product.pimages[0]} id='img' alt="Main Product" className="main-product-image" />
                 </div>
                 <div className="thumbnails">
                   {product.pimages.map((image, index) => (
@@ -71,6 +74,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
                       key={index}
                       src={image}
                       alt={`Product Image ${index + 1}`}
+                      onMouseOver={()=>{document.getElementById("img").src=product.pimages[index];}}
                       className="thumbnail"
                     />
                   ))}

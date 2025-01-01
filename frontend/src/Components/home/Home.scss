@@ -131,6 +131,7 @@ $heading-font: 'Montserrat', sans-serif;
     .view-product-button {
       display: flex;
       align-items: center;
+      gap: 8px;
       padding: 8px 16px;
       background-color: #047b6b;
       color: white;
@@ -138,11 +139,11 @@ $heading-font: 'Montserrat', sans-serif;
       border-radius: 5px;
       font-size: 16px;
       cursor: pointer;
-      
     }
     
     .view-product-button .view-icon {
       font-size: 18px; /* Adjust the size of the icon */
+      gap: 8px;
     }
     
     .view-product-button:hover {

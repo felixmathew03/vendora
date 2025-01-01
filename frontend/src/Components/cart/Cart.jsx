@@ -24,9 +24,7 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
       setQuantities(data.cart.map(item => item.quantity));
       setPriceTotal(data.cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0))
     }
-    
   }
-  console.log(quantities);
   const handleRemove = (id) => {
     localStorage.removeItem(id);
     const newItems = cartItems.filter((item) => item.id !== id);
@@ -34,15 +32,11 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
     updateTotal(newItems, quantities);
   };
 
-  const handleQuantityChange = (index, type) => {
-    const newQuantities = [...quantities];
-    if (type === 'increase') {
-      newQuantities[index] += 1;
-    } else if (type === 'decrease' && newQuantities[index] > 1) {
-      newQuantities[index] -= 1;
+  const handleQuantityChange = async(index,id, type) => {
+    const {status,data}=await axios.post(`${route()}editquantity`,{id,quantity:quantities[index],type},{headers:{"Authorization":`Bearer ${value}`}});
+    if(status==201){
+      getCart();
     }
-    setQuantities(newQuantities);
-    updateTotal(cartItems, newQuantities);
   };
 
   const updateTotal = (items, qty) => {
@@ -74,18 +68,20 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
             {cartItems.map((item, index) => (
               <div key={index} className="cart-item">
                 <div className="image">
-                  <img src={item.product.pimages[0]} alt={item.product.pname} />
+                  <Link to={`/product/${item.product._id}`}>
+                    <img src={item.product.pimages[0]} alt={item.product.pname} title='View product'/>
+                  </Link>
                 </div>
                 <div className="content">
                   <h4>{item.product.pname}</h4>
                   <h3>${item.product.price}</h3>
                   <h5>Quantity</h5>
                   <div className="quantity">
-                    <span className="decrease" onClick={() => handleQuantityChange(index, 'decrease')}>
+                    <span className="decrease" onClick={() => handleQuantityChange(index,item._id,'decrease')}>
                       -
                     </span>
                     <span className="quantity-text">{quantities[index]}</span>
-                    <span className="increase" onClick={() => handleQuantityChange(index, 'increase')}>
+                    <span className="increase" onClick={() => handleQuantityChange(index,item._id, 'increase')}>
                       +
                     </span>
                   </div>
@@ -98,7 +94,7 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
           </div>
           <div className="cart-summary">
             <div className="summary-details">
-              <h2>Total</h2>
+              <h2>Payment Details</h2>
               <table>
                 <thead>
                   <tr>
@@ -110,7 +106,7 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
                 <tbody>
                   {cartItems.map((item, index) => (
                     <tr key={index}>
-                      <td>{item.title}</td>
+                      <td>{item.product.pname}</td>
                       <td>{quantities[index]}</td>
                       <td>${item.product.price  * quantities[index]}</td>
                     </tr>
@@ -120,10 +116,10 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
             </div>
             <div className="payment-details">
               <div className="details">
-                <p>Discount: 20%</p>
-                <p>Delivery Charge: $5</p>
-                <p>Total Price:${priceTotal}</p>
-                <p>Total Amount: ${((priceTotal-(priceTotal*0.2))+5).toFixed(2)}<sup>-20%</sup></p>
+              <p className="discount">Discount: 20%</p>
+              <p>Delivery Charge: $5</p>
+              <p className="total-price">Total Price: ${priceTotal.toFixed(2)}</p>
+              <p className="total-amount">Total Amount: ${((priceTotal - (priceTotal * 0.2)) + 5).toFixed(2)}</p>
               </div>
               <div className="payment-button">
                 <button onClick={handleClearCart}>Buy Now</button>

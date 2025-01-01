@@ -68,7 +68,7 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
               </div>
               <Link to={`/product/${product._id}`}>
   <button className="view-product-button" title='View Product'>
-    <FaEye className="view-icon" /> 
+    <FaEye className="view-icon" /> View Product
   </button>
 </Link>
             </div>

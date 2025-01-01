@@ -27,7 +27,7 @@ const Products = ({ setUsername, setRole, setLoggedIn }) => {
     }
   };
   return (
-    <div className="products-container">
+    <div className="productss-container">
       {products && products.length > 0 ? (
         products.map((product) => (
           <div key={product._id} className="product-card">

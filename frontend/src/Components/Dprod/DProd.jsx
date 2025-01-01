@@ -10,6 +10,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
   const value = localStorage.getItem('Auth');
   const [product, setProduct] = useState({});
   const [isOnCart,setIsOnCart]=useState(false)
+  const [isOnWishlist,setIsOnWishlist]=useState(false)
   const [cart,setCart]=useState({
     product:{},
     size:"",
@@ -30,7 +31,9 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
           setLoggedIn(true);
           setProduct(data.product);
           setIsOnCart(data.isOnCart);
+          console.log(data.isOnWishlist);
           
+          setIsOnWishlist(data.isOnWishlist);
         }
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -38,7 +41,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
     };
 
     fetchProduct();
-  }, [id, value, isOnCart, setUsername, setRole, setLoggedIn]); // Add `id` and other necessary dependencies
+  }, [id, value, isOnCart,isOnWishlist, setUsername, setRole, setLoggedIn]); // Add `id` and other necessary dependencies
   const handleSize=(size)=>{
     setCart({size:size,product:product,quantity:1});
   }
@@ -54,9 +57,14 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
       alert("Please select size")
     }
   }
-function changeImage(i){
-    
-}
+  const addToWishlist=async(id)=>{
+    const {status,data}=await axios.post(`${route()}addtowishlist`,{id},{headers:{"Authorization":`Bearer ${value}`}});
+    if (status==201) {
+      alert("Wishlist added")
+    }else{
+      alert("Failed")
+    }
+  }
   return (
     <div className="product-page">
       <div className="product-container">
@@ -116,7 +124,7 @@ function changeImage(i){
 
             {/* Buy Now Button */}
             <div className="buy-options">
-            <button className="buy-btn" >
+              <button className="buy-btn" >
                 <FaCreditCard className="icon" />
                 Buy Now
               </button>
@@ -133,6 +141,9 @@ function changeImage(i){
               }
               
             </div>
+            {
+              !isOnCart&&(isOnWishlist?<img src="/images/liked.png" alt=""  />:<img src="/images/wlist.png" alt="" onClick={()=>{addToWishlist(product._id)}} />)
+            }
           </div>
         </div>
       </div>

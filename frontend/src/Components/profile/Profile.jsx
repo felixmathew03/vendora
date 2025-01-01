@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
 import route from "../route";
@@ -8,9 +9,10 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
   const value=localStorage.getItem('Auth');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingAddresses, setIsEditingAddresses] = useState(false);
-  const [addresses, setAddresses] = useState([
-  ]);
+  const [addresses, setAddresses] = useState([]);
   const [profile, setProfile] = useState({});
+  const [countCart,setCountCart]=useState(0);
+  const [countWishlist,setCountWishlist]=useState(0);
   useEffect(()=>{
     getEssentials();
   },[])
@@ -25,7 +27,9 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
         if(data.profile)
           setProfile({...data.profile});
         if(data.address)
-          setAddresses(data.address.addresses)
+          setAddresses(data.address.addresses);
+        setCountCart(data.cart);
+        setCountWishlist(data.wishlist);
       }
     }
      catch (error) {
@@ -172,6 +176,21 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
 
       {/* Addresses Section */}
       <div className="address-section">
+        <div className="navHeader">
+          <div className="head">
+            <Link to={'/wishlist'}>Your Wishlist
+            <div className="count">{countWishlist}</div></Link>
+          </div>
+          <div className="border"></div>
+          <div className="head">Your Orders
+          <div className="count">1</div>
+          </div>
+          <div className="border"></div>
+          <div className="head">
+            <Link to={'/cart'}>Your Cart
+            <div className="count">{countCart}</div></Link>
+          </div>
+        </div>
         <div className="title">
         <h3>Addresses</h3>
         <button onClick={handleAddAddress} className="add-button" title="Add New Address">

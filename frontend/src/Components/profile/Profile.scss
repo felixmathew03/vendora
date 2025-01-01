@@ -110,6 +110,38 @@
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none;
+    .navHeader{
+      width: 100%;
+      height: 8%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .head{
+        border: 2px solid rgb(183, 183, 183);
+        padding: 1% 3%;
+        border-radius: 8px;
+        color: #004d40;
+        background-color: #eeeeee;
+        position: relative;
+        a{
+          text-decoration: none;
+          color: #004d40;
+        }
+        &:hover{
+          background-color: #ffffff;
+        }
+        .count{
+          position: absolute;
+          top: 0;
+          right: 5%;
+          font-size: 14px;
+        }
+      }
+      .border{
+        height: 80%;
+        border-right: 1px solid black;
+      }
+    }
     .title{
       display: flex;
       align-items: center;

@@ -15,7 +15,8 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
   const [categories, setCategories] = useState([]);
   const [isEditable, setIsEditable] = useState(false);
   const [sellerCat,setSellerCat]=useState([]);
-  const [count,setCount]=useState({})
+  const [count,setCount]=useState([])
+  
   useEffect(() => {
     getEssentials();
     getCount();
@@ -25,20 +26,18 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
     try {
       const { status, data } = await axios.get(`${route()}company`, { headers: { "Authorization": `Bearer ${value}` } });
       if (status === 200) {
-        setUsername(data.username)
+        setUsername(data.username);
         setRole(data.role);
         setLoggedIn(true);
-        if (data.company) 
-          setCompany(data.company);
-        if (data.category.length > 0) 
-          setCategories(data.category[0].categories);
-        if(data.productCategory)
-          setSellerCat([...data.productCategory])
+        if (data.company) setCompany(data.company);
+        if (data.category && data.category.length > 0) setCategories(data.category[0].categories);
+        if (data.productCategory) setSellerCat([...data.productCategory]);
       }
     } catch (error) {
-      console.log("error");
+      console.error("Error fetching company data:", error);
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCompany((prev) => ({
@@ -46,31 +45,17 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
       [name]: value,
     }));
   };
+  console.log(count);
   
   const handleEditClick = () => {
     setIsEditable(true);
   };
   const getCount = () => {
-    // Initialize a new object to store category counts
-    let categoryCounts = {};
-  
-    // Loop over the categories array
-    categories.forEach((category) => {
-      let count = 0;
-      // Loop over the sellerCategory array to count occurrences of each category
-      sellerCat.forEach((scategory) => {
-        if (scategory.category === category) {
-          count++;
-        }
-      });
-  
-      // Store the count for the category in the categoryCounts object
-      categoryCounts[category] = count;
+    let categoryCounts = categories.map((category) => {
+      return sellerCat.filter((scategory) => scategory.category === category).length;
     });
-  
-    // Use setCount to update the state with the categoryCounts object
     setCount(categoryCounts);
-  }
+  };
   const handleSave = async () => {
     if (isEditable) {
       const { status, data } = await axios.post(`${route()}editcompany`, company, { headers: { "Authorization": `Bearer ${value}` } });
@@ -137,7 +122,7 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
         </div>
         <ul>
           {categories.map((category, index) => (
-                <Link to={`/products/${category}`}key={index}>
+                <Link to={`/products/${encodeURIComponent(category)}`}key={index}>
               <li >{category}</li>
             </Link>
           ))}

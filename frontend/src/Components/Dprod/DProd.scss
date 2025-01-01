@@ -89,6 +89,7 @@
       }
       .buy-options {
         display: flex;
+        align-items: center;
         gap: 20px;
         margin-top: 20px;
         a{
@@ -115,6 +116,12 @@
         .cart-btn:hover {
           background-color: #037063;
         }
+      }
+      img{
+        cursor: pointer;
+        margin-top: 10px;
+        height: 35px;
+        width: 35px;
       }
     }
   }

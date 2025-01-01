@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import route from '../route';
 import axios from 'axios';
 import './Cart.scss';
+import { FiMinus, FiPlus } from 'react-icons/fi';
 
 const Cart = ({setUsername,setRole,setLoggedIn}) => {
   const value=localStorage.getItem('Auth');
@@ -69,7 +70,11 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
               <div key={index} className="cart-item">
                 <div className="image">
                   <Link to={`/product/${item.product._id}`}>
-                    <img src={item.product.pimages[0]} alt={item.product.pname} title='View product'/>
+                    <img
+                      src={item.product.pimages[0]}
+                      alt={item.product.pname}
+                      title="View product"
+                    />
                   </Link>
                 </div>
                 <div className="content">
@@ -77,12 +82,18 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
                   <h3>${item.product.price}</h3>
                   <h5>Quantity</h5>
                   <div className="quantity">
-                    <span className="decrease" onClick={() => handleQuantityChange(index,item._id,'decrease')}>
-                      -
+                    <span
+                      className="decrease"
+                      onClick={() => handleQuantityChange(index, item._id, 'decrease')}
+                    >
+                      <FiMinus size={24} />
                     </span>
                     <span className="quantity-text">{quantities[index]}</span>
-                    <span className="increase" onClick={() => handleQuantityChange(index,item._id, 'increase')}>
-                      +
+                    <span
+                      className="increase"
+                      onClick={() => handleQuantityChange(index, item._id, 'increase')}
+                    >
+                      <FiPlus size={24} />
                     </span>
                   </div>
                 </div>

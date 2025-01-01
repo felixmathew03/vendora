@@ -1,4 +1,5 @@
 /* src/components/Navbar.scss */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=Oswald:wght@200..700&family=Pacifico&family=Squada+One&family=Ultra&display=swap');
 .navbar {
   display: flex;
   justify-content: space-around;
@@ -26,7 +27,7 @@
 
     .website-name {
       font-size: 24px;
-      font-weight: bold;
+      font-family: "Pacifico", serif;
     }
   }
 

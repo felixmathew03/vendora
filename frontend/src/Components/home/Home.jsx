@@ -21,7 +21,7 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
         setLoggedIn(true);
         setProducts(res.data.products)
       }else if(res.status==403){
-        localStorage.removeItem("Auth")
+        setLoggedIn(!loggedIn);
       }
     }}
      catch (error) {
@@ -35,20 +35,18 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
         products.map((product) => (
           <div key={product._id} className="product-card">
             {/* Product Images */}
-            {product.pimages && product.pimages.length > 0 && (
+            
               <div className="product-images">
                 <div className="image-gallery">
-                  {product.pimages.map((image, index) => (
+                  
                     <img
-                      key={index}
-                      src={image}
-                      alt={`Product Image ${index + 1}`}
+                      src={product.pimages[0]}
+                      alt={product.pname}
                       className="product-image"
                     />
-                  ))}
                 </div>
               </div>
-            )}
+            
             <div className="bottom">
               <div className="left">
                 {/* Category */}

@@ -119,7 +119,6 @@ export async function editCategory(req,res) {
     try {
         
         const {newCategory}=req.body;
-        console.log(newCategory);
     const check=await categorySchema.findOne({})
     
     if(check){
@@ -199,8 +198,6 @@ export async function product(req,res) {
         const product=await productSchema.findOne({_id});
         const check1=await cartSchema.findOne({$and:[{"product._id":_id},{buyerId:id}]});
         const check2=await wishlistSchema.findOne({$and:[{productId:_id},{buyerId:id}] })
-        console.log(check2);
-        
         if(check1)
             isOnCart=true;
         if(check2)

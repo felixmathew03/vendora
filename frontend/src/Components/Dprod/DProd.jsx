@@ -65,6 +65,20 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
       alert("Failed")
     }
   }
+  const removeFromWishlist=async(id)=>{
+    const {status,data}=await axios.delete(`${route()}removefromwishlist`,{id},{headers:{"Authorization":`Bearer ${value}`}});
+    if (status==201) {
+      alert("removed from wishlist")
+    }else{
+      alert("Failed")
+    }
+  }
+  const buynow = async(id) => {
+    const {status,data}=await axios.post(`${route()}buynow`,{id},{headers:{"Authorization":`Bearer ${value}`}});
+    setCartItems([]);
+    setQuantities([]);
+    setTotal(0);
+  };
   return (
     <div className="product-page">
       <div className="product-container">
@@ -130,7 +144,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
               </button>
               {
                 isOnCart?(<Link to={'/cart'}>
-                <button className="cart-btn" >
+                <button className="cart-btn" onClick={()=>buynow(product._id)}>
                   <FaShoppingCart className="icon" />
                   Go to Cart
                 </button>
@@ -142,7 +156,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
               
             </div>
             {
-              !isOnCart&&(isOnWishlist?<img src="/images/liked.png" alt=""  />:<img src="/images/wlist.png" alt="" onClick={()=>{addToWishlist(product._id)}} />)
+              !isOnCart&&(isOnWishlist?<img src="/images/liked.png" alt="" onClick={()=>{removeFromWishlist(product._id)}}  />:<img src="/images/wlist.png" alt="" onClick={()=>{addToWishlist(product._id)}} />)
             }
           </div>
         </div>

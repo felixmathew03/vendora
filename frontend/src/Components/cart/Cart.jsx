@@ -49,8 +49,8 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
     setTotal(totalAmount + 5); // Add delivery charge
   };
 
-  const handleClearCart = () => {
-    localStorage.clear();
+  const handleCart = async() => {
+    const {status,data}=await axios.post(`${route()}placeorder`,{headers:{"Authorization":`Bearer ${value}`}});
     setCartItems([]);
     setQuantities([]);
     setTotal(0);
@@ -133,7 +133,7 @@ const Cart = ({setUsername,setRole,setLoggedIn}) => {
               <p className="total-amount">Total Amount: ${((priceTotal - (priceTotal * 0.2)) + 5).toFixed(2)}</p>
               </div>
               <div className="payment-button">
-                <button onClick={handleClearCart}>Buy Now</button>
+                <button onClick={handleCart}>Place Order</button>
               </div>
             </div>
           </div>

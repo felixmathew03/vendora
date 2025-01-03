@@ -6,6 +6,8 @@ import categorySchema from './models/category.model.js';
 import addressSchema from './models/address.model.js';
 import cartSchema from './models/cart.model.js';
 import wishlistSchema from './models/wishlist.model.js';
+import orderSchema from './models/order.model.js';
+import soldproductSchema from './models/soldproduct.model.js'
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -22,8 +24,6 @@ export async function home(req,res) {
     try {
         const _id=req.user.userId;
         const user=await loginSchema.findOne({_id});
-        if(!user)
-            return res.status(403).send({msg:"Unauthorized acces"});
         const products=await productSchema.find({
             sellerId: { $not: { $eq: _id} }
           })
@@ -269,6 +269,20 @@ export async function addToWishlist(req,res) {
     }
 }
 
+export async function removeFromWishlist(req,res) {
+    try {
+        const {id}=req.body;
+        const _id=req.user.userId;
+        const user=await loginSchema.findOne({_id})
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const wishlist=await wishlistSchema.deleteOne({$and:[{buyerId:_id},{productId:id}]});
+        return res.status(201).send({msg:"removed"});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
 export async function getWishlists(req,res) {
     try {
         const _id=req.user.userId;
@@ -281,6 +295,78 @@ export async function getWishlists(req,res) {
         });
         const products = await Promise.all(productPromises);
         return res.status(200).send({username:user.username,role:user.role,products});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function addOrders(req,res) {
+    try {
+        const _id=req.user.userId;
+        const user=await loginSchema.findOne({_id})
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const cart = await cartSchema.find({ buyerId: _id });
+
+        const orderPromises = cart.map(async (product) => {
+            const size = product.size;
+            const field = `sizeQuantities.${size}`; // dynamic field name
+            const quantity = await productSchema.findOne({ _id: product._id }, { sizeQuantities: 1 });
+            if (quantity && quantity.sizeQuantities[size] !== undefined) {
+                const newQuantity = quantity.sizeQuantities[size] - product.size;
+                return await productSchema.updateOne({ _id: product._id }, { $set: { [field]: newQuantity } });
+            } else {
+                // Handle the case where sizeQuantities or the size is not found
+                throw new Error(`Size not found for product ${product._id}`);
+            }
+        });
+
+        Promise.all(orderPromises)
+            .then((results) => {
+                console.log("Products updated successfully", results);
+            })
+            .catch((error) => {
+                console.log("Error updating products:", error);
+            });
+
+        return res.status(201).send({msg:"success"});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function addOrder(req,res) {
+    try {
+        const {id}=req.body;
+        const _id=req.user.userId;
+        const user=await loginSchema.findOne({_id})
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const cart = await cartSchema.findOne({$and:[{buyerId:_id},{"product.id":id}]}); // Find the single cart item
+
+        if (cart) {
+            const product = cart;  // Since there's only one item, no need to loop
+            const size = product.size;
+            const field = `sizeQuantities.${size}`;
+            
+            const quantity = await productSchema.findOne({ _id: product._id }, { sizeQuantities: 1 });
+            
+            if (quantity && quantity.sizeQuantities[size] !== undefined) {
+                const newQuantity = quantity.sizeQuantities[size] - product.size;
+                
+                // Update the quantity in the database
+                await productSchema.updateOne({ _id: product._id }, { $set: { [field]: newQuantity } });
+                
+                console.log("Product updated successfully");
+            } else {
+                // Handle the case where sizeQuantities or the size is not found
+                console.log("Size not found for product", product._id);
+            }
+        } else {
+            console.log("No cart item found for buyer with id", id);
+        }
+
+        return res.status(201).send({msg:"success"});
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }

@@ -233,6 +233,22 @@ export async function getCart(req,res) {
     }
 }
 
+export async function getSingleCart(req,res) {
+    try {
+        
+        const {pid}=req.params;
+        const _id=req.user.userId;
+        const user=await loginSchema.findOne({_id});
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const cart=await cartSchema.findOne({buyerId:_id,'product._id': pid});
+        return res.status(200).send({username:user.username,role:user.role,cart})
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+
 export async function editQuantity(req,res) {
     try {
         const {id,quantity,type}=req.body;
@@ -342,31 +358,37 @@ export async function addOrder(req,res) {
         const user=await loginSchema.findOne({_id})
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
-        const cart = await cartSchema.findOne({$and:[{buyerId:_id},{"product.id":id}]}); // Find the single cart item
-
+        const cart = await cartSchema.findOne({
+            buyerId: _id,
+            'product._id': id
+          });// Find the single cart item   
         if (cart) {
             const product = cart;  // Since there's only one item, no need to loop
             const size = product.size;
             const field = `sizeQuantities.${size}`;
+            const quantity = await productSchema.findOne({ _id: id },{sizeQuantities:1});
             
-            const quantity = await productSchema.findOne({ _id: product._id }, { sizeQuantities: 1 });
-            
-            if (quantity && quantity.sizeQuantities[size] !== undefined) {
-                const newQuantity = quantity.sizeQuantities[size] - product.size;
+            if (quantity && quantity.sizeQuantities[size] !== undefined && quantity.sizeQuantities[size] >= product.quantity) {
+                const newQuantity = quantity.sizeQuantities[size] - product.quantity;
                 
                 // Update the quantity in the database
-                await productSchema.updateOne({ _id: product._id }, { $set: { [field]: newQuantity } });
-                
-                console.log("Product updated successfully");
+                productSchema.updateOne({ _id: id }, { $set: { [field]: newQuantity } }).then(async()=>{
+                    await cartSchema.deleteOne({$and:[{buyerId:_id},{"product._id":id}]});
+                    await orderSchema.create({buyerId:_id,productId:cart.product._id});
+                    await soldproductSchema.create({buyerId:_id,sellerId:cart.product.sellerId,productId:cart.product._id});
+                    console.log(cart.product._id);  
+                    return res.status(201).send({msg:"success"});
+                }).catch((error)=>{
+                    console.log(error);
+                    return res.status(201).send({msg:"error occured"});
+                })
             } else {
-                // Handle the case where sizeQuantities or the size is not found
-                console.log("Size not found for product", product._id);
+                return res.status(201).send({msg:"Size not found for product"});
             }
         } else {
-            console.log("No cart item found for buyer with id", id);
+            return res.status(201).send({msg:"No cart item found for buyer with id"});
         }
-
-        return res.status(201).send({msg:"success"});
+        
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }

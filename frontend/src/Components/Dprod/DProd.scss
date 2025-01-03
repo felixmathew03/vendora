@@ -68,22 +68,27 @@
           .size-btn {
             background-color: #efeded;
             color: #4b4a4a;
+            border: 1px solid #323131;
             padding: 8px 15px;
             border-radius: 4px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            &.size-btn:disabled {
+            &:disabled {
               background-color: #b0bec5;  /* Light gray background for disabled button */
               color: #4b5459;  /* Darker gray text */
               cursor: not-allowed;  /* Indicate that the button is not clickable */
               opacity: 0.6;  /* Slightly reduce the opacity for a disabled look */
             }
-          }
-          
-          .size-btn:hover {
-            background-color: #035e53;
-            color: white;
+            &.selected {
+              background-color: white;  /* Blue background when selected */
+              color: #035e53;               /* White text */
+              border: 2px solid #035e53;  /* Darker border when selected */
+            }
+            &:hover {
+              background-color: #035e53;
+              color: white;
+            }
           }
         }
       }

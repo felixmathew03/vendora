@@ -62,7 +62,8 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
   const addToWishlist=async(id)=>{
     const {status,data}=await axios.post(`${route()}addtowishlist`,{id},{headers:{"Authorization":`Bearer ${value}`}});
     if (status==201) {
-      alert("Wishlist added")
+      alert("Wishlist added");
+      fetchProduct();
     }else{
       alert("Failed")
     }

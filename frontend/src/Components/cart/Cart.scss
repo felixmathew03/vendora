@@ -129,7 +129,6 @@
   /* Cart Summary Section */
   .cart-summary {
     width: 35%;
-    height: auto;
     padding: 2rem;
     background-color: #fff;
     border-radius: 12px;
@@ -197,7 +196,7 @@
         border-radius: 8px;
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-        font-size: 1.1rem;
+        font-size: 0.8rem;
         &:hover {
           background-color: #036307;
           transform: translateY(-2px);

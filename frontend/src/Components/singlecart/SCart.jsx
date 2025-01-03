@@ -12,6 +12,8 @@ const SCart = ({ setUsername, setRole, setLoggedIn }) => {
     const [cartItem, setCartItem] = useState(null); // Set to null initially to check if the cart is empty
     const [quantity, setQuantity] = useState(0); // Holds quantities of items
     const [priceTotal, setPriceTotal] = useState(0); // Holds the total price
+    const [addresses,setAddresses]=useState([])
+    const [selectedAddress, setSelectedAddress] = useState("");
 
     // Fetch cart data from localStorage on component mount
     useEffect(() => {
@@ -27,6 +29,7 @@ const SCart = ({ setUsername, setRole, setLoggedIn }) => {
             setCartItem(data.cart);
             setQuantity(data.cart.quantity);
             setPriceTotal(data.cart.product.price * data.cart.quantity);
+            setAddresses(data.addresses.addresses)
         }
     };
 
@@ -47,10 +50,10 @@ const SCart = ({ setUsername, setRole, setLoggedIn }) => {
         if (status === 201) {
             alert(data.msg);
             if(data.msg=="success")
-                navigate('/')
+                navigate('/purchasecompleted')
         }
     };
-
+    
     return (
         <div className="cart-container">
             {!cartItem ? (
@@ -61,39 +64,65 @@ const SCart = ({ setUsername, setRole, setLoggedIn }) => {
             ) : (
                 <div className="cart">
                     <div id="carts" className="cart-items">
-                        <div key={cartItem._id} className="cart-item">
-                            <div className="image">
-                                <Link to={`/product/${cartItem.product._id}`}>
-                                    <img
-                                        src={cartItem.product.pimages[0]}
-                                        alt={cartItem.product.pname}
-                                        title="View product"
-                                    />
-                                </Link>
-                            </div>
-                            <div className="content">
-                                <h4>{cartItem.product.pname}</h4>
-                                <h3>${cartItem.product.price}</h3>
-                                <h5>Quantity</h5>
-                                <div className="quantity">
-                                    <span
-                                        className="decrease"
-                                        onClick={() => handleQuantityChange(cartItem._id, 'decrease')}
-                                    >
-                                        <FiMinus size={24} />
-                                    </span>
-                                    <span className="quantity-text">{quantity}</span>
-                                    <span
-                                        className="increase"
-                                        onClick={() => handleQuantityChange(cartItem._id, 'increase')}
-                                    >
-                                        <FiPlus size={24} />
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="remove">
-                                <button onClick={() => handleRemove(cartItem._id)}>Remove</button>
-                            </div>
+                        <div  className="cart-item">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr key={cartItem._id}>
+                                        <td>
+                                            <div className="image">
+                                                <Link to={`/product/${cartItem.product._id}`}>
+                                                    <img
+                                                        src={cartItem.product.pimages[0]}
+                                                        alt={cartItem.product.pname}
+                                                        title="View product"
+                                                    />
+                                                </Link>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="content">
+                                                <h4>{cartItem.product.pname}</h4>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div className="content">
+                                                <h3>${cartItem.product.price}</h3>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="quantity">
+                                                <span
+                                                    className="decrease"
+                                                    onClick={() => handleQuantityChange(cartItem._id, 'decrease')}
+                                                >
+                                                    <FiMinus size={24} />
+                                                </span>
+                                                <span className="quantity-text">{quantity}</span>
+                                                <span
+                                                    className="increase"
+                                                    onClick={() => handleQuantityChange(cartItem._id, 'increase')}
+                                                >
+                                                    <FiPlus size={24} />
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div className="price">
+                                                <h3>${cartItem.product.price * quantity}</h3>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div className="cart-summary">
@@ -122,6 +151,21 @@ const SCart = ({ setUsername, setRole, setLoggedIn }) => {
                                 <p>Delivery Charge: $5</p>
                                 <p className="total-price">Total Price: ${priceTotal.toFixed(2)}</p>
                                 <p className="total-amount">Total Amount: ${((priceTotal - (priceTotal * 0.2)) + 5).toFixed(2)}</p>
+                            </div>
+                             {/* Address Select Dropdown */}
+                            <div className="address-select">
+                                <h4>Select Address</h4>
+                                <select
+                                    value={selectedAddress}
+                                    onChange={(e) => setSelectedAddress(e.target.value)}
+                                >
+                                    <option value="">Select Address</option>
+                                    {addresses.map((address, index) => (
+                                        <option key={index} value={address._id}>
+                                            {address.houseName}, {address.pincode}, {address.postOffice}, {address.place}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="payment-button">
                                 <button onClick={handleCart}>Place Order</button>

@@ -20,28 +20,27 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
   });
   // Fetch product data when component mounts or when id changes
   useEffect(() => {
-    const fetchProduct = async () => {
-      if (!id) return; // Prevent fetching if id is not present
-      try {
-        const { status, data } = await axios.get(`${route()}product/${id}`, {
-          headers: { Authorization: `Bearer ${value}`},
-        });
-
-        if (status === 200) {
-          setUsername(data.username);
-          setRole(data.role);
-          setLoggedIn(true);
-          setProduct(data.product);
-          setIsOnCart(data.isOnCart);
-          setIsOnWishlist(data.isOnWishlist);
-        }
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      }
-    };
-
     fetchProduct();
   }, [id, value, setUsername, setRole, setLoggedIn]); // Add `id` and other necessary dependencies
+  const fetchProduct = async () => {
+    if (!id) return; // Prevent fetching if id is not present
+    try {
+      const { status, data } = await axios.get(`${route()}product/${id}`, {
+        headers: { Authorization: `Bearer ${value}`},
+      });
+
+      if (status === 200) {
+        setUsername(data.username);
+        setRole(data.role);
+        setLoggedIn(true);
+        setProduct(data.product);
+        setIsOnCart(data.isOnCart);
+        setIsOnWishlist(data.isOnWishlist);
+      }
+    } catch (error) {
+      console.error('Error fetching product:', error);
+    }
+  };
   const handleSize=(size)=>{
     setSelectedSize(size);
     setCart({size:size,product:product,quantity:1});
@@ -52,6 +51,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
       const { status, data } = await axios.post(`${route()}addtocart`, cart, { headers: { "Authorization": `Bearer ${value}` } });
       if (status==201) {
         alert(data.msg);
+        fetchProduct();
       }else{
           alert("Adding incomplete")
       }
@@ -82,7 +82,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
         alert(data.msg);
         navigate(`/scart/${product._id}`)
       }else{
-          alert("Adding incomplete")
+          alert("Could not add to cart")
       }
     }else{
       alert("Please select size")

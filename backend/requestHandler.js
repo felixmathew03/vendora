@@ -68,8 +68,6 @@ export async function editUser(req,res) {
 export async function editAddress(req,res) {
     try {
     const address=req.body;
-    console.log(address);
-    
     const id=req.user.userId
     const check=await addressSchema.findOne({userId:id})
     if(check){
@@ -124,7 +122,6 @@ export async function editCategory(req,res) {
     if(check){
         const data=await categorySchema.updateOne({_id:check._id},{$push:{categories:newCategory}});
     }else{
-        console.log("check");
         const data=await categorySchema.create({categories:[newCategory]});
     }
     return res.status(201).send({msg:"updated"});
@@ -227,7 +224,8 @@ export async function getCart(req,res) {
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const cart=await cartSchema.find({buyerId:id});
-        return res.status(200).send({username:user.username,role:user.role,cart})
+        const addresses=await addressSchema.findOne({userId:id},{addresses:1})
+        return res.status(200).send({username:user.username,role:user.role,cart,addresses})
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }
@@ -235,14 +233,14 @@ export async function getCart(req,res) {
 
 export async function getSingleCart(req,res) {
     try {
-        
         const {pid}=req.params;
         const _id=req.user.userId;
         const user=await loginSchema.findOne({_id});
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const cart=await cartSchema.findOne({buyerId:_id,'product._id': pid});
-        return res.status(200).send({username:user.username,role:user.role,cart})
+        const addresses=await addressSchema.findOne({userId:_id},{addresses:1})
+        return res.status(200).send({username:user.username,role:user.role,cart,addresses})
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }
@@ -316,40 +314,51 @@ export async function getWishlists(req,res) {
     }
 }
 
-export async function addOrders(req,res) {
+export async function addOrders(req, res) {
     try {
-        const _id=req.user.userId;
-        const user=await loginSchema.findOne({_id})
-        if(!user)
-            return res.status(403).send({msg:"Unauthorized acces"});
-        const cart = await cartSchema.find({ buyerId: _id });
+        const {selectedAddress}=req.body;
+        const _id = req.user.userId;
+        const user = await loginSchema.findOne({ _id });
+        if (!user) return res.status(403).send({ msg: "Unauthorized access" });
 
-        const orderPromises = cart.map(async (product) => {
-            const size = product.size;
-            const field = `sizeQuantities.${size}`; // dynamic field name
-            const quantity = await productSchema.findOne({ _id: product._id }, { sizeQuantities: 1 });
-            if (quantity && quantity.sizeQuantities[size] !== undefined) {
-                const newQuantity = quantity.sizeQuantities[size] - product.size;
-                return await productSchema.updateOne({ _id: product._id }, { $set: { [field]: newQuantity } });
+        const cart = await cartSchema.find({ buyerId: _id }); // Find all cart items for the user
+        
+        if (!cart || cart.length === 0) {
+            return res.status(404).send({ msg: "No cart items found" });
+        }
+
+        // Process each cart item in parallel
+        const orderPromises = cart.map(async (c) => {
+            const size = c.size;
+            const field = `sizeQuantities.${size}`; // Dynamic field name for the size
+            const quantity = await productSchema.findOne({ _id: c.product._id }, { sizeQuantities: 1 });
+            
+            if (quantity && quantity.sizeQuantities[size] !== undefined && quantity.sizeQuantities[size] >= c.quantity) {
+                const newQuantity = quantity.sizeQuantities[size] - c.quantity;
+
+                // Update the product's quantity
+                await productSchema.updateOne({ _id: c.product._id }, { $set: { [field]: newQuantity } });
+
+                // Remove the product from the cart and create an order
+                await cartSchema.deleteOne({ buyerId: _id, "product._id": c.product._id });
+                await orderSchema.create({ buyerId: _id, product: c.product});
+                await soldproductSchema.create({ buyerId: _id, sellerId: c.product.sellerId, product: c.product,address:selectedAddress  });
             } else {
-                // Handle the case where sizeQuantities or the size is not found
-                throw new Error(`Size not found for product ${product._id}`);
+                // Handle case when the size or quantity is not sufficient
+                throw new Error(`Insufficient stock for product ${c.product}`);
             }
         });
 
-        Promise.all(orderPromises)
-            .then((results) => {
-                console.log("Products updated successfully", results);
-            })
-            .catch((error) => {
-                console.log("Error updating products:", error);
-            });
+        // Wait for all orderPromises to resolve
+        await Promise.all(orderPromises);
 
-        return res.status(201).send({msg:"success"});
+        return res.status(201).send({ msg: "Orders placed successfully",msg1:"success" });
     } catch (error) {
-        return res.status(404).send({msg:"error"})
+        console.error("Error placing orders:", error);
+        return res.status(500).send({ msg: "Error occurred while processing the order" });
     }
 }
+
 
 export async function addOrder(req,res) {
     try {
@@ -358,10 +367,7 @@ export async function addOrder(req,res) {
         const user=await loginSchema.findOne({_id})
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
-        const cart = await cartSchema.findOne({
-            buyerId: _id,
-            'product._id': id
-          });// Find the single cart item   
+        const cart = await cartSchema.findOne({ buyerId: _id,'product._id': id  });// Find the single cart item   
         if (cart) {
             const product = cart;  // Since there's only one item, no need to loop
             const size = product.size;
@@ -374,9 +380,8 @@ export async function addOrder(req,res) {
                 // Update the quantity in the database
                 productSchema.updateOne({ _id: id }, { $set: { [field]: newQuantity } }).then(async()=>{
                     await cartSchema.deleteOne({$and:[{buyerId:_id},{"product._id":id}]});
-                    await orderSchema.create({buyerId:_id,productId:cart.product._id});
-                    await soldproductSchema.create({buyerId:_id,sellerId:cart.product.sellerId,productId:cart.product._id});
-                    console.log(cart.product._id);  
+                    await orderSchema.create({buyerId:_id,product:cart.product});
+                    await soldproductSchema.create({buyerId:_id,sellerId:cart.product.sellerId,product:cart.product});
                     return res.status(201).send({msg:"success"});
                 }).catch((error)=>{
                     console.log(error);

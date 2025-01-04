@@ -33,11 +33,6 @@ const SCart = ({ setUsername, setRole, setLoggedIn }) => {
         }
     };
 
-    const handleRemove = (id) => {
-        localStorage.removeItem(id); // Removing item from localStorage
-        setCartItem(null); // Clear the cart item state after removal (or refetch the cart)
-    };
-
     const handleQuantityChange = async(id, type) => {
         const {status,data}=await axios.post(`${route()}editquantity`,{id,quantity,type},{headers:{"Authorization":`Bearer ${value}`}});
         if(status==201){

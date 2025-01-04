@@ -15,6 +15,7 @@ import DProd from './Components/Dprod/DProd';
 import Wishlist from './Components/Wishlist/Wishlist';
 import SCart from './Components/singlecart/SCart';
 import PurchaseCompleted from './Components/purchase/PurchaseCompleted';
+import EmailVerificationSuccess from './Components/verifysuccess/EmailVerificationSuccess';
 import './App.css'
 
 
@@ -40,6 +41,7 @@ const App = () => {
         <Route path='/wishlist' element={<Wishlist  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/scart/:pid' element={<SCart  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/purchasecompleted' Component={PurchaseCompleted}/>
+        <Route path='/emailsuccess' Component={EmailVerificationSuccess}/>
       </Routes>
     </BrowserRouter>
   )

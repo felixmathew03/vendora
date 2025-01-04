@@ -29,7 +29,7 @@ const Wishlist = ({setUsername,setRole,setLoggedIn}) => {
     }
   }
   return (
-    <div className='home'>
+    <div className='Wishlist'>
        <div className="products-container">
       {products && products.length > 0 ? (
         products.map((product) => (

@@ -43,7 +43,8 @@ export async function profile(req,res) {
         const address=await addressSchema.findOne({userId:_id},{addresses:1});
         const cart=await cartSchema.countDocuments({buyerId:_id})
         const wishlist=await wishlistSchema.countDocuments({buyerId:_id})
-        return res.status(200).send({username:user.username,role:user.role,profile,address,cart,wishlist})
+        const orders=await orderSchema.countDocuments({buyerId:_id})
+        return res.status(200).send({username:user.username,role:user.role,profile,address,cart,wishlist,orders})
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }

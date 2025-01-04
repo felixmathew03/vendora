@@ -17,6 +17,7 @@ $heading-font: 'Montserrat', sans-serif;
 
 
 // Products Container
+.Wishlist{
 .products-container {
   display: flex;
   flex-wrap: wrap;
@@ -31,8 +32,6 @@ $heading-font: 'Montserrat', sans-serif;
   display: flex;
     flex-direction: column;
   border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-
   // Product Image
   .product-images {
     width: 100%;
@@ -151,6 +150,7 @@ $heading-font: 'Montserrat', sans-serif;
     }
       
   }
+}
 }
 }
 // Empty State Text

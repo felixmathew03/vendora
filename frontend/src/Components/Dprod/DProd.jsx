@@ -3,30 +3,31 @@ import axios from 'axios';
 import route from '../route';
 import './DProd.scss';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { FaShoppingCart, FaCreditCard } from 'react-icons/fa';
+import { FaShoppingCart, FaCreditCard, FaStar } from 'react-icons/fa';
 
 const DProd = ({ setUsername, setRole, setLoggedIn }) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
   const value = localStorage.getItem('Auth');
   const [product, setProduct] = useState({});
-  const [isOnCart,setIsOnCart]=useState(false)
-  const [isOnWishlist,setIsOnWishlist]=useState(false);
+  const [isOnCart, setIsOnCart] = useState(false);
+  const [isOnWishlist, setIsOnWishlist] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
-  const [cart,setCart]=useState({
-    product:{},
-    size:"",
-    quantity:0
+  const [cart, setCart] = useState({
+    product: {},
+    size: "",
+    quantity: 0
   });
-  // Fetch product data when component mounts or when id changes
+
   useEffect(() => {
     fetchProduct();
-  }, [id, value, setUsername, setRole, setLoggedIn]); // Add `id` and other necessary dependencies
+  }, [id, value, setUsername, setRole, setLoggedIn]);
+
   const fetchProduct = async () => {
-    if (!id) return; // Prevent fetching if id is not present
+    if (!id) return;
     try {
       const { status, data } = await axios.get(`${route()}product/${id}`, {
-        headers: { Authorization: `Bearer ${value}`},
+        headers: { Authorization: `Bearer ${value}` },
       });
 
       if (status === 200) {
@@ -41,54 +42,69 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
       console.error('Error fetching product:', error);
     }
   };
-  const handleSize=(size)=>{
+
+  const handleSize = (size) => {
     setSelectedSize(size);
-    setCart({size:size,product:product,quantity:1});
-  }
-  
-  const handleAddToCart=async()=>{
-    if(cart.size){
-      const { status, data } = await axios.post(`${route()}addtocart`, cart, { headers: { "Authorization": `Bearer ${value}` } });
-      if (status==201) {
+    setCart({ size: size, product: product, quantity: 1 });
+  };
+
+  const handleAddToCart = async () => {
+    if (cart.size) {
+      const { status, data } = await axios.post(`${route()}addtocart`, cart, {
+        headers: { "Authorization": `Bearer ${value}` }
+      });
+      if (status === 201) {
         alert(data.msg);
         fetchProduct();
-      }else{
-          alert("Adding incomplete")
+      } else {
+        alert("Adding incomplete");
       }
-    }else{
-      alert("Please select size")
-    }
-  }
-  const addToWishlist=async(id)=>{
-    const {status,data}=await axios.post(`${route()}addtowishlist`,{id},{headers:{"Authorization":`Bearer ${value}`}});
-    if (status==201) {
-      alert("Wishlist added");
-      fetchProduct();
-    }else{
-      alert("Failed")
-    }
-  }
-  const removeFromWishlist=async(id)=>{
-    const {status,data}=await axios.delete(`${route()}removefromwishlist`,{id},{headers:{"Authorization":`Bearer ${value}`}});
-    if (status==201) {
-      alert("removed from wishlist")
-    }else{
-      alert("Failed")
-    }
-  }
-  const handleBuynow = async() => {
-    if(cart.size){
-      const { status, data } = await axios.post(`${route()}addtocart`, cart, { headers: { "Authorization": `Bearer ${value}` } });
-      if (status==201) {
-        alert(data.msg);
-        navigate(`/scart/${product._id}`)
-      }else{
-          alert("Could not add to cart")
-      }
-    }else{
-      alert("Please select size")
+    } else {
+      alert("Please select size");
     }
   };
+
+  const addToWishlist = async (id) => {
+    const { status, data } = await axios.post(`${route()}addtowishlist`, { id }, {
+      headers: { "Authorization": `Bearer ${value}` }
+    });
+    if (status === 201) {
+      alert("Wishlist added");
+      fetchProduct();
+    } else {
+      alert("Failed");
+    }
+  };
+
+  const removeFromWishlist = async (id) => {
+    const { status, data } = await axios.delete(`${route()}removefromwishlist`, {
+      data: { id },
+      headers: { "Authorization": `Bearer ${value}` }
+    });
+    if (status === 201) {
+      alert("Removed from wishlist");
+      fetchProduct();
+    } else {
+      alert("Failed");
+    }
+  };
+
+  const handleBuynow = async () => {
+    if (cart.size) {
+      const { status, data } = await axios.post(`${route()}addtocart`, cart, {
+        headers: { "Authorization": `Bearer ${value}` }
+      });
+      if (status === 201) {
+        alert(data.msg);
+        navigate(`/scart/${product._id}`);
+      } else {
+        alert("Could not add to cart");
+      }
+    } else {
+      alert("Please select size");
+    }
+  };
+
   return (
     <div className="product-page">
       <div className="product-container">
@@ -98,7 +114,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
             {product.pimages && product.pimages.length > 0 ? (
               <>
                 <div className="main-image">
-                  <img src={product.pimages[0]} id='img' alt="Main Product" className="main-product-image" />
+                  <img id='img' src={product.pimages[0]} alt="Main Product" className="main-product-image" />
                 </div>
                 <div className="thumbnails">
                   {product.pimages.map((image, index) => (
@@ -106,7 +122,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
                       key={index}
                       src={image}
                       alt={`Product Image ${index + 1}`}
-                      onMouseOver={()=>{document.getElementById("img").src=product.pimages[index];}}
+                      onMouseOver={() => { document.getElementById("img").src = product.pimages[index]; }}
                       className="thumbnail"
                     />
                   ))}
@@ -120,8 +136,9 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
 
         {/* Product Details */}
         <div className="product-details">
-          <div className="product-title">
-            <h1>{product.pname}</h1>
+            <div className="product-title">
+              <h1>{product.pname}</h1>
+            </div>
             <div className="product-category">
               <strong>{product.category?.toUpperCase()}</strong>
             </div>
@@ -151,40 +168,44 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
               </div>
             </div>
 
-            {/* Buy Now Button */}
+            {/* Buy Options */}
             <div className="buy-options">
-              
-              {
-                isOnCart?(<Link to={`/scart/${product._id}`}>
-                <button className="buy-btn" >
-                <FaCreditCard className="icon" />
-                Buy Now
+              {isOnCart ? (
+                <Link to={`/scart/${product._id}`}>
+                  <button className="buy-btn">
+                    <FaCreditCard className="icon" />
+                    Buy Now
+                  </button>
+                </Link>
+              ) : (
+                <button className="buy-btn" onClick={handleBuynow}>
+                  <FaCreditCard className="icon" />
+                  Buy Now
                 </button>
-                </Link>):
-                (<button className="buy-btn" onClick={handleBuynow}>
-                <FaCreditCard className="icon" />
-                Buy Now
-              </button>)
-              }
-              {
-                isOnCart?(<Link to={'/cart'}>
-                <button className="cart-btn" >
-                  <FaShoppingCart className="icon" />
-                  Go to Cart
-                </button>
-                </Link>):(<button className="cart-btn" onClick={handleAddToCart}>
+              )}
+              {isOnCart ? (
+                <Link to={'/cart'}>
+                  <button className="cart-btn">
+                    <FaShoppingCart className="icon" />
+                    Go to Cart
+                  </button>
+                </Link>
+              ) : (
+                <button className="cart-btn" onClick={handleAddToCart}>
                   <FaShoppingCart className="icon" />
                   Add to Cart
-                </button>)
-              }
-              
+                </button>
+              )}
             </div>
-            {
-              !isOnCart&&(isOnWishlist?<img src="/images/liked.png" alt="" onClick={()=>{removeFromWishlist(product._id)}}  />:<img src="/images/wlist.png" alt="" onClick={()=>{addToWishlist(product._id)}} />)
-            }
-          </div>
+
+            {/* Wishlist */}
+            {!isOnCart && (isOnWishlist ?
+              <img src="/images/liked.png" alt="Wishlist" onClick={() => { removeFromWishlist(product._id) }} /> :
+              <img src="/images/wlist.png" alt="Wishlist" onClick={() => { addToWishlist(product._id) }} />
+            )}
         </div>
       </div>
+
     </div>
   );
 };

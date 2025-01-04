@@ -13,6 +13,7 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
   const [profile, setProfile] = useState({});
   const [countCart,setCountCart]=useState(0);
   const [countWishlist,setCountWishlist]=useState(0);
+  const [countOrders,setCountOrders]=useState(0);
   useEffect(()=>{
     getEssentials();
   },[])
@@ -30,6 +31,7 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
           setAddresses(data.address.addresses);
         setCountCart(data.cart);
         setCountWishlist(data.wishlist);
+        setCountOrders(data.orders)
       }
     }
      catch (error) {
@@ -183,7 +185,7 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
           </div>
           <div className="border"></div>
           <div className="head">Your Orders
-          <div className="count">1</div>
+          <div className="count">{countOrders}</div>
           </div>
           <div className="border"></div>
           <div className="head">

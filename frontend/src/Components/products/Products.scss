@@ -24,14 +24,12 @@ $heading-font: 'Montserrat', sans-serif;
   justify-content: start;
   padding: 40px 20px;
   transition: all 0.3s ease-in-out;
-}
 
 .product-card {
   background-color: $card-background;
   display: flex;
 
   border-radius: 12px;
-  box-shadow: 0 6px 12px $shadow-color;
   overflow: hidden;
   height: 420px;
   // Product Image
@@ -168,6 +166,8 @@ $heading-font: 'Montserrat', sans-serif;
     }
 
   }
+}
+
 }
 
 // Empty State Text

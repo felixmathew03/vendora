@@ -33,7 +33,7 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
        <div className="products-container">
       {products && products.length > 0 ? (
         products.map((product) => (
-          <div key={product._id} className="product-card">
+          <Link to={`/product/${product._id}`} key={product._id} className="product-card">
             {/* Product Images */}
             
               <div className="product-images">
@@ -51,26 +51,21 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
               <div className="left">
                 {/* Category */}
                 <div className="product-info">
-                  <strong>Category:</strong> <span className='product-category'>{product.category.toUpperCase()}</span>
+                  <p>Category:</p> <span className='product-category'>{product.category.toUpperCase()}</span>
                 </div>
 
                 {/* Product Name */}
                 <div className="product-info">
-                  <strong>Product Name:</strong> <span className='product-name'>{product.pname}</span>
+                  <p>Product Name:</p> <span className='product-name'>{product.pname}</span>
                 </div>
 
                 {/* Price */}
                 <div className="product-info">
-                  <strong>Price:</strong><span className='product-price'>${product.price.toFixed(2)}</span> 
+                  <p>Price:</p><span className='product-price'>${product.price.toFixed(2)}</span> 
                 </div>
               </div>
-              <Link to={`/product/${product._id}`}>
-  <button className="view-product-button" title='View Product'>
-    <FaEye className="view-icon" /> View Product
-  </button>
-</Link>
             </div>
-          </div>
+          </Link>
         ))
       ) : (
         <p>No products available</p>

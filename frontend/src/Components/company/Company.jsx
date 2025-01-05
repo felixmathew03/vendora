@@ -10,16 +10,15 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
   // Managing state for company name, location, categories, and product form
   const [company, setCompany] = useState({
     name: "",
-    location: ""
+    location: "",
+    gstin:"",
+    contact:""
   });
   const [categories, setCategories] = useState([]);
   const [isEditable, setIsEditable] = useState(false);
-  const [sellerCat,setSellerCat]=useState([]);
-  const [count,setCount]=useState([])
   
   useEffect(() => {
     getEssentials();
-    getCount();
   }, []);
 
   const getEssentials = async () => {
@@ -31,7 +30,6 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
         setLoggedIn(true);
         if (data.company) setCompany(data.company);
         if (data.category && data.category.length > 0) setCategories(data.category[0].categories);
-        if (data.productCategory) setSellerCat([...data.productCategory]);
       }
     } catch (error) {
       console.error("Error fetching company data:", error);
@@ -45,16 +43,8 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
       [name]: value,
     }));
   };
-  console.log(count);
-  
   const handleEditClick = () => {
     setIsEditable(true);
-  };
-  const getCount = () => {
-    let categoryCounts = categories.map((category) => {
-      return sellerCat.filter((scategory) => scategory.category === category).length;
-    });
-    setCount(categoryCounts);
   };
   const handleSave = async () => {
     if (isEditable) {
@@ -73,49 +63,77 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
   return (
     <div className="company-details">
       <div className="company-info">
-        <div className="company-photo">
-          <FaBuilding size={80} />
-        </div>
-        <div className="comp">
-          <div className="company-name">
-            <label>Company Name:</label>
-            {isEditable ? (
-              <input 
-                type="text" 
-                value={company.name} 
-                name="name"
-                onChange={handleChange} 
-                className="editable-input"
-              />
-            ) : (
-              <p>{company.name}</p>
-            )}
-          </div>
-          <div className="company-location">
-            <label>Location:</label>
-            {isEditable ? (
-              <input 
-                type="text" 
-                name="location"
-                value={company.location} 
-                onChange={handleChange} 
-                className="editable-input"
-              />
-            ) : (
-              <p>{company.location}</p>
-            )}
-          </div>
-        </div>
-        {!isEditable && <button className="edit-btn" onClick={handleEditClick}><FaEdit /> Edit</button>}
-        {isEditable && <button className="save-btn" onClick={handleSave}>Save</button>}
-      </div>
+  <div className="company-photo">
+    <FaBuilding size={80} />
+  </div>
+  <div className="comp">
+    {/* Company Name */}
+    <div className="company-name">
+      <label>Company Name:</label>
+      
+        <input 
+          type="text" 
+          value={company.name} 
+          name="name"
+          onChange={handleChange} 
+          disabled={!isEditable}
+          className="editable-input"
+        />
+    </div>
+
+    {/* Company Location */}
+    <div className="company-location">
+      <label>Location:</label>
+        <input 
+          type="text" 
+          name="location"
+          value={company.location} 
+          onChange={handleChange} 
+          disabled={!isEditable}
+          className="editable-input"
+        />
+    </div>
+
+    {/* Key Executives */}
+    <div className="company-gstin">
+      <label>GSTIN:</label>
+        <input 
+          type="text" 
+          name="gstin"
+          value={company.gstin} 
+          onChange={handleChange} 
+          disabled={!isEditable}
+          className="editable-input"
+        />
+    </div>
+    
+    {/* Contact Information */}
+    <div className="company-contact">
+      <label>Contact:</label>
+        <input 
+          type="text" 
+          name="contact"
+          value={company.contact} 
+          onChange={handleChange} 
+          disabled={!isEditable}
+          className="editable-input"
+        />
+    </div>
+
+  </div>
+
+  {/* Edit and Save Buttons */}
+  {!isEditable && <button className="edit-btn" onClick={handleEditClick}><FaEdit /> Edit</button>}
+  {isEditable && <button className="save-btn" onClick={handleSave}>Save</button>}
+</div>
+
 
       <div className="company-categories">
         <div className="header">
         <h3>Categories</h3>
         {/* Add Product Button */}
         <Link to={'/addproduct'} className="add-product-link">
-          <button className="add-product-btn">
+          <button className="add-product-btn" >
             <FaPlus /> Product
           </button>
         </Link>

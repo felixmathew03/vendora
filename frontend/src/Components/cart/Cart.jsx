@@ -85,7 +85,7 @@
   };
 
     return (
-      <div className="cart-container">
+      <div className="cartt-container">
         {cartItems.length === 0 ? (
           <div className="empty-cart">
             <h2>Cart empty..</h2>
@@ -184,7 +184,6 @@
                 </div>
                 {/* Address Select Dropdown */}
               <div className="address-select">
-                  <h4>Select Address</h4>
                   <select
                       value={selectedAddress}
                       onChange={(e) => {

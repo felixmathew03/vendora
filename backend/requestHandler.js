@@ -90,8 +90,7 @@ export async function company(req,res) {
             return res.status(403).send({msg:"Unauthorized acces"});
         const company=await companySchema.findOne({sellerId:_id});
         const category=await categorySchema.find();
-        const productCategory=await productSchema.find({sellerId:_id},{category:1})
-        return res.status(200).send({username:user.username,role:user.role,company,category,productCategory})
+        return res.status(200).send({username:user.username,role:user.role,company,category})
         
     } catch (error) {
         return res.status(404).send({msg:"error"})
@@ -310,6 +309,19 @@ export async function getWishlists(req,res) {
         });
         const products = await Promise.all(productPromises);
         return res.status(200).send({username:user.username,role:user.role,products});
+    } catch (error) {
+        return res.status(404).send({msg:"error"})
+    }
+}
+
+export async function getOrders(req,res) {
+    try {
+        const _id=req.user.userId;
+        const user=await loginSchema.findOne({_id});
+        if(!user)
+            return res.status(403).send({msg:"Unauthorized acces"});
+        const orders=await orderSchema.find({buyerId:_id});
+        return res.status(200).send({username:user.username,role:user.role,orders});
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }

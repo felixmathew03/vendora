@@ -180,12 +180,13 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
       <div className="address-section">
         <div className="navHeader">
           <div className="head">
-            <Link to={'/wishlist'}>Your Wishlist
+            <Link to={'/mywishlist'}>Your Wishlist
             <div className="count">{countWishlist}</div></Link>
           </div>
           <div className="border"></div>
-          <div className="head">Your Orders
-          <div className="count">{countOrders}</div>
+          <div className="head">
+          <Link to={'/myorders'}>Your Orders
+          <div className="count">{countOrders}</div></Link>
           </div>
           <div className="border"></div>
           <div className="head">
@@ -204,52 +205,61 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
         </button>
         </div>
         {addresses.map((address, index) => (
-          <div key={index} className="address-container">
-            <input
-              type="text"
-              name="houseName"
-              placeholder="House Name"
-              value={address.houseName}
-              onChange={(e) => handleAddressChange(index, e)}
-              disabled={!isEditingAddresses}
-            />
-            <input
-              type="text"
-              name="place"
-              placeholder="Place"
-              value={address.place}
-              onChange={(e) => handleAddressChange(index, e)}
-              disabled={!isEditingAddresses}
-            />
-            <input
-              type="text"
-              name="pincode"
-              placeholder="Pincode"
-              value={address.pincode}
-              onChange={(e) => handleAddressChange(index, e)}
-              disabled={!isEditingAddresses}
-            />
-            <input
-              type="text"
-              name="postOffice"
-              placeholder="Post Office"
-              value={address.postOffice}
-              onChange={(e) => handleAddressChange(index, e)}
-              disabled={!isEditingAddresses}
-            />
-            <input
-              type="text"
-              name="landmark"
-              placeholder="Landmark"
-              value={address.landmark}
-              onChange={(e) => handleAddressChange(index, e)}
-              disabled={!isEditingAddresses}
-            />
-            <button onClick={handleSubmitAddress}>
-              {isEditingAddresses ? "Save Address" : "Edit Address"}
-            </button>
-          </div>
-        ))}
+  <div key={index} className="address-container">
+    <input
+      type="text"
+      name="houseName"
+      placeholder="House Name"
+      value={address.houseName}
+      onChange={(e) => handleAddressChange(index, e)}
+      disabled={!isEditingAddresses}
+      className="hname"
+    />
+    <input
+      type="text"
+      name="place"
+      placeholder="Place"
+      value={address.place}
+      onChange={(e) => handleAddressChange(index, e)}
+      disabled={!isEditingAddresses}
+      className="address-input"
+    />
+    <input
+      type="text"
+      name="pincode"
+      placeholder="Pincode"
+      value={address.pincode}
+      onChange={(e) => handleAddressChange(index, e)}
+      disabled={!isEditingAddresses}
+      className="address-input"
+    />
+    <input
+      type="text"
+      name="postOffice"
+      placeholder="Post Office"
+      value={address.postOffice}
+      onChange={(e) => handleAddressChange(index, e)}
+      disabled={!isEditingAddresses}
+      className="address-input"
+    />
+    <input
+      type="text"
+      name="landmark"
+      placeholder="Landmark"
+      value={address.landmark}
+      onChange={(e) => handleAddressChange(index, e)}
+      disabled={!isEditingAddresses}
+      className="address-input"
+    />
+    <div className="adrbut">
+      
+    <button onClick={handleSubmitAddress} className="address-button">
+      {isEditingAddresses ? "Save Address" : "Edit Address"}
+    </button>
+    </div>
+  </div>
+))}
+
       </div>
     </div>
   );

@@ -43,6 +43,7 @@ const Navbar = ({ username, role, loggedIn ,setLoggedIn}) => {
         {loggedIn ? (
           <>
             
+            <h4>{username}</h4>
             {/* Profile Icon & Popover */}
             <div className="profile-containerr">
               <FaUserCircle 
@@ -61,7 +62,6 @@ const Navbar = ({ username, role, loggedIn ,setLoggedIn}) => {
                 </div>
               )}
             </div>
-            <h4>{username}</h4>
             {/* Seller Dashboard Button */}
             {isSeller && (
               <Link to={'/company'}>

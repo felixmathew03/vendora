@@ -28,5 +28,6 @@ router.route("/removefromwishlist").delete(Auth,user.removeFromWishlist);
 router.route("/getwishlists").get(Auth,user.getWishlists);
 router.route("/placeorder").post(Auth,user.addOrders);
 router.route("/buynow").post(Auth,user.addOrder);
+router.route("/getorders").get(Auth,user.getOrders);
 
 export default router;

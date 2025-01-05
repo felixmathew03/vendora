@@ -14,6 +14,7 @@ import Cart from './Components/cart/Cart';
 import DProd from './Components/Dprod/DProd';
 import Wishlist from './Components/Wishlist/Wishlist';
 import SCart from './Components/singlecart/SCart';
+import Orders from './Components/orders/Orders';
 import PurchaseCompleted from './Components/purchase/PurchaseCompleted';
 import EmailVerificationSuccess from './Components/verifysuccess/EmailVerificationSuccess';
 import './App.css'
@@ -38,8 +39,9 @@ const App = () => {
         <Route path='/editproduct/:_id' element={<EditProduct  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/cart' element={<Cart  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/product/:id' element={<DProd  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
-        <Route path='/wishlist' element={<Wishlist  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
+        <Route path='/mywishlist' element={<Wishlist  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/scart/:pid' element={<SCart  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
+        <Route path='/myorders' element={<Orders  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/purchasecompleted' Component={PurchaseCompleted}/>
         <Route path='/emailsuccess' Component={EmailVerificationSuccess}/>
       </Routes>

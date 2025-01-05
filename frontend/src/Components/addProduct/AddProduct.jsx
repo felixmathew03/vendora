@@ -128,102 +128,108 @@ const AddProduct = ({setUsername, setRole, setLoggedIn }) => {
     <div className="add-product">
       <h2>Add Product</h2>
       <form className="product-form" onSubmit={handleSubmit}>
-        {/* Category */}
-        <div className="form-group">
-          <label>Category</label>
-          <div className="category-select">
-            <select
-              value={category}
-              onChange={handleCategoryChange}
-              disabled={categories.length === 0}
-            >
-              <option value="">Select a Category</option>
-              {categories.map((cat, index) => (
-                <option key={index} value={cat}>{cat}</option>
-              ))}
-            </select>
-            
-              <div className="add-category">
-                <button type="button" onClick={() => setAddCategory(!isAddCategory)}>
-                  +
-                </button>
-                {isAddCategory  && (
-                  <div className="new-category-input">
+        <div className="top">
+          {/* Category */}
+          <div className="form-group">
+            <label>Category</label>
+            <div className="category-select">
+              <select
+                value={category}
+                onChange={handleCategoryChange}
+                disabled={categories.length === 0}
+              >
+                <option value="">Select a Category</option>
+                {categories.map((cat, index) => (
+                  <option key={index} value={cat}>{cat}</option>
+                ))}
+              </select>
+              
+                <div className="add-category">
+                  <button type="button" onClick={() => setAddCategory(!isAddCategory)}>
+                    +
+                  </button>
+                  {isAddCategory  && (
+                    <div className="new-category-input">
+                      <input
+                        type="text"
+                        value={newCategory}
+                        onChange={handleNewCategoryChange}
+                        placeholder="Add new category"
+                      />
+                      <button type="button" onClick={handleAddCategory}>Add</button>
+                    </div>
+                  )}
+                </div>
+            </div>
+          </div>
+        </div>
+        <div className="mid">
+          <div className="left">
+            {/* Product Name */}
+            <div className="form-group">
+              <label>Product Name</label>
+              <input
+                type="text"
+                name="pname"
+                value={productDetails.pname}
+                onChange={handleProductDetailChange}
+                placeholder="Enter product name"
+              />
+            </div>
+
+            {/* Price */}
+            <div className="form-group">
+              <label>Price</label>
+              <input
+                type="number"
+                name="price"
+                value={productDetails.price}
+                onChange={handleProductDetailChange}
+                placeholder="Enter price"
+              />
+            </div>
+
+            {/* Brand (Company) */}
+            <div className="form-group">
+              <label>Brand (Company)</label>
+              <input
+                type="text"
+                name="brand"
+                value={brand}
+                disabled="true"
+                placeholder="Enter brand"
+              />
+            </div>
+
+            {/* Product Images */}
+            <div className="form-group">
+              <label>Product Images</label>
+              <input
+                type="file"
+                multiple
+                onChange={handleImageChange}
+              />
+            </div>
+          </div>
+          <div className="right">
+            {/* Sizes and Quantities */}
+            <div className="form-group">
+              <label className='label'>Sizes (Enter Quantity)</label>
+              <div className="size-quantity">
+                {['S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map((size) => (
+                  <div key={size} className="size-input">
+                    <label>{size}</label>
                     <input
-                      type="text"
-                      value={newCategory}
-                      onChange={handleNewCategoryChange}
-                      placeholder="Add new category"
+                      type="number"
+                      value={productDetails.sizeQuantities[size]}
+                      onChange={(e) => handleSizeQuantityChange(size, e)}
+                      placeholder="Quantity"
                     />
-                    <button type="button" onClick={handleAddCategory}>Add</button>
                   </div>
-                )}
+                ))}
               </div>
+            </div>
           </div>
-        </div>
-
-        {/* Product Name */}
-        <div className="form-group">
-          <label>Product Name</label>
-          <input
-            type="text"
-            name="pname"
-            value={productDetails.pname}
-            onChange={handleProductDetailChange}
-            placeholder="Enter product name"
-          />
-        </div>
-
-        {/* Price */}
-        <div className="form-group">
-          <label>Price</label>
-          <input
-            type="number"
-            name="price"
-            value={productDetails.price}
-            onChange={handleProductDetailChange}
-            placeholder="Enter price"
-          />
-        </div>
-
-        {/* Brand (Company) */}
-        <div className="form-group">
-          <label>Brand (Company)</label>
-          <input
-            type="text"
-            name="brand"
-            value={brand}
-            disabled="true"
-            placeholder="Enter brand"
-          />
-        </div>
-
-        {/* Sizes and Quantities */}
-        <div className="form-group">
-          <label>Sizes (Enter Quantity)</label>
-          <div className="size-quantity">
-            {['S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map((size) => (
-              <div key={size} className="size-input">
-                <label>{size}</label>
-                <input
-                  type="number"
-                  value={productDetails.sizeQuantities[size]}
-                  onChange={(e) => handleSizeQuantityChange(size, e)}
-                  placeholder="Quantity"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Product Images */}
-        <div className="form-group">
-          <label>Product Images</label>
-          <input
-            type="file"
-            multiple
-            onChange={handleImageChange}
-          />
         </div>
 
         <button type="submit" className="submit-btn">Submit</button>

@@ -114,9 +114,9 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
     <div className="profile-container">
       {/* Profile Section */}
       <div className="profile-header">
-        <h1>User Details</h1>
+        <h1>Your Details</h1>
         <div className="profile-pic">
-          <FaUserCircle size={120} />
+          <FaUserCircle size={40}  /> <p>Hi {profile.fname},</p>
         </div>
         <div className="profile-info">
           <div className="input-container">

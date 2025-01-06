@@ -25,6 +25,7 @@ $heading-font: 'Montserrat', sans-serif;
     text-decoration: none;
   }
   width: 80%;
+  background-color: rgb(255, 255, 255);
   margin: auto;
   padding: 20px;
   gap: 20px;
@@ -34,84 +35,54 @@ $heading-font: 'Montserrat', sans-serif;
   transition: all 0.3s ease-in-out;
   .product-card {
     border-radius: 8px;
-    padding: 0 0 10px;
     transition: transform 0.3s ease;
-    width: 250px;
-    height: 350px;
-    border: 1px solid rgb(179, 178, 178);
+    border: 1px solid rgb(147, 145, 145);
     cursor: pointer;
-
+    overflow: hidden;
     // Product Image Section
     .product-images {
-      width: 100%;
-      height: 70%;
       background: #f4f4f4;
-      border-radius: 8px;
       overflow: hidden;
-
-      .image-gallery {
-        width: 100%;
-        height: 100%;
+      width: 250px;
+      height: 250px;
         .product-image {
+          margin: auto;
           width: 100%;
           height: 100%;
           object-fit: contain;
-          object-position: top;
+          object-position: center;
           transition: transform 0.3s ease;
           &:hover {
             transform:scale(1.18);
           }
         }
-      }
     }
 
     // Bottom Section (Product Info & Action Button)
     .bottom {
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 30%;
-      // &:hover {
-      //   // transform: translateY(-5px);
-      // }
-      .left {
-        width: 100%;
-        height: 100%;
+      width: 250px;
+      height: 50px;
+      padding: 10px 0;
         .product-info {
           font-size: 14px;
           color: $text-color;
-          margin-bottom: 10px;
-          display: flex;
-          justify-content: space-between;
-          
-          p {
-            color: rgb(149, 89, 97);
-            font-weight: 600;
-          }
-
+          margin-left: 10px;
           .product-name {
             font-size: 18px;
-            font-weight: bold;
-            color: $primary-color;
-            margin-bottom: 5px;
+            font-weight: 200;
+            color: #4f4f51;
+            margin-bottom: 10px;
+            font-size: 16px;
             text-transform: capitalize;
           }
 
           .product-price {
             font-size: 20px;
-            font-weight: bold;
+            font-weight: 600;
             color: $accent-color;
           }
 
-          .product-category {
-            color: #1060b1;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-          }
         }
-      }
 
     }
   }

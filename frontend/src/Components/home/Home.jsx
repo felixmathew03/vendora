@@ -37,33 +37,23 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
             {/* Product Images */}
             
               <div className="product-images">
-                <div className="image-gallery">
-                  
                     <img
                       src={product.pimages[0]}
                       alt={product.pname}
                       className="product-image"
                     />
-                </div>
               </div>
             
             <div className="bottom">
-              <div className="left">
-                {/* Category */}
-                <div className="product-info">
-                  <p>Category:</p> <span className='product-category'>{product.category.toUpperCase()}</span>
-                </div>
-
                 {/* Product Name */}
                 <div className="product-info">
-                  <p>Product Name:</p> <span className='product-name'>{product.pname}</span>
+                   <span className='product-name'>{product.pname}</span>
                 </div>
 
                 {/* Price */}
                 <div className="product-info">
-                  <p>Price:</p><span className='product-price'>${product.price.toFixed(2)}</span> 
+                  <span className='product-price'>${product.price.toFixed(2)}</span> 
                 </div>
-              </div>
             </div>
           </Link>
         ))

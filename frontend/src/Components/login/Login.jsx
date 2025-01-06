@@ -1,41 +1,63 @@
-// src/Login.js
-
 import React, { useState } from 'react';
-import {Link,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import route from '../route';
 import { FaFacebook, FaGoogle } from 'react-icons/fa';
 import './login.scss';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css'; // Import toastify styles
 
 const Login = () => {
-  const navigate=useNavigate();
-  const [loginDetails,setDetails]=useState({
-    email:"",
-    password:""
+  const navigate = useNavigate();
+  const [loginDetails, setDetails] = useState({
+    email: "",
+    password: ""
   });
-  const handleSubmit =async (e) => {
+
+  // const notify = (msg) => toast.success(`${msg}`, {
+  //   position: "top-center",
+  //   autoClose: 5000,
+  //   hideProgressBar: false,
+  //   closeOnClick: false,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   progress: undefined,
+  //   theme: "light"
+  // });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const {status,data}=await axios.post(`${route()}signin`,loginDetails,{Headers:{"Content-Type":"application/json"}});
-    if(status===200){
-      localStorage.setItem("Auth",data.token)
-      alert(data.msg)
-      navigate('/')
-    }
-    else{
-      alert(data.msg)
-    }
+      const { status, data } = await axios.post(`${route()}signin`, loginDetails, { Headers: { "Content-Type": "application/json" } });
+      if (status === 200) {
+        localStorage.setItem("Auth", data.token);
+        alert(data.msg)
+        // notify(data.msg || "Login successful!");
+        navigate('/');
+      } else {
+        toast.error(data.msg || "An error occurred during login.");
+      }
     } catch (error) {
-      alert("error occured")
+      toast.error("Error occurred during login.");
     }
   };
-  const handleChange=(e)=>{
-    setDetails((pre)=>({...pre,[e.target.name]:e.target.value}))
-  }
+
+  const handleChange = (e) => {
+    setDetails((pre) => ({ ...pre, [e.target.name]: e.target.value }));
+  };
 
   return (
     <div className="login-container">
       <div className="login-box">
+        {/* <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          closeOnClick={false}
+          pauseOnHover
+          draggable
+          theme="light"
+        /> */}
         <div className="logo">
           <img src="/images/logo.jpg" alt="Logo" />
         </div>
@@ -46,7 +68,7 @@ const Login = () => {
           <label htmlFor="email">Email</label>
           <input
             id="email"
-            name='email'
+            name="email"
             type="email"
             onChange={handleChange}
           />
@@ -57,7 +79,7 @@ const Login = () => {
           <input
             id="password"
             type="password"
-            name='password'
+            name="password"
             onChange={handleChange}
           />
         </div>
@@ -67,7 +89,6 @@ const Login = () => {
         </button>
 
         <div className="extra-links">
-          
           <div className="signup-link">
             Don't have an account? <Link to={"/email"}>Sign Up</Link>
           </div>

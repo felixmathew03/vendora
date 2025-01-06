@@ -105,10 +105,9 @@
   }
   .address-section {
     margin-right: 40px;
-    width: 50%;
+    width: 70%;
     height: 100%;
     overflow-y: scroll;
-    overflow-x: hidden;
     scrollbar-width: none;
     .navHeader{
       width: 100%;
@@ -171,107 +170,137 @@
           }
         }
       }
-    }.address-container {
+    }
+    .address-container {
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       margin-bottom: 20px;
-      width: 80%;
       padding: 20px;
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       transition: box-shadow 0.3s ease-in-out;
+      width: 80%;
     
       &:hover {
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       }
     
+      .address-input,
       .hname {
-        width: 100%;
-        margin: 12px 0;
-        font-size: 16px;
-        border: 1px solid #e0e0e0; // Lighter border color
-        border-radius: 4px; // More rounded corners for the input fields
-        background-color: #fafafa; // Light background
-        color: #333;
-        transition: all 0.3s ease-in-out;
-    
-        // Placeholder Text Style
-        &::placeholder {
-          color: #bbb; // Lighter placeholder text
-        }
-    
-        // On Focus (user clicks or focuses on input field)
-        &:focus {
-          border-color: #0066cc; // Flipkart blue border on focus
-          background-color: #fff; // Background turns white when focused
-          outline: none; // Remove default blue outline
-        }
-    
-        // Disabled Input
-        &:disabled {
-          background-color: #f1f1f1; // Lighter background for disabled state
-          cursor: not-allowed;
-          color: #aaa; // Text color changes to indicate disabled state
-        }
-      }
-    
-      .address-input {
         margin: 12px 0;
         width: 46%;
         font-size: 16px;
-        border: 1px solid #e0e0e0; // Lighter border color
-        border-radius: 4px; // More rounded corners for the input fields
-        background-color: #fafafa; // Light background
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        background-color: #fafafa;
         color: #333;
         transition: all 0.3s ease-in-out;
     
-        // Placeholder Text Style
         &::placeholder {
-          color: #bbb; // Lighter placeholder text
+          color: #bbb;
         }
     
-        // On Focus (user clicks or focuses on input field)
         &:focus {
-          border-color: #0066cc; // Flipkart blue border on focus
-          background-color: #fff; // Background turns white when focused
-          outline: none; // Remove default blue outline
+          border-color: #0066cc;
+          background-color: #fff;
+          outline: none;
         }
+      }
     
-        // Disabled Input
-        &:disabled {
-          background-color: #f1f1f1; // Lighter background for disabled state
-          cursor: not-allowed;
-          color: #aaa; // Text color changes to indicate disabled state
+      .hname {
+        width: 100%;
+      }
+    }
+    .address-details{
+      width: 90%;
+      padding:2% 5%;
+      margin: auto;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      .address-detail{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: left ;
+        align-items: start;
+        text-align: left;
+        border-bottom: 1px solid rgb(228, 229, 230);
+        line-height: 5vh;
+        .address-header{
+          width: 100%;
+          position: relative;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .three-dot-icon {
+            cursor: pointer;
+            margin-left: 10px;
+            transform: rotate(90deg);
+          }
+          .popover {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            top: 30px;
+            right: 0;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            button {
+              display: block;
+              border:1px solid #969696;
+              background-color: white;
+              color: black;
+              margin-bottom: 5px;
+              padding: 5px 10px;
+              cursor: pointer;
+            }
+          }
+        }
+        p{
+          font-size:small;
+          color: #555;
+          display: flex;
+          gap: 10px;
         }
       }
     }
-    
     .adrbut {
       width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
     
       .address-button {
-        width: 50%;
+        width: 48%;
         height: 40px;
-        background-color: #0066cc; // Flipkart blue color for the button
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #0066cc;
         border: none;
         border-radius: 8px;
         color: white;
         font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease-in-out;
+        padding: 10px;
+        text-align: center;
     
-        &:hover {
-          background-color: #005299; // Darker blue shade on hover
+        &.disabled {
+          background-color: #e0e0e0;
+          cursor: not-allowed;
         }
     
-        &:disabled {
-          background-color: #e0e0e0; // Disabled button color (gray)
-          cursor: not-allowed;
+        &:hover {
+          background-color: #005299;
+        }
+    
+        svg {
+          margin-right: 8px; /* Adds space between icon and text */
         }
       }
     }

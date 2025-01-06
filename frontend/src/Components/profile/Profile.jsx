@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle,FaEllipsisH,FaEdit, FaTimes  } from "react-icons/fa";
 import axios from "axios";
 import route from "../route";
 import './Profile.scss';
@@ -14,6 +14,8 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
   const [countCart,setCountCart]=useState(0);
   const [countWishlist,setCountWishlist]=useState(0);
   const [countOrders,setCountOrders]=useState(0);
+  const [showPopover, setShowPopover] = useState(null);
+  const [position,setPosition]=useState(0)
   useEffect(()=>{
     getEssentials();
   },[])
@@ -45,15 +47,19 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
       [name]: value,
     }));
   };
+  const handlePopoverToggle = (index) => {
+    setShowPopover(showPopover === index ? null : index);
+  };
   const handleSubmitProfile=async()=>{
     if(isEditingProfile){
       const {status,data}=await axios.post(`${route()}edituser`,profile,{headers:{"Authorization":`Bearer ${value}`}});
       if (status===201) {
-        alert(data.msg)
+        alert(data.msg);
       }else{
-        alert("error")
+        alert("error");
       }
       setIsEditingProfile(!isEditingProfile);
+      getEssentials();
     }
     else{
       setIsEditingProfile(!isEditingProfile);
@@ -74,7 +80,13 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
       ...addresses,
       { houseNumber: "", houseName: "", place: "", pincode: "", postOffice: "" },
     ]);
+    setPosition(addresses.length);
+    setIsEditingAddresses(!isEditingAddresses);
   };
+  const handleEditAddress=(ind)=>{
+    setPosition(ind);
+    setIsEditingAddresses(!isEditingAddresses);
+  }
   const handleSubmitAddress=async()=>{
     if(isEditingAddresses){
       const {status,data}=await axios.post(`${route()}editaddress`,addresses,{headers:{"Authorization":`Bearer ${value}`}});
@@ -83,12 +95,21 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
       }else{
         alert("error")
       }
+      setPosition(0);
       setIsEditingAddresses(!isEditingAddresses);
+      getEssentials();
     }
     else{
       setIsEditingAddresses(!isEditingAddresses);
     }
   }
+  const handleCancelAddress=()=>{
+    if((addresses[position].houseName==''))
+      addresses.pop();
+    setPosition(0);
+    setIsEditingAddresses(!isEditingAddresses);
+  }
+  
   return (
     <div className="profile-container">
       {/* Profile Section */}
@@ -204,62 +225,95 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
           </svg>
         </button>
         </div>
+        {isEditingAddresses && (
+          <div className="address-container">
+            <input
+              type="text"
+              name="houseName"
+              placeholder="House Name"
+              value={addresses[position].houseName}
+              onChange={(e) => handleAddressChange(position, e)}
+              disabled={!isEditingAddresses}
+              className="hname"
+            />
+            <input
+              type="text"
+              name="place"
+              placeholder="Place"
+              value={addresses[position].place}
+              onChange={(e) => handleAddressChange(position, e)}
+              disabled={!isEditingAddresses}
+              className="address-input"
+            />
+            <input
+              type="text"
+              name="pincode"
+              placeholder="Pincode"
+              value={addresses[position].pincode}
+              onChange={(e) => handleAddressChange(position, e)}
+              disabled={!isEditingAddresses}
+              className="address-input"
+            />
+            <input
+              type="text"
+              name="postOffice"
+              placeholder="Post Office"
+              value={addresses[position].postOffice}
+              onChange={(e) => handleAddressChange(position, e)}
+              disabled={!isEditingAddresses}
+              className="address-input"
+            />
+            <input
+              type="text"
+              name="landmark"
+              placeholder="Landmark"
+              value={addresses[position].landmark}
+              onChange={(e) => handleAddressChange(position, e)}
+              className="address-input"
+            />
+            <div className="adrbut">
+              <button
+                onClick={handleSubmitAddress}
+                className="address-button"
+                disabled={!isEditingAddresses}  // Disable submit button if not in editing mode
+              >
+                <FaEdit /> Edit Address
+              </button>
+              <button
+                onClick={handleCancelAddress}
+                className="address-button"
+              >
+                <FaTimes /> Cancel
+              </button>
+            </div>
+          </div>
+        )}
+      <div className="address-details">
         {addresses.map((address, index) => (
-  <div key={index} className="address-container">
-    <input
-      type="text"
-      name="houseName"
-      placeholder="House Name"
-      value={address.houseName}
-      onChange={(e) => handleAddressChange(index, e)}
-      disabled={!isEditingAddresses}
-      className="hname"
-    />
-    <input
-      type="text"
-      name="place"
-      placeholder="Place"
-      value={address.place}
-      onChange={(e) => handleAddressChange(index, e)}
-      disabled={!isEditingAddresses}
-      className="address-input"
-    />
-    <input
-      type="text"
-      name="pincode"
-      placeholder="Pincode"
-      value={address.pincode}
-      onChange={(e) => handleAddressChange(index, e)}
-      disabled={!isEditingAddresses}
-      className="address-input"
-    />
-    <input
-      type="text"
-      name="postOffice"
-      placeholder="Post Office"
-      value={address.postOffice}
-      onChange={(e) => handleAddressChange(index, e)}
-      disabled={!isEditingAddresses}
-      className="address-input"
-    />
-    <input
-      type="text"
-      name="landmark"
-      placeholder="Landmark"
-      value={address.landmark}
-      onChange={(e) => handleAddressChange(index, e)}
-      disabled={!isEditingAddresses}
-      className="address-input"
-    />
-    <div className="adrbut">
-      
-    <button onClick={handleSubmitAddress} className="address-button">
-      {isEditingAddresses ? "Save Address" : "Edit Address"}
-    </button>
-    </div>
-  </div>
-))}
-
+            address.houseName&&(
+          <div key={index} className="address-detail" >
+              <>
+              <div className="address-header">
+              <h2>{address.houseName}</h2>
+              <FaEllipsisH
+                className="three-dot-icon"
+                onClick={() => handlePopoverToggle(index)}
+              />
+              {showPopover === index && (
+                <div className="popover">
+                  <button onClick={() => handleEditAddress(index)}>Edit</button>
+                  <button onClick={() => setShowPopover(null)}>Cancel</button>
+                </div>
+              )}
+            </div>
+            <p>
+              <span>{address.place},</span><span>{address.pincode},</span><span>{address.landmark}</span>
+            </p>
+              </>
+              </div>
+            )
+        ))}
+      </div>
       </div>
     </div>
   );

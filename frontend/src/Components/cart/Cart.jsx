@@ -68,7 +68,6 @@
               );
   
               if (status === 201) {
-                  alert(data.msg);
                   if (data.msg1 === "success") {
                       navigate('/purchasecompleted');
                   }

@@ -21,8 +21,7 @@ const Signup = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      const {data,status}=await axios.post(`${route()}signup`,user,{headers:{"Content-Type":"application/json"}});
-    console.log("res");
+      const {data,status}=await axios.post(`${route()}signup`,user,{headers:{"Content-Type":"application/json"}})
     
     if(status===201){
       localStorage.removeItem('email');

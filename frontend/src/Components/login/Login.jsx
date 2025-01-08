@@ -35,10 +35,10 @@ const Login = () => {
         // notify(data.msg || "Login successful!");
         navigate('/');
       } else {
-        toast.error(data.msg || "An error occurred during login.");
+        alert(data.msg );
       }
     } catch (error) {
-      toast.error("Error occurred during login.");
+      alert("Wrong password");
     }
   };
 

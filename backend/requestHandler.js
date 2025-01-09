@@ -27,7 +27,9 @@ export async function home(req,res) {
         const products=await productSchema.find({
             sellerId: { $not: { $eq: _id} }
           })
-        return res.status(200).send({username:user.username,role:user.role,products});
+          const categories=await categorySchema.find();
+          
+        return res.status(200).send({username:user.username,role:user.role,products,categories});
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }

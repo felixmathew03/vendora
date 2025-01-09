@@ -1,0 +1,24 @@
+.Sidebar {
+    width: 20%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-right: 1px solid black;
+    height: 100%;
+    .search-box,
+    .category-filter {
+      margin-bottom: 20px;
+    }
+  
+    input[type="text"] {
+      width: 90%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+  
+    select {
+      width: 90%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+  }
+  

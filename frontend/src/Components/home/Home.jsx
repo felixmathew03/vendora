@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from 'react';
 import route from '../route';
 import axios from 'axios';
+import Sidebar from '../sidebar/Sidebar';
 import './Home.scss';
 import { Link } from 'react-router-dom';
-import { FaEye } from 'react-icons/fa';
 
 const Home = ({setUsername,setRole,setLoggedIn}) => {
   const value=localStorage.getItem('Auth');
@@ -30,6 +30,7 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
   }
   return (
     <div className='home'>
+    <Sidebar setProducts={setProducts}/>
        <div className="products-container">
       {products && products.length > 0 ? (
         products.map((product) => (

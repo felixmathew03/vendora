@@ -19,19 +19,23 @@ $heading-font: 'Montserrat', sans-serif;
 
 // Container for Products (Flex layout with Wrap)
 .home{
-  
+  display: flex;
+  justify-content: space-around;
+  height: 86vh;
+  width: 100%;
 .products-container {
   a{
     text-decoration: none;
   }
-  width: 80%;
+  width: 72%;
+  height: 100%;
   background-color: rgb(255, 255, 255);
-  margin: auto;
   padding: 20px;
   gap: 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
+  overflow-y: scroll;
   transition: all 0.3s ease-in-out;
   .product-card {
     border-radius: 8px;
@@ -39,6 +43,7 @@ $heading-font: 'Montserrat', sans-serif;
     border: 1px solid rgb(147, 145, 145);
     cursor: pointer;
     overflow: hidden;
+    max-height: 320px;
     // Product Image Section
     .product-images {
       background: #f4f4f4;

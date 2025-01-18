@@ -29,7 +29,7 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
         setRole(data.role);
         setLoggedIn(true);
         if (data.company) setCompany(data.company);
-        if (data.category && data.category.length > 0) setCategories(data.category[0].categories);
+        if (data.categories && data.categories.length > 0) setCategories(data.categories);
       }
     } catch (error) {
       console.error("Error fetching company data:", error);
@@ -140,8 +140,8 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
         </div>
         <ul>
           {categories.map((category, index) => (
-                <Link to={`/products/${encodeURIComponent(category)}`}key={index}>
-              <li >{category}</li>
+                <Link to={`/products/${encodeURIComponent(category.category)}`}key={index}>
+              <li >{category.category}</li>
             </Link>
           ))}
         </ul>

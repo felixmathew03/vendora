@@ -28,8 +28,6 @@ const Sidebar = ({setProducts}) => {
       console.log("error");
     }
   }
-  console.log(categories);
-  
   // Handle search input change
   const handleSearchChange = async(e) => {
     setSearchTerm(e.target.value);
@@ -57,6 +55,7 @@ const Sidebar = ({setProducts}) => {
         console.log(error);
     }
   };
+console.log(categories);
 
   return (
     <div className="Sidebar">
@@ -81,11 +80,11 @@ const Sidebar = ({setProducts}) => {
           <option  value="">
             All
           </option>
-          {categories.map(category=> category.categories.map((cat,ind)=>(
+          {categories.map((cat,ind)=>(
             <option key={ind} value={cat}>
-            {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            {cat.category.charAt(0).toUpperCase() + cat.slice(1)}
           </option>
-          )))}
+          ))}
         </select>
       </div>
     </div>

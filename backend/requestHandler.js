@@ -91,8 +91,8 @@ export async function company(req,res) {
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const company=await companySchema.findOne({sellerId:_id});
-        const category=await categorySchema.find();
-        return res.status(200).send({username:user.username,role:user.role,company,category})
+        const categories=await categorySchema.find();
+        return res.status(200).send({username:user.username,role:user.role,company,categories})
         
     } catch (error) {
         return res.status(404).send({msg:"error"})
@@ -117,15 +117,8 @@ export async function editCompany(req,res) {
 
 export async function editCategory(req,res) {
     try {
-        
-        const {newCategory}=req.body;
-    const check=await categorySchema.findOne({})
-    
-    if(check){
-        const data=await categorySchema.updateOne({_id:check._id},{$push:{categories:newCategory}});
-    }else{
-        const data=await categorySchema.create({categories:[newCategory]});
-    }
+    const {newCategory}=req.body;
+    const data=await categorySchema.create({category:newCategory});
     return res.status(201).send({msg:"updated"});
     } catch (error) {
         return res.status(404).send({msg:"error"})

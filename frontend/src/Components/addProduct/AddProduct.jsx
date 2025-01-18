@@ -25,13 +25,13 @@ const AddProduct = ({setUsername, setRole, setLoggedIn }) => {
     pimages: [],
   });
   const [isAddCategory,setAddCategory]=useState(false)
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-  };
+  
   useEffect(() => {
     getEssentials();
   }, []);
-
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
   const getEssentials = async () => {
     try {
       const { status, data } = await axios.get(`${route()}company`, { headers: { "Authorization": `Bearer ${value}` } });
@@ -39,8 +39,8 @@ const AddProduct = ({setUsername, setRole, setLoggedIn }) => {
         setUsername(data.username)
         setRole(data.role);
         setLoggedIn(true);
-        if (data.category.length > 0) 
-            setCategories(data.category[0].categories);
+        if (data.categories.length > 0) 
+            setCategories(data.categories);
         if (data.company) {
             setBrand(data.company.name)
         }
@@ -55,8 +55,6 @@ const AddProduct = ({setUsername, setRole, setLoggedIn }) => {
 
   const handleAddCategory =async () => {
     if (newCategory.trim()) {
-      setCategories([...categories, newCategory]);
-      setCategory(newCategory);  
       const {status,data}=await axios.post(`${route()}editcategory`,{newCategory},{headers:{"Authorization":`Bearer ${value}`}});
       if (status===201) {
         alert(data.msg);

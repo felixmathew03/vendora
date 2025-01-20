@@ -2,7 +2,7 @@ import React, { useState,useEffect} from 'react';
 import route from '../route';
 import axios from 'axios';
 import './Sidebar.scss'
-import { data } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
 const Sidebar = ({setProducts}) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -55,19 +55,14 @@ const Sidebar = ({setProducts}) => {
         console.log(error);
     }
   };
-console.log(categories);
-
   return (
     <div className="Sidebar">
-      <div className="search-box">
-        <label htmlFor="search">Search:</label>
-        <input
-          type="text"
+      <div className="group">
+        <FaSearch className="icon" />
+        <input className="input" type="search" 
           id="search"
           value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Search..."
-        />
+          onChange={handleSearchChange} placeholder="Search" />
       </div>
 
       <div className="category-filter">

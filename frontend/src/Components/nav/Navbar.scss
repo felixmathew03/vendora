@@ -2,10 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=Oswald:wght@200..700&family=Pacifico&family=Squada+One&family=Ultra&display=swap');
 .navbar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #004d40; /* Dark background for navbar */
+  background-color: #090fab; /* Dark background for navbar */
   color: white;
 
   .navbar-logo {
@@ -74,8 +74,8 @@
     }
 
     .seller-btn {
-      background-color: #00796b;
-      color: white;
+      background-color: #a4d0f5;
+      color: black;
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
@@ -83,7 +83,7 @@
       font-size: 16px;
 
       &:hover {
-        background-color: #056f5e;
+        background-color: #adc7dc;
       }
     }
 

@@ -109,7 +109,7 @@ const EditProduct = ({setUsername, setRole, setLoggedIn }) => {
         }
     }
   return (
-    <div className="add-product">
+    <div className="edit-product">
       <h2>Edit Product</h2>
       <form className="product-form" onSubmit={handleSubmit}>
         {/* Category */}

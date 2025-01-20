@@ -32,6 +32,7 @@ $error-color: #e60000; // Error color for input fields (optional)
       .highlight {
         font-size: 2rem;
         color: $primary-color;
+        font-family: "Pacifico", serif;
       }
     }
 
@@ -101,11 +102,11 @@ $error-color: #e60000; // Error color for input fields (optional)
       font-size: 0.875rem;
       color: $text-color;
       margin-top: 1.6rem;
-
+      
       a {
         color: $primary-color;
         text-decoration: none;
-
+        font-weight: 600;
         &:hover {
           text-decoration: underline;
         }

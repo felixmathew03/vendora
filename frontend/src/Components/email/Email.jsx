@@ -33,17 +33,18 @@ const Email = () => {
       <div className="email-box">
         <div className="logo">
           <img src="/images/logo.jpg" alt="Logo" />
+          <h2>Vendora</h2>
         </div>
-        <h2>Email Confirmation</h2>
-        <p className="tagline">Please enter your email address.</p>
+        <h2>Sign up</h2>
+        <p className="tagline">Please enter your email address to confirm signup.</p>
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
-            <label htmlFor="email">Email</label>
             <input
               type="text"
               id="email"
               name="email"
+              placeholder='Email'
               onChange={handleChange}
             />
           </div>
@@ -53,7 +54,7 @@ const Email = () => {
 
         <div className="extra-links">
           <p className="back-to-login">
-            <Link to={'/login'}>Back to Login</Link>
+            Already have an account? <Link to={'/login'}>Login</Link>
           </p>
         </div>
       </div>

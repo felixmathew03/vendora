@@ -132,16 +132,16 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
         <div className="header">
         <h3>Categories</h3>
         {/* Add Product Button */}
-        <Link to={'/addproduct'} className="add-product-link">
+        {company.name&&<Link to={'/addproduct'} className="add-product-link">
           <button className="add-product-btn" >
             <FaPlus /> Product
           </button>
-        </Link>
+        </Link>}
         </div>
         <ul>
           {categories.map((category, index) => (
-                <Link to={`/products/${encodeURIComponent(category.category)}`}key={index}>
-              <li >{category.category}</li>
+              <Link to={`/products/${encodeURIComponent(category.category)}`}key={index}>
+                <li >{category.category}</li>
             </Link>
           ))}
         </ul>

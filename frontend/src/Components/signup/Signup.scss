@@ -5,24 +5,21 @@ $accent-color: #044733;  // Accent color for buttons and highlights
 $black: #151414;
 $light-gray: #2c2b2b;
 $dark-gray: #202020;
-$error-color: #319275;  // Red for error messages
-
-// Global Body Styling
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;  // Set the default font family
+  font-size: 16px;  // Base font size
+  color: $black;  // Default text color
   margin: 0;
   padding: 0;
-  color: $dark-gray;
-
+  box-sizing: border-box;  // Ensure padding and border don't affect element size
+  line-height: 1.6;  // Improve text readability
 }
-
 // Main Signup Container
 .signup-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-image: url('/images/bg.avif');
+  height: 88vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -38,65 +35,36 @@ body {
     text-align: center;
     max-height: 600px;  // Max height for the signup box
     overflow-y: auto;  // Allows scrolling if content overflows
-
-    .logo {
-      margin-bottom: 1rem;
-      img {
-        width: 70px;  // Reduced logo size
-        height: 70px;
-        border-radius: 50%;
+    .hader {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      p {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 400;
+        color: #706b6b;
       }
     }
 
-    h2 {
-      color: $black;
-      font-size: 24px;  // Reduced font size
-      margin-bottom: 0.5rem;
-      letter-spacing: 1px;
-      font-weight: 600;
-    }
-
-    .tagline {
-      color: $black;
-      font-size: 12px;  // Reduced tagline font size
-      margin-bottom: 1.5rem;  // Reduced bottom margin
-      opacity: 0.8;
-    }
-
-    .input-group {
-      margin-bottom: 1.25rem;  // Reduced bottom margin
-      position: relative;
-
-      label {
-        display: block;
-        font-size: 13px;  // Reduced font size
-        margin-bottom: 5px;
-        color: $black;
-        opacity: 0.8;
-      }
-
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
       input, select {
-        width: 100%;
-        padding: 0.75rem;
-        border-radius: 8px;
-        border: 1px solid $light-gray;
-        background-color: #fff;
-        font-size: 14px;  // Reduced input font size
-        color: #133335;
+        height: 40px;
         outline: none;
-        transition: all 0.3s ease;
-
+        border: 1px solid #cccccc;
+        padding: 0 0 0 10px;
+        font-size: 15px;
+        border-radius: 8px;
         &:focus {
           border-color: $accent-color;
           box-shadow: 0 0 8px rgba($accent-color, 0.4);
         }
-
-        &.error {
-          border-color: $error-color;
-        }
       }
-
-      /* Styling for the Select box */
       select {
         appearance: none; /* Remove default browser styling */
         -webkit-appearance: none;
@@ -109,14 +77,6 @@ body {
         padding-right: 35px; /* Space for the arrow */
       }
     }
-    
-    .error-message {
-      color: $error-color;
-      font-size: 13px;  // Reduced font size
-      margin-bottom: 1rem;
-      text-align: left;
-    }
-
     .signup-btn {
       width: 100%;
       padding: 0.75rem;
@@ -130,18 +90,18 @@ body {
       text-transform: uppercase;
 
       &:hover {
-        background-color: lighten($accent-color, 10%);
+        background-color: #076448;
       }
 
       &:active {
-        background-color: lighten($accent-color, 15%);
+        background-color: #08694c;
         transform: scale(0.98);
       }
     }
 
     .extra-links {
       margin-top: 1rem;
-      font-size: 13px;  // Reduced font size
+      font-size: 13px;  
       color: $black;
 
       .login-link {
@@ -155,93 +115,92 @@ body {
         transition: color 0.3s ease;
 
         &:hover {
-          color: darken($accent-color, 15%);
+          color: #023c2b;
           text-decoration: underline;
         }
       }
     }
-
   }
 }
 
-// Media Queries for Responsiveness
-@media (max-width: 768px) {
+// Media Queries
+
+@media only screen and (max-width: 480px) {
   .signup-container {
-    padding: 1rem;
+    height: auto;
+    padding: 20px; 
   }
 
   .signup-box {
-    padding: 1.25rem;  // Reduced padding
-    width: 90%;
-    max-width: 350px;
-    h2 {
-      font-size: 22px;  // Reduced font size
-    }
+    max-width: 90%; 
+    padding: 1rem;
+  }
 
-    .tagline {
-      font-size: 12px;
-      margin-bottom: 1.25rem;  // Reduced margin
+  .hader {
+    font-size: 18px;
+    p {
+      font-size: 16px;
     }
+  }
 
-    .input-group {
-      label {
-        font-size: 12px;  // Reduced font size
-      }
+  form input, form select {
+    font-size: 14px;  
+    height: 35px; 
+  }
 
-      input, select {
-        font-size: 13px;  // Reduced font size
-      }
-    }
+  .signup-btn {
+    font-size: 12px;  
+    padding: 0.65rem; 
+  }
 
-    .signup-btn {
-      font-size: 13px;  // Reduced font size
-      padding: 0.8rem;
-    }
-
-    .social-icons .social-icon {
-      width: 30px;  // Reduced icon size
-      height: 30px;
-    }
+  .extra-links {
+    font-size: 12px;
   }
 }
 
-@media (max-width: 480px) {
+/* Tablets and medium-sized screens */
+@media only screen and (max-width: 768px) {
   .signup-container {
-    padding: 1rem;
+    height: auto;
+    padding: 20px;  
   }
 
   .signup-box {
-    width: 100%;
-    max-width: 280px;  // Reduced width
-    padding: 1rem;
+    max-width: 80%;
+    padding: 1.25rem;
+  }
 
-    h2 {
-      font-size: 20px;  // Reduced font size
+  .hader {
+    font-size: 20px;
+    p {
+      font-size: 17px;
     }
+  }
 
-    .tagline {
-      font-size: 12px;
-      margin-bottom: 1rem;  // Reduced margin
-    }
+  form input, form select {
+    font-size: 15px;  
+    height: 38px;
+  }
 
-    .input-group {
-      label {
-        font-size: 12px;  // Reduced font size
-      }
+  .signup-btn {
+    font-size: 13px;
+    padding: 0.7rem;
+  }
 
-      input, select {
-        font-size: 12px;  // Reduced font size
-      }
-    }
+  .extra-links {
+    font-size: 13px;
+  }
+}
 
-    .signup-btn {
-      font-size: 13px;  // Reduced font size
-      padding: 0.75rem;
-    }
+/* Larger Screens (Desktops) */
+@media only screen and (min-width: 1024px) {
+  .signup-container {
+    height: 88vh;
+    padding: 0;
+  }
 
-    .social-icons .social-icon {
-      width: 28px;  // Reduced icon size
-      height: 28px;
-    }
+  .signup-box {
+    max-width: 400px;
+    padding: 1.5rem;
   }
 }

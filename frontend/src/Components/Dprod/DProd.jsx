@@ -45,7 +45,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
 
   const handleSize = (size) => {
     setSelectedSize(size);
-    setCart({ size: size, product: product, quantity: 1 });
+    setCart({ sizeOrColor: size, product: product, quantity: 1 });
   };
 
   const handleAddToCart = async () => {
@@ -154,15 +154,16 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
             <div className="size-options">
               <strong>Select Size:</strong>
               <div className="size-choices">
-                {product.sizeQuantities &&
-                  Object.keys(product.sizeQuantities).map((size) => (
+                {product.sizeColorQuantities &&
+                  product.sizeColorQuantities.map((sq,ind) => (
                     <button
-                      key={size}
-                      className={`size-btn ${selectedSize === size ? 'selected' : ''}`}
-                      onClick={() => handleSize(size)}
-                      disabled={product.sizeQuantities[size] <= 0}
+                      key={ind}
+                      className={`size-btn ${selectedSize === sq.sizeOrColor ? 'selected' : ''}`}
+                      onClick={() => handleSize(sq.sizeOrColor)}
+                      disabled={sq.quantity <= 0}
                     >
-                      {size}
+
+                      {sq.quantity}
                     </button>
                   ))}
               </div>

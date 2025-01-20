@@ -39,71 +39,27 @@ const Signup = () => {
   return (
     <div className="signup-container">
       <div className="signup-box">
-        <div className="logo">
-          <img src="/images/logo.jpg" alt="Logo" />
-        </div>
-        <h2>Create an Account</h2>
-        <p className="tagline">Fill in the details below to sign up.</p>
+      <div class="hader">
+        <span>Join us today!</span>
+        <p>Sing up now to become a member.</p>
+      </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              onChange={handleChange}
-              
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={handleChange}
-              
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="cpassword">Confirm Password</label>
-            <input
-              type="password"
-              id="cpassword"
-              name="cpassword"
-              onChange={handleChange}
-              
-            />
-          </div>
-
-          {/* Role selection dropdown */}
-          <div className="input-group">
-            <label htmlFor="role">I am a</label>
-            <select
-              id="role"
-              name="role"
-              onChange={handleChange}
-              
-            >
-              <option value="">Select one option</option>
+          <input type="text" placeholder="Enter Name" id="username" name="username" onChange={handleChange} />
+          <input type="password" placeholder="Choose A Password" id="password" name="password" onChange={handleChange} />
+          <input type="password" placeholder="Re-Enter Password" id="cpassword" name="cpassword" onChange={handleChange} />
+            <select  id="role" name="role" onChange={handleChange}>
+              <option value="">Select your role</option>
               <option value="buyer">Buyer</option>
               <option value="seller">Seller</option>
             </select>
-          </div>
-
-
           <button type="submit" className="signup-btn">Sign Up</button>
         </form>
-
         <div className="extra-links">
           <p className="login-link">
             Already have an account? <Link to={"/login"}>Login here</Link>
           </p>
         </div>
-
       </div>
     </div>
   );

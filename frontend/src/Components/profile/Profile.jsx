@@ -104,10 +104,11 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
     }
   }
   const handleCancelAddress=()=>{
-    if((addresses[position].houseName==''))
+    if(addresses[position].houseName=='')
       addresses.pop();
     setPosition(0);
     setIsEditingAddresses(!isEditingAddresses);
+    getEssentials();
   }
   
   return (
@@ -176,6 +177,7 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
                 checked={profile.gender === "male"}
                 onChange={handleProfileChange}
                 disabled={!isEditingProfile}
+                
               />
               Male
             </label>
@@ -277,7 +279,7 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
                 className="address-button"
                 disabled={!isEditingAddresses}  // Disable submit button if not in editing mode
               >
-                <FaEdit /> Edit Address
+                <FaEdit /> Save Address
               </button>
               <button
                 onClick={handleCancelAddress}
@@ -307,7 +309,7 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
               )}
             </div>
             <p>
-              <span>{address.place},</span><span>{address.pincode},</span><span>{address.landmark}</span>
+            <span>{address.postOffice} P.O</span><span>{address.place},</span><span>{address.pincode} (PIN),</span><span>{address.landmark}</span>
             </p>
               </>
               </div>

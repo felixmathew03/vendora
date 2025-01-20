@@ -28,63 +28,41 @@ $heading-font: 'Montserrat', sans-serif;
 .product-card {
   background-color: $card-background;
   display: flex;
-
+  flex-direction: column;
   border-radius: 12px;
-  overflow: hidden;
   height: 420px;
+  width: 300px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   // Product Image
-  .product-images {
-    width: 300px;
-    height: 100%;
-    background: #ddd;
-    position: relative;
-    overflow: hidden;
 
     .image-gallery {
-        width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      overflow-y: scroll;
-      scrollbar-width: none;
-      height: 100%;
-
+      width: 100%;
+      height: 60%;
       .product-image {
         width: 100%;
-        height: 80%;
-        object-fit: cover;
+        height: 100%;
+        object-fit: contain;
         transition: opacity 0.3s ease;
       }
 
-      .product-image:hover {
-        opacity: 0.8;
-      }
     }
-  }
 
   // Bottom Section (Product Info & Sizes)
   .bottom {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    gap: 15px;
-    width: 350px;
-    height: 100%;
+    gap: 5px;
+    width: 100%;
+    height: 20%;
     .left {
-      // Product Details
+      padding: 15px ;
+      padding-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
       .product-info {
         font-size: 16px;
         color: $text-color;
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-between;
-
-        strong {
-          color: $primary-color;
-          font-weight: 500;
-        }
-
         .product-name {
           font-size: 18px;
           font-weight: 600;
@@ -107,40 +85,16 @@ $heading-font: 'Montserrat', sans-serif;
       }
     }
 
-    .right {
-
-      // Size Quantities
-      .size-quantities {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-
-        .size-quantity {
-          background-color: $secondary-color;
-          color: #fff;
-          padding: 8px 12px;
-          border-radius: 5px;
-          font-size: 14px;
-          font-weight: 600;
-          transition: background-color 0.3s ease;
-          cursor: pointer;
-
-          &:hover {
-            background-color: $primary-color;
-          }
-        }
-      }
-    }
     // Button Styling
     .edit-btn {
-      background-color: #00796b;    // Light Green for background
+      margin-left: 15px;
+      background-color: #000879;    // Light Green for background
       color: white;                 // White text for contrast
       border: none;
       padding: 12px 18px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 14px;
       display: inline-flex;
       align-items: center;          // Align the text and icon
       gap: 10px;                    // Add some space between the icon and text
@@ -148,15 +102,15 @@ $heading-font: 'Montserrat', sans-serif;
       text-decoration: none;        // Remove underline in Link component
 
       &:hover {
-        background-color: darken(#00796b, 10%);
+        background-color: #020965;
       }
 
       &:active {
-        background-color: darken(#00796b, 20%);  
+        background-color: #010757;  
       }
 
       .edit-icon {
-        font-size: 18px;           // Make the icon a bit larger
+        font-size: 14px;           // Make the icon a bit larger
         transition: color 0.3s ease; // Smooth transition for the icon color
       }
 

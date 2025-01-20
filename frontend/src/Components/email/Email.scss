@@ -1,11 +1,10 @@
 // src/VerifyEmail.scss
-$secondary-color: #a1c9cb;  // Light color for background
-$primary-color: #094432;  // Dark color for elements
-$accent-color: #044733;  // Accent color for buttons and highlights
+$secondary-color: #a1adcb;  // Light color for background
+$primary-color: #091544;  // Dark color for elements
+$accent-color: #041d47;  // Accent color for buttons and highlights
 $black: #0e0d0d;
 $light-gray: #f1f1f1;
 $dark-gray: #333;
-$error-color: #319275;  // Red for error messages
 
 // Main Verify Email Container
 .email-container {
@@ -18,7 +17,7 @@ $error-color: #319275;  // Red for error messages
   background-size: cover;
 
   .email-box {
-    background-color: rgba(161, 201, 203, 0.596); 
+    background-color: rgb(205, 222, 248); 
     padding: 1rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 350px;
@@ -108,7 +107,7 @@ $error-color: #319275;  // Red for error messages
         transition: color 0.3s ease;
 
         &:hover {
-          color: #03402e;
+          color: #050340;
           text-decoration: underline;
         }
       }

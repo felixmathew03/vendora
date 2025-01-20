@@ -44,6 +44,8 @@ const Sidebar = ({setProducts}) => {
 
   // Handle category selection change
   const handleCategoryChange = (e) => {
+    console.log(e.target.value);
+    
     setSelectedCategory(e.target.value);
     try {
       setProducts([])
@@ -76,8 +78,8 @@ const Sidebar = ({setProducts}) => {
             All
           </option>
           {categories.map((cat,ind)=>(
-            <option key={ind} value={cat}>
-            {cat.category.charAt(0).toUpperCase() + cat.slice(1)}
+            <option key={ind} value={cat.category}>
+            {cat.category.toUpperCase()}
           </option>
           ))}
         </select>

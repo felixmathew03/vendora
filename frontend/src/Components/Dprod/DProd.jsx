@@ -15,7 +15,8 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [cart, setCart] = useState({
     product: {},
-    size: "",
+    sizeOrColor: "",
+    index: 0,
     quantity: 0
   });
 
@@ -43,13 +44,13 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
     }
   };
 
-  const handleSize = (size) => {
+  const handleSize = (size,ind) => {
     setSelectedSize(size);
-    setCart({ sizeOrColor: size, product: product, quantity: 1 });
+    setCart({ sizeOrColor: size, index: ind, product: product, quantity: 1 });
   };
 
   const handleAddToCart = async () => {
-    if (cart.size) {
+    if (cart.sizeOrColor) {
       const { status, data } = await axios.post(`${route()}addtocart`, cart, {
         headers: { "Authorization": `Bearer ${value}` }
       });
@@ -90,7 +91,8 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
   };
 
   const handleBuynow = async () => {
-    if (cart.size) {
+    
+    if (cart.sizeOrColor) {
       const { status, data } = await axios.post(`${route()}addtocart`, cart, {
         headers: { "Authorization": `Bearer ${value}` }
       });
@@ -159,11 +161,11 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
                     <button
                       key={ind}
                       className={`size-btn ${selectedSize === sq.sizeOrColor ? 'selected' : ''}`}
-                      onClick={() => handleSize(sq.sizeOrColor)}
+                      onClick={() => handleSize(sq.sizeOrColor,ind)}
                       disabled={sq.quantity <= 0}
                     >
 
-                      {sq.quantity}
+                      {sq.sizeOrColor}
                     </button>
                   ))}
               </div>

@@ -4,8 +4,6 @@ import axios from 'axios';
 import route from '../route';
 import './Products.scss';
 import { Link, useParams } from 'react-router-dom';
-import { FaEdit } from 'react-icons/fa';
-
 const Products = ({ setUsername, setRole, setLoggedIn }) => {
   const {category}=useParams();
   const value=localStorage.getItem("Auth")
@@ -59,8 +57,7 @@ const Products = ({ setUsername, setRole, setLoggedIn }) => {
               </div>
               <Link to={`/editproduct/${product._id}`}>
                 <button className="edit-btn">
-                  <FaEdit className="edit-icon"/>
-                  Edit
+                  Edit Product
                 </button>
               </Link>
             </div>

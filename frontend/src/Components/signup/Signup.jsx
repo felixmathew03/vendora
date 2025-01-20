@@ -39,7 +39,7 @@ const Signup = () => {
   return (
     <div className="signup-container">
       <div className="signup-box">
-      <div class="hader">
+      <div className="hader">
         <span>Join us today!</span>
         <p>Sing up now to become a member.</p>
       </div>

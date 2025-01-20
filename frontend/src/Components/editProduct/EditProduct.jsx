@@ -12,14 +12,15 @@ const EditProduct = ({setUsername, setRole, setLoggedIn }) => {
   const [newCategory, setNewCategory] = useState('');
   const [categories, setCategories] = useState([]); 
   const [product, setProduct] = useState({});
+  const [sizeColorQuantities,setsizeColorQuantities]=useState([])
   const [isAddCategory,setAddCategory]=useState(false)
-  const handleCategoryChange = (e) => {
-    setProduct({category:e.target.value});
-  };
+  
   useEffect(() => {
     fetchProduct();
   }, []);
-
+const handleCategoryChange = (e) => {
+    setProduct({category:e.target.value});
+  };
   const fetchProduct = async () => {
     try {
       const { status, data } = await axios.get(`${route()}getproduct/${_id}`, { headers: { "Authorization": `Bearer ${value}` } });
@@ -28,8 +29,10 @@ const EditProduct = ({setUsername, setRole, setLoggedIn }) => {
         setRole(data.role);
         setLoggedIn(true);
         setProduct(data.product);
+        
         if (data.category.length > 0) 
-            setCategories(data.category[0].categories);
+            setCategories(data.category);
+        setsizeColorQuantities(data.product.sizeColorQuantities)
       }
     } catch (error) {
       console.log("error");
@@ -54,14 +57,18 @@ const EditProduct = ({setUsername, setRole, setLoggedIn }) => {
       setNewCategory('');
     }
   };
-  const handleSizeQuantityChange = (size, e) => {
+  const handleSizeQuantityChange = ( e,ind) => {
+    
+    const updatedSizeColorQuantities = [...sizeColorQuantities]; // Spread the existing array to preserve other elements
+  updatedSizeColorQuantities[ind] = {
+    ...updatedSizeColorQuantities[ind], // Spread the current object to preserve other properties
+    quantity: e.target.value, // Update the specific property you want to modify (in this case, quantity)
+  };
     setProduct({
       ...product,
-      sizeQuantities: {
-        ...product.sizeQuantities,
-        [size]: parseInt(e.target.value, 10) || 0,
-      },
+      sizeColorQuantities: updatedSizeColorQuantities,
     });
+  setsizeColorQuantities(updatedSizeColorQuantities);
   };
   const handleProductDetailChange = (e) => {
     const { name, value } = e.target;
@@ -112,6 +119,8 @@ const EditProduct = ({setUsername, setRole, setLoggedIn }) => {
     <div className="edit-product">
       <h2>Edit Product</h2>
       <form className="product-form" onSubmit={handleSubmit}>
+        <div className="top">
+          
         {/* Category */}
         <div className="form-group">
           <label>Category</label>
@@ -121,9 +130,9 @@ const EditProduct = ({setUsername, setRole, setLoggedIn }) => {
               onChange={handleCategoryChange}
               disabled={categories.length === 0}
             >
-              <option value="">Select a Category</option>
+              <option value={product.category}>{product.category}</option>
               {categories.map((cat, index) => (
-                <option key={index} value={cat}>{cat}</option>
+                product.category!=cat.category&&<option key={index} value={cat.category}>{cat.category}</option>
               ))}
             </select>
             
@@ -145,71 +154,74 @@ const EditProduct = ({setUsername, setRole, setLoggedIn }) => {
               </div>
           </div>
         </div>
-
-        {/* Product Name */}
-        <div className="form-group">
-          <label>Product Name</label>
-          <input
-            type="text"
-            name="pname"
-            value={product.pname}
-            onChange={handleProductDetailChange}
-            placeholder="Enter product name"
-          />
         </div>
+        <div className="mid">
+          <div className="left">
+            {/* Product Name */}
+            <div className="form-group">
+              <label>Product Name</label>
+              <input
+                type="text"
+                name="pname"
+                value={product.pname}
+                onChange={handleProductDetailChange}
+                placeholder="Enter product name"
+              />
+            </div>
 
-        {/* Price */}
-        <div className="form-group">
-          <label>Price</label>
-          <input
-            type="number"
-            name="price"
-            value={product.price}
-            onChange={handleProductDetailChange}
-            placeholder="Enter price"
-          />
-        </div>
+            {/* Price */}
+            <div className="form-group">
+              <label>Price</label>
+              <input
+                type="number"
+                name="price"
+                value={product.price}
+                onChange={handleProductDetailChange}
+                placeholder="Enter price"
+              />
+            </div>
 
-        {/* Brand (Company) */}
-        <div className="form-group">
-          <label>Brand (Company)</label>
-          <input
-            type="text"
-            name="brand"
-            value={product.brand}
-            disabled="true"
-            placeholder="Enter brand"
-          />
-        </div>
-
-        {/* Sizes and Quantities */}
-        <div className="form-group">
-          <label>Sizes (Enter Quantity)</label>
-          <div className="size-quantity">
-            {['S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map((size) => (
-              <div key={size} className="size-input">
-                <label>{size}</label>
-                <input
-                  type="number"
-                  value={product.sizeQuantities?.[size] || 0}
-                  onChange={(e) => handleSizeQuantityChange(size, e)}
-                  placeholder="Quantity"
-                />
+            {/* Brand (Company) */}
+            <div className="form-group">
+              <label>Brand (Company)</label>
+              <input
+                type="text"
+                name="brand"
+                value={product.brand}
+                disabled
+                placeholder="Enter brand"
+              />
+            </div>
+            {/* Product Images */}
+            <div className="form-group">
+              <label>Product Images</label>
+              <input
+                type="file"
+                multiple
+                onChange={handleImageChange}
+              />
+            </div>
+          </div>
+          <div className="right">
+              {/* Sizes and Quantities */}
+              <div className="form-group">
+                <label>Sizes or Color (Enter Quantity)</label>
+                <div className="size-color-quantity">
+                  {sizeColorQuantities.map((sq,ind) => (
+                    <div key={ind} className="size-color-input">
+                      <label>{sq.sizeOrColor}</label>
+                      <input
+                        type="number"
+                        value={sq.quantity}
+                        onChange={(e) => handleSizeQuantityChange( e,ind)}
+                        placeholder="Quantity"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
           </div>
         </div>
-
-        {/* Product Images */}
-        <div className="form-group">
-          <label>Product Images</label>
-          <input
-            type="file"
-            multiple
-            onChange={handleImageChange}
-          />
-        </div>
-
         <button type="submit" className="submit-btn">Submit</button>
       </form>
     </div>

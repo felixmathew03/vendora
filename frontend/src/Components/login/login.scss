@@ -1,5 +1,5 @@
 // Define Colors
-$primary-color: #086656;  // Purple color for highlights and buttons
+$primary-color: #080a66;  // Purple color for highlights and buttons
 $secondary-color: #1e0e4b; // Dark color for main text
 $background-color: #fff;  // White background for the box
 $text-color: #1e0e4b; // Main text color
@@ -83,13 +83,14 @@ $error-color: #e60000; // Error color for input fields (optional)
       padding: 10px 20px;
       font-size: 1rem;
       border-radius: 8px;
+      border: none;
       width: 100%;
       cursor: pointer;
       text-transform: uppercase;
       transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: #075044;
+        background-color: #13158f;
       }
 
       &:active {

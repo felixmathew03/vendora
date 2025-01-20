@@ -154,13 +154,12 @@ export async function products(req,res) {
 export async function getProduct(req,res) {
     try {
         const {_id}=req.params;
-        console.log(_id);
-        
         const id=req.user.userId;
         const user=await loginSchema.findOne({_id:id});
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const product=await productSchema.findOne({_id});
+        
         const category=await categorySchema.find();
         return res.status(200).send({username:user.username,role:user.role,product,category})
     } catch (error) {
@@ -369,26 +368,29 @@ export async function addOrders(req, res) {
 
 export async function addOrder(req,res) {
     try {
-        const {id}=req.body;
+        
+        const {id,address}=req.body;
         const _id=req.user.userId;
         const user=await loginSchema.findOne({_id})
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const cart = await cartSchema.findOne({ buyerId: _id,'product._id': id  });  
-        if (cart) {
-            const product = cart;  
-            const size = product.size;
-            const field = `sizeQuantities.${size}`;
-            const quantity = await productSchema.findOne({ _id: id },{sizeQuantities:1});
-            
-            if (quantity && quantity.sizeQuantities[size] !== undefined && quantity.sizeQuantities[size] >= product.quantity) {
-                const newQuantity = quantity.sizeQuantities[size] - product.quantity;
+        
+        if (cart) { 
+            const size = cart.index;
+            const cQuantity = await productSchema.findOne({ _id: id },{sizeColorQuantities:1});
+            if (cQuantity && cQuantity.sizeColorQuantities[size].quantity !== undefined && cQuantity.sizeColorQuantities[size].quantity >= cart.quantity) {
+                const newQuantity = cQuantity.sizeColorQuantities[size].quantity - cart.quantity;
+                console.log(newQuantity);
                 
                 // Update the quantity in the database
-                productSchema.updateOne({ _id: id }, { $set: { [field]: newQuantity } }).then(async()=>{
+                    productSchema.updateOne(
+                        { _id: id, "sizeColorQuantities.sizeOrColor": cart.sizeOrColor },
+                        { $set: { "sizeColorQuantities.$.quantity": newQuantity } } 
+                    ).then(async()=>{
                     await cartSchema.deleteOne({$and:[{buyerId:_id},{"product._id":id}]});
-                    await orderSchema.create({buyerId:_id,product:cart.product});
-                    await soldproductSchema.create({buyerId:_id,sellerId:cart.product.sellerId,product:cart.product});
+                    await orderSchema.create({buyerId:_id,product:cart.product,sizeOrColor:cart.sizeOrColor,quantity:cart.quantity,shipped:false});
+                    await soldproductSchema.create({buyerId:_id,sellerId:cart.product.sellerId,product:cart.product,address,sname:user.username,email:user.email});
                     return res.status(201).send({msg:"success"});
                 }).catch((error)=>{
                     console.log(error);

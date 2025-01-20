@@ -1,7 +1,7 @@
 /* src/Signup.scss */
-$secondary-color: #a1c9cb;  // Light color for background
-$primary-color: #094432;  // Dark color for elements
-$accent-color: #044733;  // Accent color for buttons and highlights
+$secondary-color: #a1a9cb;  // Light color for background
+$primary-color: #091544;  // Dark color for elements
+$accent-color: #041047;  // Accent color for buttons and highlights
 $black: #151414;
 $light-gray: #2c2b2b;
 $dark-gray: #202020;
@@ -25,7 +25,7 @@ body {
   background-size: cover;
 
   .signup-box {
-    background-color: rgba(161, 201, 203, 0.596); 
+    background-color: rgb(205, 218, 249); 
     padding: 1.5rem; 
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -90,11 +90,11 @@ body {
       text-transform: uppercase;
 
       &:hover {
-        background-color: #076448;
+        background-color: #100764;
       }
 
       &:active {
-        background-color: #08694c;
+        background-color: #081869;
         transform: scale(0.98);
       }
     }
@@ -115,7 +115,7 @@ body {
         transition: color 0.3s ease;
 
         &:hover {
-          color: #023c2b;
+          color: #05023c;
           text-decoration: underline;
         }
       }

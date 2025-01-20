@@ -41,11 +41,15 @@ const SCart = ({ setUsername, setRole, setLoggedIn }) => {
     };
 
     const handleCart = async () => {
-        const { status, data } = await axios.post(`${route()}buynow`, { id: pid }, { headers: { "Authorization": `Bearer ${value}` } });
-        if (status === 201) {
-            alert(data.msg);
-            if(data.msg=="success")
-                navigate('/purchasecompleted')
+        if(selectedAddress){
+            const { status, data } = await axios.post(`${route()}buynow`, { id: pid,address:selectedAddress }, { headers: { "Authorization": `Bearer ${value}` } });
+            if (status === 201) {
+                alert(data.msg);
+                if(data.msg=="success")
+                    navigate('/purchasecompleted')
+            }
+        }else{
+            alert("Select your address")
         }
     };
     
@@ -54,7 +58,7 @@ const SCart = ({ setUsername, setRole, setLoggedIn }) => {
             {!cartItem ? (
                 <div className="empty-cart">
                     <h2>No such product</h2>
-                    <Link to={'/home'}>Go to homepage</Link>
+                    <Link to={'/'}>Go to homepage</Link>
                 </div>
             ) : (
                 <div className="cart">

@@ -33,28 +33,28 @@ const Login = () => {
   };
 
   return (
-    <div class="login-container">
-    <div class="login-box">
-      <div class="title">
-        Welcome back to <span class="highlight">Vendora</span>
+    <div className="login-container">
+    <div className="login-box">
+      <div className="title">
+        Welcome back to <span className="highlight">Vendora</span>
       </div>
-      <div class="tagline">Log in to your account</div>
+      <div className="tagline">Log in to your account</div>
   
-      <form class="flex flex-col gap-3">
-        <div class="input-group">
-          <label for="email">Email</label>
+      <form className="flex flex-col gap-3">
+        <div className="input-group">
+          <label htmlFor="email">Email</label>
           <input type="text" id="email" name="email"  onChange={handleChange}/>
         </div>
   
-        <div class="input-group">
-          <label for="password">Password</label>
+        <div className="input-group">
+          <label htmlFor="password">Password</label>
           <input type="password" id="password" name="password"  onChange={handleChange}/>
         </div>
   
         <button onClick={handleSubmit} class="login-btn" >Sign in</button>
       </form>
   
-      <div class="signup-link">
+      <div className="signup-link">
         Don’t have an account yet? <Link to={"/email"}>Sign Up</Link>
       </div>
   

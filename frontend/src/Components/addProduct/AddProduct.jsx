@@ -95,7 +95,7 @@ const AddProduct = ({ setUsername, setRole, setLoggedIn }) => {
   }
 
   const handleAddSizeColor = () => {
-    setSizeColorQuantities([...sizeColorQuantities, { sizeOrColor: '', quantity: '' }]);
+    setSizeColorQuantities([...sizeColorQuantities, { sizeOrColor: '', quantity: 0 }]);
   };
 
   const handleSizeColorChange = (index, field, value) => {  

@@ -50,6 +50,9 @@ const Orders = ({ setUsername, setRole, setLoggedIn }) => {
                 {/* Second content (order details or product name) */}
                 <div className="second-content">
                   <span className='order-name'>{order.product.pname}</span>
+                  <span className='order-name'>size-{order.sizeOrColor}</span>
+                  <span className='order-name'>quatity-{order.quantity}</span>
+                  <span className='order-name'>{order.shipped?"Shipped successfully":"Not yet shipped"}</span>
                 </div>
               </Link>
             </div>

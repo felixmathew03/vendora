@@ -4,6 +4,7 @@ import axios from 'axios';
 import route from '../route';
 import './Products.scss';
 import { Link, useParams } from 'react-router-dom';
+
 const Products = ({ setUsername, setRole, setLoggedIn }) => {
   const {category}=useParams();
   const value=localStorage.getItem("Auth")

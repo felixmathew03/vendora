@@ -137,6 +137,11 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
             <FaPlus /> Product
           </button>
         </Link>}
+        <Link to={'/placedorders'} className="add-product-link">
+          <button className="add-product-btn" >
+            Placed orders
+          </button>
+        </Link>
         </div>
         <ul>
           {categories.map((category, index) => (

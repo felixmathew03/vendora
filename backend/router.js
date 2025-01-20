@@ -29,5 +29,7 @@ router.route("/getwishlists").get(Auth,user.getWishlists);
 router.route("/placeorder").post(Auth,user.addOrders);
 router.route("/buynow").post(Auth,user.addOrder);
 router.route("/getorders").get(Auth,user.getOrders);
+router.route("/ordersplaced").get(Auth,user.placedOrders);
+router.route("/confirmorder").put(Auth,user.addToShipping);
 
 export default router;

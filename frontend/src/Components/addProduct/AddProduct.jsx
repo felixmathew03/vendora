@@ -100,7 +100,12 @@ const AddProduct = ({ setUsername, setRole, setLoggedIn }) => {
 
   const handleSizeColorChange = (index, field, value) => {  
     const updatedSizeColorQuantities = [...sizeColorQuantities];
-    updatedSizeColorQuantities[index][field] = value;
+    
+    if(field=="quantity"){
+      updatedSizeColorQuantities[index][field] = parseInt(value,10);
+    }else{
+      updatedSizeColorQuantities[index][field] = value;
+    }
     setSizeColorQuantities(updatedSizeColorQuantities);
   };
 

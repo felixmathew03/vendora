@@ -17,6 +17,7 @@ import SCart from './Components/singlecart/SCart';
 import Orders from './Components/orders/Orders';
 import PurchaseCompleted from './Components/purchase/PurchaseCompleted';
 import EmailVerificationSuccess from './Components/verifysuccess/EmailVerificationSuccess';
+import PlacedOrders from './Components/PlacedOrders/PlacedOrders';
 import './App.css'
 
 
@@ -42,6 +43,7 @@ const App = () => {
         <Route path='/mywishlist' element={<Wishlist  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/scart/:pid' element={<SCart  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/myorders' element={<Orders  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
+        <Route path='/placedorders' element={<PlacedOrders  setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn}/>}/>
         <Route path='/purchasecompleted' Component={PurchaseCompleted}/>
         <Route path='/emailsuccess' Component={EmailVerificationSuccess}/>
       </Routes>

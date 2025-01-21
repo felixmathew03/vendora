@@ -51,7 +51,7 @@ const Login = () => {
           <input type="password" id="password" name="password"  onChange={handleChange}/>
         </div>
   
-        <button onClick={handleSubmit} class="login-btn" >Sign in</button>
+        <button onClick={handleSubmit} className="login-btn" >Sign in</button>
       </form>
   
       <div className="signup-link">

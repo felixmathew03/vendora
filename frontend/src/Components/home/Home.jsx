@@ -3,9 +3,10 @@ import route from '../route';
 import axios from 'axios';
 import Sidebar from '../sidebar/Sidebar';
 import './Home.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Home = ({setUsername,setRole,setLoggedIn}) => {
+  const navigate=useNavigate();
   const value=localStorage.getItem('Auth');
     const [products, setProducts] = useState([]);
   useEffect(()=>{
@@ -21,8 +22,11 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
         setLoggedIn(true);
         setProducts(res.data.products)
       }else if(res.status==403){
+        
         setLoggedIn(!loggedIn);
       }
+    }else{
+      navigate('/login')
     }}
      catch (error) {
       console.log("error");

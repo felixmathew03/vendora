@@ -8,7 +8,12 @@
     .category-filter {
       margin-bottom: 20px;
     }
-  
+    .price-filter{
+      p{
+        font-weight: 600;
+        font-size: large;
+      }
+    }
     .group {
       display: flex;
       align-items: center;
@@ -40,6 +45,7 @@
           box-shadow: 0 0 0 4px rgba(0, 48, 73, 0.1);
         }
       }
+
       .icon {
         position: absolute;
         left: 1rem;

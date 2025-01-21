@@ -9,6 +9,7 @@ const Sidebar = ({setProducts}) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const[sideProducts,setSideProducts]=useState([])
   const [categories,setCategories] = useState([]);
+  const [maxPrice,setPrice]=useState(10000);
   const value=localStorage.getItem("Auth");
   useEffect(()=>{
     getDetails();
@@ -33,7 +34,7 @@ const Sidebar = ({setProducts}) => {
     setSearchTerm(e.target.value);
     try {
       setProducts([])
-        sideProducts.filter((i)=>i.pname.toLowerCase().includes(e.target.value.toLowerCase())&&i.category.toLowerCase().includes(selectedCategory.toLowerCase())).map((product)=>{
+        sideProducts.filter((i)=>i.pname.toLowerCase().includes(e.target.value.toLowerCase())&&i.category.toLowerCase().includes(selectedCategory.toLowerCase())&&i.price<=maxPrice).map((product)=>{
           setProducts((pre)=>[...pre,product])
         })
 
@@ -41,7 +42,19 @@ const Sidebar = ({setProducts}) => {
         console.log(error);
     }
   };
+  const handlePriceChange = async(e) => {
+    setPrice(parseInt(e.target.value,10));
+    try {
+      setProducts([])
+        sideProducts.filter((i)=>i.price<=maxPrice&&i.category.toLowerCase().includes(selectedCategory.toLowerCase())&&i.pname.toLowerCase().includes(searchTerm.toLowerCase())).map((product)=>{
+          setProducts((pre)=>[...pre,product])
+        })
 
+    } catch (error) {
+        console.log(error);
+    }
+  };
+  
   // Handle category selection change
   const handleCategoryChange = (e) => {
     console.log(e.target.value);
@@ -49,7 +62,7 @@ const Sidebar = ({setProducts}) => {
     setSelectedCategory(e.target.value);
     try {
       setProducts([])
-        sideProducts.filter((i)=>i.category.toLowerCase().includes(e.target.value.toLowerCase())&&i.pname.toLowerCase().includes(searchTerm.toLowerCase())).map((product)=>{
+        sideProducts.filter((i)=>i.category.toLowerCase().includes(e.target.value.toLowerCase())&&i.pname.toLowerCase().includes(searchTerm.toLowerCase())&&i.price<=maxPrice).map((product)=>{
           setProducts((pre)=>[...pre,product])
         })
 
@@ -83,6 +96,12 @@ const Sidebar = ({setProducts}) => {
           </option>
           ))}
         </select>
+        
+      </div>
+      <div className="price-filter">
+      <label for="rangeInput">Price Filter:</label>
+      <p id="rangeValue">Under:- ${maxPrice}</p>
+      <input type="range" id="rangeInput" name="range" min="0" max="10000" step="1"  onChange={handlePriceChange} />
       </div>
     </div>
   );

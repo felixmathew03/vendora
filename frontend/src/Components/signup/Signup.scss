@@ -64,6 +64,21 @@ body {
           border-color: $accent-color;
           box-shadow: 0 0 8px rgba($accent-color, 0.4);
         }
+        
+      }
+      .strong{
+        border: 1px solid green;
+        &:focus {
+          border-color: green;
+          box-shadow: 0 0 8px rgba($accent-color, 0.4);
+        }
+      }
+      .weak{
+        border-color:  red;
+        &:focus {
+          border-color: red;
+          box-shadow: 0 0 8px rgba($accent-color, 0.4);
+        }
       }
       select {
         appearance: none; /* Remove default browser styling */

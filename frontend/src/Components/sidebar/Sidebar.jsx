@@ -101,7 +101,7 @@ const Sidebar = ({setProducts}) => {
       <div className="price-filter">
       <label for="rangeInput">Price Filter:</label>
       <p id="rangeValue">Under:- ${maxPrice}</p>
-      <input type="range" id="rangeInput" name="range" min="0" max="10000" step="1"  onChange={handlePriceChange} />
+      <input type="range" id="rangeInput" name="range" min="0" max="10000" step="5"  onChange={handlePriceChange} />
       </div>
     </div>
   );

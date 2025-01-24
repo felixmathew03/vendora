@@ -15,8 +15,8 @@ const {sign}=pkg;
 const transporter = nodemailer.createTransport({
    service:"gmail",
     auth: {
-      user: "felixmathewt@gmail.com",
-      pass: "qwvy rccu lwjz rmal",
+      user: "",
+      pass: "",
     },
 });
 

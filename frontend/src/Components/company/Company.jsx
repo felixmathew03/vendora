@@ -16,6 +16,7 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
   });
   const [categories, setCategories] = useState([]);
   const [isEditable, setIsEditable] = useState(false);
+    const [phoneError, setPhoneError] = useState("");
   
   useEffect(() => {
     getEssentials();
@@ -42,6 +43,14 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
       ...prev,
       [name]: value,
     }));
+    if (name === "phone") {
+      const phonePattern = /^[0-9]{10}$/;
+      if (!phonePattern.test(value)) {
+        setPhoneError("Phone number must be 10 digits.");
+      } else {
+        setPhoneError("");
+      }
+    }
   };
   const handleEditClick = () => {
     setIsEditable(true);
@@ -118,6 +127,7 @@ const Company = ({setUsername, setRole, setLoggedIn }) => {
           disabled={!isEditable}
           className="editable-input"
         />
+        {phoneError && <p className="perror">{phoneError}</p>}
     </div>
 
   </div>

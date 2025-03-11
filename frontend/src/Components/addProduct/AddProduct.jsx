@@ -125,6 +125,8 @@ const AddProduct = ({ setUsername, setRole, setLoggedIn }) => {
       if (status === 201) {
         alert(data.msg);
         navigate('/company');
+      }else if(status===202){
+        alert(data.msg);
       } else {
         alert('Adding incomplete');
       }

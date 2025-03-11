@@ -15,6 +15,7 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
   const [countWishlist,setCountWishlist]=useState(0);
   const [countOrders,setCountOrders]=useState(0);
   const [showPopover, setShowPopover] = useState(null);
+  const [phoneError, setPhoneError] = useState("");
   const [position,setPosition]=useState(0)
   useEffect(()=>{
     getEssentials();
@@ -46,6 +47,14 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
       ...prev,
       [name]: value,
     }));
+    if (name === "phone") {
+      const phonePattern = /^[0-9]{10}$/;
+      if (!phonePattern.test(value)) {
+        setPhoneError("Phone number must be 10 digits.");
+      } else {
+        setPhoneError("");
+      }
+    }
   };
   const handlePopoverToggle = (index) => {
     setShowPopover(showPopover === index ? null : index);
@@ -161,6 +170,7 @@ const Profile = ({setUsername,setRole,setLoggedIn}) => {
                 className="input"
               />
               <label htmlFor="phone" className="input-label">Phone Number</label>
+              {phoneError && <p className="perror">{phoneError}</p>}
             </div>
           </div>
 

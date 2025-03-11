@@ -126,7 +126,7 @@ export async function editCategory(req,res) {
 }
 
 export async function addProduct(req,res) {
-    try {
+    try { 
         const product=req.body;
         const id=req.user.userId;
         const data=await productSchema.create({sellerId:id,...product});

@@ -5,9 +5,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #090fab; /* Dark background for navbar */
-  color: white;
-
+  color: #020448;
+  width: 60%;
+  margin: auto;
   .navbar-logo {
     display: flex;
     align-items: center;
@@ -24,13 +24,11 @@
       height: 40px;
       border-radius: 50%;
     }
-
     .website-name {
       font-size: 24px;
       font-family: "Pacifico", serif;
     }
   }
-
   .navbar-right {
     display: flex;
     align-items: center;
@@ -86,7 +84,6 @@
         background-color: #adc7dc;
       }
     }
-
     .cart-icon {
       cursor: pointer;
       color: white;

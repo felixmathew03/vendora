@@ -77,8 +77,8 @@ $error-color: #e60000; // Error color for input fields (optional)
         width: 96%;
         padding: 0 11px;
         height: 38px;
-        padding-right: 0px;
         border-radius: 38px;
+        padding-right: 0px;
         border: 1px solid #9897b6;
         font-size: 0.875rem;
         color: $text-color;
@@ -101,9 +101,9 @@ $error-color: #e60000; // Error color for input fields (optional)
     .login-btn {
       background-color: #020354;
       color: white;
-      padding: 10px 20px;
+      height: 38px;
+      border-radius: 38px;
       font-size: 1rem;
-      border-radius: 8px;
       border: none;
       width: 65%;
       cursor: pointer;

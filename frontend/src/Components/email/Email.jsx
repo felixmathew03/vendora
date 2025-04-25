@@ -8,9 +8,16 @@ import './Email.scss'; // Importing the SCSS file for styling
 const Email = () => {
   const navigate=useNavigate();
   const [email, setEmail] = useState(''); 
+  const [validateE,setValidateE]=useState(true);
 
   const handleChange = (event) => {
-    setEmail(event.target.value);
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|co\.in)$/;
+      if(regex.test(event.target.value)){
+        setValidateE(!validateE)
+        setEmail(event.target.value);
+      }else{
+        setValidateE(false)
+      }
   };
   const handleSubmit = async(event) => {
     event.preventDefault(); 
@@ -45,6 +52,7 @@ const Email = () => {
               id="email"
               name="email"
               placeholder='Email'
+              className={validateE?"":"error"} 
               onChange={handleChange}
             />
           </div>

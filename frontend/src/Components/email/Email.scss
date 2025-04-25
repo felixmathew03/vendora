@@ -73,6 +73,9 @@ $dark-gray: #333;
         &:focus {
           border-color: $accent-color;
         }
+        &.error{
+          border-color: rgb(232, 9, 9);
+        }
       }
     }
     .btn {

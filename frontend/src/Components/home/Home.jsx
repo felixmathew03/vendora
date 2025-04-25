@@ -29,7 +29,7 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
       navigate('/login')
     }}
      catch (error) {
-      console.log("error");
+      navigate('/login');
     }
   }
   return (

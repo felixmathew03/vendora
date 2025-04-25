@@ -1,6 +1,6 @@
 // Define Colors
-$primary-color: #080a66;  // Purple color for highlights and buttons
-$secondary-color: #1e0e4b; // Dark color for main text
+$primary-color: #cdcdcd;  // Purple color for highlights and buttons
+$secondary-color: #ffffff; // Dark color for main text
 $background-color: #fff;  // White background for the box
 $text-color: #1e0e4b; // Main text color
 $error-color: #e60000; // Error color for input fields (optional)
@@ -10,18 +10,36 @@ $error-color: #e60000; // Error color for input fields (optional)
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  height: 100vh;
   background-color: #f9f9f9;
 
   .login-box {
-    max-width: 400px;
-    width: 100%;
-    padding: 20px;
+    width: 60%;
+    height: 80%;
     background-color: $background-color;
-    border-radius: 12px;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-
+    display: flex;
+    .login-box-left{
+      width: 55%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('/images/lbg.avif');
+      background-position: top;
+      background-size: cover;
+    }
+    .login-box-right{
+      width: 55%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 1%;
+    }
     // Heading Styles
     .title {
       font-size: 1.5rem;
@@ -38,7 +56,7 @@ $error-color: #e60000; // Error color for input fields (optional)
 
     .tagline {
       font-size: 1rem;
-      color: $secondary-color;
+      color: #020354;
       margin-bottom: 2rem;
       opacity: 0.8;
     }
@@ -47,7 +65,7 @@ $error-color: #e60000; // Error color for input fields (optional)
     .input-group {
       margin-bottom: 1.5rem;
       text-align: left;
-
+      width: 65%;
       label {
         font-size: 0.875rem;
         color: $text-color;
@@ -57,9 +75,11 @@ $error-color: #e60000; // Error color for input fields (optional)
 
       input {
         width: 96%;
-        padding: 11px;
-        border-radius: 8px;
-        border: 1px solid #e0e0e0;
+        padding: 0 11px;
+        height: 38px;
+        padding-right: 0px;
+        border-radius: 38px;
+        border: 1px solid #9897b6;
         font-size: 0.875rem;
         color: $text-color;
         outline: none;
@@ -73,18 +93,19 @@ $error-color: #e60000; // Error color for input fields (optional)
         &.error {
           border-color: $error-color;
         }
+
       }
     }
 
     // Submit Button
     .login-btn {
-      background-color: $primary-color;
+      background-color: #020354;
       color: white;
       padding: 10px 20px;
       font-size: 1rem;
       border-radius: 8px;
       border: none;
-      width: 100%;
+      width: 65%;
       cursor: pointer;
       text-transform: uppercase;
       transition: background-color 0.3s ease;
@@ -105,7 +126,7 @@ $error-color: #e60000; // Error color for input fields (optional)
       margin-top: 1.6rem;
       
       a {
-        color: $primary-color;
+        color: #190258;
         text-decoration: none;
         font-weight: 600;
         &:hover {

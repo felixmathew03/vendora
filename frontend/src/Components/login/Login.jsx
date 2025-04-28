@@ -30,9 +30,11 @@ const Login = () => {
   };
 
   const handleChange = (e) => {
-    if (e.target.name==="password") {
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    if (e.target.name=="password") {
+      console.log(e.target.value);
+      const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
       if(regex.test(e.target.value)){
+        
         setValidateP(!validateP)
         setDetails((pre) => ({ ...pre, [e.target.name]: e.target.value }));
       }else{

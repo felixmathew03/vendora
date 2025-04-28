@@ -20,6 +20,9 @@ const Sidebar = ({setProducts}) => {
       const {data,status}=await axios.get(`${route()}home`,{headers:{"Authorization":`Bearer ${value}`}})
       if (status==200) {
         setSideProducts(data.products);
+        const maxPrice = Math.max(...data.products.map(product => product.price));
+        setPrice(maxPrice+100)
+
         setCategories(data.categories);
       }else if(res.status==403){
         setLoggedIn(!loggedIn);
@@ -57,12 +60,10 @@ const Sidebar = ({setProducts}) => {
   
   // Handle category selection change
   const handleCategoryChange = (e) => {
-    console.log(e.target.value);
-    
-    setSelectedCategory(e.target.value);
+    setSelectedCategory(e);
     try {
       setProducts([])
-        sideProducts.filter((i)=>i.category.toLowerCase().includes(e.target.value.toLowerCase())&&i.pname.toLowerCase().includes(searchTerm.toLowerCase())&&i.price<=maxPrice).map((product)=>{
+        sideProducts.filter((i)=>i.category.includes(e)&&i.pname.toLowerCase().includes(searchTerm.toLowerCase())&&i.price<=maxPrice).map((product)=>{
           setProducts((pre)=>[...pre,product])
         })
 
@@ -71,8 +72,18 @@ const Sidebar = ({setProducts}) => {
     }
   };
   return (
-    <div className="Sidebar">
-      <div className="group">
+    <div className="Sidebar" id='sidebar-container'>
+    <div className="category-filter">
+        <button  value="" className={selectedCategory==""&&"selectedCategory"} onClick={()=>{handleCategoryChange("")}}>
+          All
+        </button>
+        {categories.map((cat,ind)=>(
+          <button key={ind} value={cat.category} className={selectedCategory==cat.category&&"selectedCategory"}  onClick={()=>{handleCategoryChange(cat.category)}}>
+          {cat.category.toUpperCase()}
+        </button>
+        ))}
+    </div>  
+      <div className="group" >
         <FaSearch className="icon" />
         <input className="input" type="search" 
           id="search"
@@ -80,28 +91,20 @@ const Sidebar = ({setProducts}) => {
           onChange={handleSearchChange} placeholder="Search" />
       </div>
 
-      <div className="category-filter">
-        <label htmlFor="categories">Category:</label>
-        <select
-          id="categories"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          <option  value="">
-            All
-          </option>
-          {categories.map((cat,ind)=>(
-            <option key={ind} value={cat.category}>
-            {cat.category.toUpperCase()}
-          </option>
-          ))}
-        </select>
-        
-      </div>
       <div className="price-filter">
-      <label for="rangeInput">Price Filter:</label>
-      <p id="rangeValue">Under:- ${maxPrice}</p>
-      <input type="range" id="rangeInput" name="range" min="0" max="10000" step="5"  onChange={handlePriceChange} />
+        <p id="rangeValue">{"< $"+maxPrice}</p>
+        <div className="range-container">
+  <input
+    type="range"
+    id="rangeInput"
+    name="range"
+    min="0"
+    max="10000"
+    value={maxPrice}
+    step="5"
+    onChange={handlePriceChange}
+  />
+</div>
       </div>
     </div>
   );

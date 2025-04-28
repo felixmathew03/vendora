@@ -106,9 +106,21 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
       alert("Please select size");
     }
   };
-
+  const goBack=()=>{
+    navigate(`/`);
+  }
   return (
     <div className="product-page">
+      <div className="path">
+        <p>Home </p>
+        <p className='dull'>/</p>
+        <p>{product.category}</p>
+        <p className='dull'>/</p>
+        <p className='dull'>{product.pname}</p>
+      </div>
+      <div className="backButton">
+        <button onClick={goBack}><span>{"<< "} </span> Back to Home</button>
+      </div>
       <div className="product-container">
         {/* Product Images */}
         <div className="product-images">

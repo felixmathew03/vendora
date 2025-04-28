@@ -25,7 +25,7 @@ export async function home(req,res) {
         const _id=req.user.userId;
         const user=await loginSchema.findOne({_id});
         const products=await productSchema.find({
-            sellerId: { $not: { $eq: _id} }
+            // sellerId: { $not: { $eq: _id} }
           })
           const categories=await categorySchema.find();
           
@@ -531,17 +531,19 @@ export async function signUp(req,res) {
 
 export async function signIn(req,res) {
     try {
-  const {email,password}=req.body;  
-
-  if(!(email&&password))
-      return res.status(404).send({msg:"feilds are empty"})
+        const {email,password}=req.body; 
+        if(!(email&&password))
+            return res.status(404).send({msg:"feilds are empty"})
 
   const user=await loginSchema.findOne({email})
+  
   if(user===null)
       return res.status(404).send({msg:"invalid email"})
 
   //convert to hash and compare using bcrypt
   const success=await bcrypt.compare(password,user.password);
+  console.log(success);
+  
   if(success!==true)
       return res.status(404).send({msg:"email or password is invalid"})
   //generate token using sign(JWT key)

@@ -1,6 +1,6 @@
 // src/components/Navbar.js
 import React, { useEffect, useState } from 'react';
-import { FaUserCircle, FaShoppingCart } from 'react-icons/fa'; // Import cart icon
+import { FaCartArrowDown, FaSearch, FaRegHeart   } from 'react-icons/fa'; // Import cart icon
 import './Navbar.scss'; // Import SCSS for styling
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,9 @@ const Navbar = ({ username, role, loggedIn ,setLoggedIn}) => {
       setIsSeller(true);
     }
   }, [role]);
-
+  const goToProfile=()=>{
+    navigate("/profile");
+  }
   const handleLogout = () => {
     localStorage.removeItem('Auth');
     setIsSeller(false);
@@ -39,49 +41,61 @@ const Navbar = ({ username, role, loggedIn ,setLoggedIn}) => {
       </div>
 
       {/* Right Side of Navbar */}
-      <div className="navbar-right">
-        {loggedIn ? (
+      <div className="navbar-center">
+        {loggedIn && 
           <>
-            
-            <h4>{username}</h4>
+            {/*Home link */}
+            <Link to={'/'}>
+                <p  >
+                  Home
+                </p>
+              </Link>
             {/* Profile Icon & Popover */}
             <div className="profile-containerr">
-              <FaUserCircle 
+              <p 
                 className="profile-icon" 
                 onClick={togglePopover} 
-                size={30} 
-              />
+                title={username}
+              >My Account</p>
               {isPopoverVisible && (
                 <div className="profile-popover">
-                  <Link to={`/profile`}>
-                    <button className="popover-btn">Profile</button>
-                  </Link>
-                  <button className="popover-btn" onClick={handleLogout}>
-                    Logout
-                  </button>
+                    <button className="popover-btn" onClick={goToProfile}>Profile</button>
+                    <button className="popover-btn" onClick={handleLogout}>
+                      Logout
+                    </button>
                 </div>
               )}
             </div>
             {/* Seller Dashboard Button */}
             {isSeller && (
               <Link to={'/company'}>
-                <button className="seller-btn">
-                  Seller Dashboard
-                </button>
+                <p className="seller-btn">
+                  My Company
+                </p>
               </Link>
-            )}
-
-            {/* Cart Icon */}
-            <Link to={'/cart'}> {/* Adjust to the correct route for the cart */}
-              <FaShoppingCart className="cart-icon" size={30} />
-            </Link>
+            )}  
+            <a href="#contactus"><p>Contact Us</p></a>
+            <a href="#footer"><p>Footer</p></a>
           </>
-        ) : (
-          <Link to={'/login'}>
-            <button className="login-btn">Login</button>
-          </Link>
-        )}
+      }
       </div>
+      <div className="navbar-right">
+        {/* Cart Icon */}
+        <Link to={'/cart'}>
+          <FaCartArrowDown className="icon" size={24} title='CART'/>
+        </Link>
+
+        {/* Search Icon */}
+        <a href='#search'>
+          <FaSearch className="icon" size={24} title='SEARCH'/>
+        </a>
+
+        {/* Wishlist Icon */}
+        <Link to={'/mywishlist'}>
+          <FaRegHeart  className="icon" size={24} title='WISHLIST'/>
+        </Link>
+      </div>
+      
     </div>
   );
 };

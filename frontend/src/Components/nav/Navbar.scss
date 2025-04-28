@@ -1,12 +1,15 @@
 /* src/components/Navbar.scss */
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=Oswald:wght@200..700&family=Pacifico&family=Squada+One&family=Ultra&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&display=swap');
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 10px 20px;
-  color: #020448;
-  width: 60%;
+  background-color: #d3a222;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
   margin: auto;
   .navbar-logo {
     display: flex;
@@ -17,7 +20,7 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      color: #ffffff;
+      color: white;
     }
     .logo-image {
       width: 40px;
@@ -29,11 +32,27 @@
       font-family: "Pacifico", serif;
     }
   }
-  .navbar-right {
+  .navbar-center {
     display: flex;
     align-items: center;
-    gap: 20px;
-
+    justify-content: center;
+    gap: 30px;
+    p{
+      padding: 4px 8px;
+      transition: all;
+      transition-duration: 0.4s;
+      color: white;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      font-family: "Special Gothic Condensed One", sans-serif;
+    }
+    p:hover{
+      background-color: #ffffff;
+      border-radius: 4px;
+      color: #a9a605;
+    }
     .profile-containerr {
       position: relative;
       display: flex;
@@ -70,41 +89,24 @@
         }
       }
     }
-
-    .seller-btn {
-      background-color: #a4d0f5;
-      color: black;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-
-      &:hover {
-        background-color: #adc7dc;
-      }
+    a{
+      text-decoration: none;
+      color: white;
     }
-    .cart-icon {
+    .seller-btn {
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+  .navbar-right{
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    .icon {
       cursor: pointer;
       color: white;
       transition: color 0.3s ease;
-
-      &:hover {
-        color: #ff7043; /* Change color on hover */
-      }
-    }
-
-    .login-btn {
-      background-color: #a4d0f5;
-      color: rgb(0, 0, 0);
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #adc7dc;
-      }
     }
   }
 }

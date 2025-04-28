@@ -2,8 +2,10 @@ import React,{useEffect,useState} from 'react';
 import route from '../route';
 import axios from 'axios';
 import Sidebar from '../sidebar/Sidebar';
+import Footer from '../footer/Footer';
 import './Home.scss';
 import { Link, useNavigate } from 'react-router-dom';
+
 
 const Home = ({setUsername,setRole,setLoggedIn}) => {
   const navigate=useNavigate();
@@ -33,14 +35,20 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
     }
   }
   return (
-    <div className='home'>
+    <div className='home' >
+      <div className="header">
+        <h1>VENDORA</h1>
+        <div className="hfoot">
+          <p>Get Start <br/>Your Favourite Shopping</p>
+          <button > <a href="#sidebar-container">SHOP NOW</a></button>
+        </div>
+      </div>
     <Sidebar setProducts={setProducts}/>
-       <div className="products-container">
+       <div className="products-container" >
       {products && products.length > 0 ? (
         products.map((product) => (
           <Link to={`/product/${product._id}`} key={product._id} className="product-card">
             {/* Product Images */}
-            
               <div className="product-images">
                     <img
                       src={product.pimages[0]}
@@ -48,7 +56,6 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
                       className="product-image"
                     />
               </div>
-            
             <div className="bottom">
                 {/* Product Name */}
                 <div className="product-info">
@@ -66,6 +73,7 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
         <p>No products available</p>
       )}
     </div>
+    <Footer/>
     </div>
   )
 }

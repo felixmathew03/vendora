@@ -73,6 +73,53 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
         <p>No products available</p>
       )}
     </div>
+    <div className="recommends">
+      <div className="left">
+        <div className="headings">
+          <h1>Your Life.</h1>
+          <h1>Your Look.</h1>
+          <h1>Your Store.</h1>
+        </div>
+      </div>
+    </div>
+    <div className="teamservices">
+      <div className="service right">
+        <div className="tsimage">
+          <img src="/images/Icon1.png" alt="" />
+        </div>
+        <div className="tscontent">
+          <p className='tsp1'>FREE SHIPPING</p>
+          <p className='tsp2'>On all orders over $500.00</p>
+        </div>
+      </div>
+      <div className="service right">
+        <div className="tsimage">
+          <img src="/images/Icon2.png" alt="" />
+        </div>
+        <div className="tscontent">
+          <p className='tsp1'>100% PAYMENT SECURE</p>
+          <p className='tsp2'>WE ensure secure payment</p>
+        </div>
+      </div>
+      <div className="service right">
+        <div className="tsimage">
+          <img src="/images/Icon3.png" alt="" />
+        </div>
+        <div className="tscontent">
+          <p className='tsp1'>30 DAYS RETURN GUARANTEE</p>
+          <p className='tsp2'>30-days free return policy</p>
+        </div>
+      </div>
+      <div className="service ">
+        <div className="tsimage">
+          <img src="/images/Icon4.png" alt="" />
+        </div>
+        <div className="tscontent">
+          <p className='tsp1'>24/7 SUPPORT</p>
+          <p className='tsp2'>Dedicated support</p>
+        </div>
+      </div>
+    </div>
     <Footer/>
     </div>
   )

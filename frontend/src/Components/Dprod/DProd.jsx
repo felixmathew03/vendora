@@ -4,6 +4,7 @@ import route from '../route';
 import './DProd.scss';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaShoppingCart, FaCreditCard, FaStar } from 'react-icons/fa';
+import Footer from '../footer/Footer';
 
 const DProd = ({ setUsername, setRole, setLoggedIn }) => {
   const navigate = useNavigate();
@@ -220,7 +221,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
             )}
         </div>
       </div>
-
+      <Footer/>
     </div>
   );
 };

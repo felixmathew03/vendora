@@ -354,7 +354,6 @@ export async function addOrders(req, res) {
                 throw new Error(`Insufficient stock for product ${c.product}`);
             }
         });
-
         await Promise.all(orderPromises);
 
         return res.status(201).send({ msg: "Orders placed successfully",msg1:"success" });
@@ -367,7 +366,6 @@ export async function addOrders(req, res) {
 
 export async function addOrder(req,res) {
     try {
-        
         const {id,address}=req.body;
         const _id=req.user.userId;
         const user=await loginSchema.findOne({_id})
@@ -542,7 +540,6 @@ export async function signIn(req,res) {
 
   //convert to hash and compare using bcrypt
   const success=await bcrypt.compare(password,user.password);
-  console.log(success);
   
   if(success!==true)
       return res.status(404).send({msg:"email or password is invalid"})

@@ -6,6 +6,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    height: 150px;
     .price-filter{
       display: flex;
       gap: 10px;
@@ -74,24 +75,36 @@
       display: flex;
       gap: 10px;
       align-items: center;
+
       width: 50%;
       overflow-x: scroll;
       scrollbar-width: none;
-      button{
-        width: max-content;
+      button {
+        width: max-content; /* You may want to use a fixed or max width instead */
+        max-width: 150px; /* 👈 Set a max width for truncation */
         padding: 6px 24px;
         border-radius: 5px;
-        border: 2px solid gray ;
+        border: 2px solid gray;
         color: gray;
         background-color: transparent;
-        transition: all;
-        transition-duration: 0.5s;
-        &:hover{
+        transition: all 0.5s; /* Combine transition properties */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Truncation styles */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
           color: white;
-          background-color:  gray;
+          background-color: gray;
           cursor: pointer;
+          text-overflow: clip;
+          white-space: wrap;
         }
       }
+
       .selectedCategory{
           color: white;
           background-color:  gray;

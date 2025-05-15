@@ -78,7 +78,7 @@ const Sidebar = ({setProducts}) => {
           All
         </button>
         {categories.map((cat,ind)=>(
-          <button key={ind} value={cat.category} className={selectedCategory==cat.category&&"selectedCategory"}  onClick={()=>{handleCategoryChange(cat.category)}}>
+          <button key={ind} value={cat.category} className={selectedCategory==cat.category&&"selectedCategory"} title={cat.category}  onClick={()=>{handleCategoryChange(cat.category)}}>
           {cat.category.toUpperCase()}
         </button>
         ))}

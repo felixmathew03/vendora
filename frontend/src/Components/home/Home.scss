@@ -169,6 +169,7 @@ $heading-font: 'Montserrat', sans-serif;
     box-sizing: border-box;
     display: flex;
     justify-content: space-around;
+
     .service{
       display: flex;
       justify-content: left;
@@ -222,6 +223,19 @@ $heading-font: 'Montserrat', sans-serif;
     width: 100%;
     max-width: 100%;
   }
+  .home{
+    .teamservices{
+      width: 100%;
+      flex-direction: column;
+      align-items: left;
+      margin: auto;
+      padding: 5%;
+      gap: 15px;
+      .right{ 
+        border-right: none
+      }
+    }
+  }
 }
 
 @media (max-width: 480px) {
@@ -244,5 +258,17 @@ $heading-font: 'Montserrat', sans-serif;
 
   .product-info .product-category {
     font-size: 12px;
+  }
+  .home{
+    .teamservices{
+      flex-direction: column;
+      align-items: left;
+      margin: auto;
+      width: max-content;
+      gap: 15px;
+      .right{ 
+        border-right: none
+      }
+    }
   }
 }

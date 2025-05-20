@@ -92,7 +92,7 @@ const Sidebar = ({setProducts}) => {
       </div>
 
       <div className="price-filter">
-        <p id="rangeValue">{"< $"+maxPrice}</p>
+        <p id="rangeValue">{"Price: Under $"+maxPrice}</p>
         <div className="range-container">
   <input
     type="range"

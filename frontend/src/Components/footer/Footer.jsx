@@ -1,98 +1,208 @@
-import React from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin, FaGooglePlus, FaRss, FaPinterestP, FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPhoneSquareAlt } from 'react-icons/fa';
-import './Footer.scss'
+import React, { useState } from 'react';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import './Footer.scss';
+
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (email) {
+      // Here you would typically make an API call to subscribe the user
+      setIsSubscribed(true);
+      setEmail('');
+      setTimeout(() => setIsSubscribed(false), 3000);
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
   return (
-      <div className='footer' id='footer'>
-        <div className='top'>
-          <div className='section'>
-            <div className='content'>
-              <h3>Special Time</h3>
-              <ul>
-                <li>Monday - Friday: 11.00am to 11.10am</li>
-                <li>Saturday: 10.00am to 10.05pm</li>
-                <li>Sunday: <span>10.00pm</span></li>
-              </ul>
-            </div>
+    <footer className="footer">
+      <motion.div 
+        className="top"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+      >
+        <motion.div className="section" variants={itemVariants}>
+          <div className="content">
+            <h3>Business Hours</h3>
+            <ul>
+              <li>Monday - Friday: 9:00 AM - 6:00 PM</li>
+              <li>Saturday: 10:00 AM - 4:00 PM</li>
+              <li>Sunday: Closed</li>
+            </ul>
           </div>
+        </motion.div>
 
-          <div className='section'>
-            <div className='content'>
-              <h3>Newsletter</h3>
-              <form>
-                <div className='inputDiv'>
-                    <input
-                        type="email"
-                        name="Email"
-                        placeholder="Email Address*"
-                    />
-                    <FaEnvelope size={20} /> {/* You can adjust the size as needed */}
-                </div>
-                <button type="submit">Submit</button>
-              </form>
-            </div>
+        <motion.div className="section" variants={itemVariants}>
+          <div className="content">
+            <h3>Newsletter</h3>
+            <p>Subscribe to our newsletter for updates and exclusive offers.</p>
+            <form onSubmit={handleSubscribe}>
+              <div className="inputDiv">
+                <FaEnvelope />
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                type="submit"
+              >
+                Subscribe
+              </motion.button>
+            </form>
+            {isSubscribed && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                style={{ color: '#4CAF50' }}
+              >
+                Thank you for subscribing!
+              </motion.p>
+            )}
+            <ul className="icons">
+              <li>
+                <motion.a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaFacebook />
+                </motion.a>
+              </li>
+              <li>
+                <motion.a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaTwitter />
+                </motion.a>
+              </li>
+              <li>
+                <motion.a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaInstagram />
+                </motion.a>
+              </li>
+              <li>
+                <motion.a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  >
+                  <FaLinkedin />
+                </motion.a>
+              </li>
+            </ul>
           </div>
+        </motion.div>
 
-          <div className='section'>
-            <div className='content'>
-              <h3>Social Media</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <ul className='icons'>
-                <li><a href="#"><FaFacebook size={20} /></a></li>
-                <li><a href="#"><FaTwitter size={20} /></a></li>
-                <li><a href="#"><FaLinkedin size={20} /></a></li>
-                <li><a href="#"><FaGooglePlus size={20} /></a></li>
-                <li><a href="#"><FaRss size={20} /></a></li>
-                <li><a href="#"><FaPinterestP size={20} /></a></li>
-                <li><a href="#"><FaWhatsapp size={20} /></a></li>
-              </ul>
-            </div>
+        <motion.div className="section" variants={itemVariants}>
+          <div className="content">
+            <h3>Contact Us</h3>
+            <ul>
+              <li>
+                <FaPhone />
+                <p>+1 (555) 123-4567</p>
+              </li>
+              <li>
+                <FaEnvelope />
+                <p>info@vendora.com</p>
+              </li>
+              <li>
+                <FaMapMarkerAlt />
+                <p>123 Business Street, Suite 100<br />New York, NY 10001</p>
+              </li>
+            </ul>
           </div>
-        </div>
+        </motion.div>
+      </motion.div>
 
-        <hr />
+      <hr />
 
-        <div className='bottom'>
-          <div className='section'>
-            <div className='content'>
-              <h4>About Vendora</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
+      <motion.div 
+        className="bottom"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+      >
+        <motion.div className="section" variants={itemVariants}>
+          <div className="content">
+            <h4>About Us</h4>
+            <p>Vendora is your trusted partner in business solutions, providing innovative services to help your business grow and succeed in the digital age.</p>
           </div>
+        </motion.div>
 
-          <div className='section'>
-            <div className='content'>
-              <h4>Information</h4>
-              <ul>
-                <li><a href="#footer">About Us</a></li>
-                <li><a href="#">Customer Service</a></li>
-                <li><a href="#">Our Sitemap</a></li>
-                <li><a href="#">Terms &amp; Conditions</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Delivery Information</a></li>
-              </ul>
-            </div>
+        <motion.div className="section" variants={itemVariants}>
+          <div className="content">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/services">Services</a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/terms">Terms of Service</a></li>
+            </ul>
           </div>
+        </motion.div>
 
-          <div className='section'>
-            <div className='content' id='contactus'>
-              <h4>Contact Us</h4>
-              <ul>
-                <li>
-                    <p><FaMapMarkerAlt /> Address: Michael I. Days 3756 <br />Preston Street Wichita, <br />KS 67213</p>
-                </li>
-                <li>
-                    <p><FaPhoneSquareAlt /> Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
-                </li>
-                <li>
-                    <p><FaEnvelope /> Email: <a href="mailto:contactinfo@gmail.com">info@vendora.com</a></p>
-                </li>
-              </ul>
-            </div>
+        <motion.div className="section" variants={itemVariants}>
+          <div className="content">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="/faq">FAQ</a></li>
+              <li><a href="/help">Help Center</a></li>
+              <li><a href="/support">Technical Support</a></li>
+              <li><a href="/feedback">Feedback</a></li>
+            </ul>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
+    </footer>
   );
 };
 

@@ -9,7 +9,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const Login = lazy(() => import('./Components/login/Login'));
 const Email = lazy(() => import('./Components/email/Email'));
 const Signup = lazy(() => import('./Components/signup/Signup'));
-const Home = lazy(() => delay(4500).then(() => import('./Components/home/Home')));
+const Home = lazy(() => delay(1500).then(() => import('./Components/home/Home')));
 const Profile = lazy(() => import('./Components/profile/Profile'));
 const Company = lazy(() => import('./Components/company/Company'));
 const AddProduct = lazy(() => import('./Components/addProduct/AddProduct'));

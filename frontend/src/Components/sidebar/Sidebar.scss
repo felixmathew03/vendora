@@ -1,172 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+// Variables
+$primary-color: #2c3e50;
+$secondary-color: #f8f9fa;
+$accent-color: #e74c3c;
+$text-color: #2c3e50;
+$border-color: #e9ecef;
+$hover-color: #3498db;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$gradient-start: #2c3e50;
+$gradient-end: #3498db;
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
 .Sidebar {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-around;
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  min-height: 250px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px $shadow-color;
+  animation: fadeIn 0.5s ease-out;
+
+  .mobile-filter-toggle {
+    display: none;
     align-items: center;
-    height: 150px;
-    .price-filter{
-      display: flex;
-      gap: 10px;
-      p{  
-        font-size: large;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, $gradient-start, $gradient-end);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 5px $shadow-color;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+  }
+
+  .sidebar-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .category-filter {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 50%;
+    overflow-x: auto;
+    padding: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: $hover-color $secondary-color;
+    height: 100%;
+    min-height: 180px;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $secondary-color;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $hover-color;
+      border-radius: 10px;
+    }
+
+    button {
+      min-width: 120px;
+      padding: 1rem 1.5rem;
+      border-radius: 25px;
+      border: 2px solid $border-color;
+      color: $text-color;
+      background-color: white;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: 0 2px 5px $shadow-color;
+      height: 50px;
+
+      &:hover {
+        color: white;
+        background: linear-gradient(135deg, $gradient-start, $gradient-end);
+        border-color: transparent;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
       }
-      /* Style for the range input container */
+    }
+
+    .selectedCategory {
+      color: white;
+      background: linear-gradient(135deg, $gradient-start, $gradient-end);
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+  }
+
+  .group {
+    position: relative;
+    width: 250px;
+    animation: slideIn 0.5s ease-out;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .input {
+      width: 100%;
+      height: 50px;
+      padding: 0 1.5rem 0 3rem;
+      border: 2px solid $border-color;
+      border-radius: 25px;
+      outline: none;
+      background-color: white;
+      color: $text-color;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px $shadow-color;
+
+      &::placeholder {
+        color: #9ea7a6;
+      }
+
+      &:focus {
+        border-color: $hover-color;
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+      }
+    }
+
+    .icon {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9e9ea7;
+      width: 1.2rem;
+      height: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    &:focus-within .icon {
+      color: $hover-color;
+    }
+  }
+.price-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 250px;
+    animation: slideIn 0.5s ease-out 0.2s both;
+    height: 100%;
+    justify-content: center;
+
+    p {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: $text-color;
+      margin: 0;
+    }
+
+    .range-container {
+      position: relative;
+      width: 100%;
+      padding: 0.5rem 0;
+
       #rangeInput {
         -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
         width: 100%;
         height: 8px;
         border-radius: 10px;
-        background: #f1e1a6; /* Soft yellow background */
+        background: linear-gradient(to right, $gradient-start, $gradient-end);
         outline: none;
-        transition: background 0.3s ease;
-      }
+        transition: all 0.3s ease;
 
-      /* Style for the range input when it's being hovered */
-      #rangeInput:hover {
-        background: #f3c957; /* Slightly darker yellow on hover */
-      }
-
-      /* Style for the thumb (the draggable part of the range) */
-      #rangeInput::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #f2b600; /* Yellow thumb */
-        cursor: pointer;
-        transition: background 0.3s ease;
-      }
-
-      #rangeInput::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #f2b600; /* Yellow thumb */
-        cursor: pointer;
-        transition: background 0.3s ease;
-      }
-
-      /* Style for the thumb when hovered */
-      #rangeInput::-webkit-slider-thumb:hover {
-        background: #d89a00; /* Darker yellow when hovered */
-      }
-
-      #rangeInput::-moz-range-thumb:hover {
-        background: #d89a00; /* Darker yellow when hovered */
-      }
-
-      /* Optional: Adding a value label above the range */
-      .range-value-label {
-        font-size: 16px;
-        color: #333;
-        text-align: center;
-        margin-top: 10px;
-        font-weight: bold;
-      }
-
-    }
-    .category-filter{
-      display: flex;
-      gap: 10px;
-      align-items: center;
-
-      width: 50%;
-      overflow-x: scroll;
-      scrollbar-width: none;
-      button {
-        width: max-content; /* You may want to use a fixed or max width instead */
-        max-width: 150px; /* 👈 Set a max width for truncation */
-        padding: 6px 24px;
-        border-radius: 5px;
-        border: 2px solid gray;
-        color: gray;
-        background-color: transparent;
-        transition: all 0.5s; /* Combine transition properties */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* Truncation styles */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        &:hover {
-          color: white;
-          background-color: gray;
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background: white;
+          border: 2px solid $hover-color;
           cursor: pointer;
-          text-overflow: clip;
-          white-space: wrap;
-        }
-      }
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 5px $shadow-color;
 
-      .selectedCategory{
-          color: white;
-          background-color:  gray;
+          &:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+          }
+        }
+
+        &::-moz-range-thumb {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background: white;
+          border: 2px solid $hover-color;
           cursor: pointer;
-      }
-    }
-    .group {
-      display: flex;
-      align-items: center;
-      position: relative;
-      max-width: 190px;
-      line-height: 28px;
-      .input {
-        width: 100%;
-        height: 30px;
-        padding: 0 1rem;
-        padding-left: 2.5rem;
-        line-height: 28px;
-        border: 2px solid gray;
-        border-radius: 8px;
-        outline: none;
-        background-color: #ffffff;
-        color: #0d0c22;
-        transition: 0.3s ease;
-      
-        &::placeholder {
-          color: #9ea7a6;
-        }
-      
-        &:focus,
-        &:hover {
-          outline: none;
-          border-color: rgba(0, 48, 73, 0.4);
-          background-color: #fff;
-          box-shadow: 0 0 0 4px rgba(0, 48, 73, 0.1);
-        }
-      }
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 5px $shadow-color;
 
-      .icon {
-        position: absolute;
-        left: 1rem;
-        fill: #9e9ea7;
-        width: 1rem;
-        height: 1rem;
+          &:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+          }
+        }
       }
-    }
-  
-    select {
-      width: 90%;
-      border-radius: 8px;
-      padding: 8px;
-      margin-top: 5px;
     }
   }
-  
-  @media (max-width: 768px){
-    .Sidebar{
+
+  .close-filter {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: $text-color;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $hover-color;
+      transform: scale(1.1);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .Sidebar {
+    width: 95%;
+    padding: 2rem;
+    gap: 1.5rem;
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Sidebar {
+    flex-direction: column;
+    width: 100%;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    min-height: auto;
+
+    .mobile-filter-toggle {
+      display: flex;
       width: 100%;
+      justify-content: center;
+    }
+
+    .sidebar-content {
       flex-direction: column;
-      padding: 10px;
-      .price-filter,.category-filter,.group{
-        width: 100%;
-      }
+      gap: 1.5rem;
+    }
+
+    .category-filter,
+    .group,
+    .price-filter {
+      width: 100%;
+    }
+
+    .category-filter {
+      padding-bottom: 0.5rem;
+      min-height: auto;
+    }
+
+    .close-filter {
+      display: block;
     }
   }
+}
+
+@media (max-width: 480px) {
+  .Sidebar {
+    padding: 1rem;
+
+    .category-filter button {
+      min-width: 100px;
+      padding: 0.8rem 1rem;
+      font-size: 0.8rem;
+      height: 45px;
+    }
+
+    .group .input {
+      height: 45px;
+      font-size: 0.9rem;
+    }
+
+    .price-filter p {
+      font-size: 1.1rem;
+    }
+  }
+}

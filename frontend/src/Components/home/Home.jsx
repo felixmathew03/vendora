@@ -4,6 +4,7 @@ import axios from 'axios';
 import Sidebar from '../sidebar/Sidebar';
 import Footer from '../footer/Footer';
 import './Home.scss';
+import { motion } from "framer-motion";
 import { Link, useNavigate } from 'react-router-dom';
 
 
@@ -44,35 +45,44 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
         </div>
       </div>
     <Sidebar setProducts={setProducts}/>
-       <div className="products-container" >
-      {products && products.length > 0 ? (
-        products.map((product) => (
-          <Link to={`/product/${product._id}`} key={product._id} className="product-card">
-            {/* Product Images */}
-              <div className="product-images">
-                    <img
-                      src={product.pimages[0]}
-                      alt={product.pname}
-                      className="product-image"
-                    />
-              </div>
-            <div className="bottom">
-                {/* Product Name */}
-                <div className="product-info">
-                   <span className='product-name'>{product.pname}</span>
-                </div>
-
-                {/* Price */}
-                <div className="product-info">
-                  <span className='product-price'>${product.price.toFixed(2)}</span> 
-                </div>
+       <div className="products-container">
+  {products && products.length > 0 ? (
+    products.map((product, index) => (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+        key={product._id}
+      >
+        <Link
+          to={`/product/${product._id}`}
+          className="product-card"
+        >
+          <div className="product-images">
+            <motion.img
+              whileHover={{ scale: 1.08 }}
+              transition={{ type: "spring", stiffness: 200 }}
+              src={product.pimages[0]}
+              alt={product.pname}
+              className="product-image"
+            />
+          </div>
+          <div className="bottom">
+            <div className="product-info">
+              <span className="product-name">{product.pname}</span>
             </div>
-          </Link>
-        ))
-      ) : (
-        <p>No products available</p>
-      )}
-    </div>
+            <div className="product-info">
+              <span className="product-price">${product.price.toFixed(2)}</span>
+            </div>
+          </div>
+        </Link>
+      </motion.div>
+    ))
+  ) : (
+    <p>No products available</p>
+  )}
+</div>
+
     <div className="recommends">
       <div className="left">
         <div className="headings">

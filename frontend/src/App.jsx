@@ -4,7 +4,6 @@ import LoadingSpinner from './Components/Loader/LoadingSpinner';
 import Navbar from './Components/nav/Navbar';
 import './App.css';
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 // Lazy load route components
 const Login = lazy(() => import('./Components/login/Login'));
 const Email = lazy(() => import('./Components/email/Email'));

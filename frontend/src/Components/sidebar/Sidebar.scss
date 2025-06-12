@@ -8,8 +8,8 @@ $text-color: #2c3e50;
 $border-color: #e9ecef;
 $hover-color: #3498db;
 $shadow-color: rgba(0, 0, 0, 0.1);
-$gradient-start: #2c3e50;
-$gradient-end: #3498db;
+$gradient-start: #e9f17f;
+$gradient-end: #beb208;
 
 // Animations
 @keyframes fadeIn {
@@ -67,34 +67,24 @@ $gradient-end: #3498db;
 
   .category-filter {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
     align-items: center;
-    width: 50%;
-    overflow-x: auto;
-    padding: 1rem;
-    scrollbar-width: thin;
-    scrollbar-color: $hover-color $secondary-color;
+    gap: 10px;
+    width: 51%;
     height: 100%;
     min-height: 180px;
-
-    &::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: $secondary-color;
-      border-radius: 10px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: $hover-color;
-      border-radius: 10px;
-    }
-
-    button {
-      min-width: 120px;
-      padding: 1rem 1.5rem;
-      border-radius: 25px;
+    .categories{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+      padding: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      button {
+      padding: 10px;
+      border-radius: 4px;
       border: 2px solid $border-color;
       color: $text-color;
       background-color: white;
@@ -109,19 +99,54 @@ $gradient-end: #3498db;
       height: 50px;
 
       &:hover {
-        color: white;
         background: linear-gradient(135deg, $gradient-start, $gradient-end);
         border-color: transparent;
         transform: translateY(-2px);
         box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
       }
     }
+    }
+    
+    
+    .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #f1f1f1;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &:hover:not(:disabled) {
+        background-color: #e0e0e0;
+        transform: translateY(-1px);
+      }
+
+      &.active {
+        background-color: #0073b1;
+        color: white;
+        font-weight: 600;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        background-color: #ddd;
+        opacity: 0.6;
+      }
+    }
+  }
 
     .selectedCategory {
-      color: white;
-      background: linear-gradient(135deg, $gradient-start, $gradient-end);
+      background: linear-gradient(180deg, #f6cf43, #ffd84a);
       border-color: transparent;
-      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      box-shadow: 2px 4px 15px rgba(52, 152, 219, 0.3);
     }
   }
 
@@ -199,7 +224,7 @@ $gradient-end: #3498db;
         width: 100%;
         height: 8px;
         border-radius: 10px;
-        background: linear-gradient(to right, $gradient-start, $gradient-end);
+        background: linear-gradient(to right, #0073b1, #2c3e50);
         outline: none;
         transition: all 0.3s ease;
 

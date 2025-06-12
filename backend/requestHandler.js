@@ -27,14 +27,33 @@ export async function home(req,res) {
         const products=await productSchema.find({
             // sellerId: { $not: { $eq: _id} }
           })
-          const categories=await categorySchema.find();
           
-        return res.status(200).send({username:user.username,role:user.role,products,categories});
+        return res.status(200).send({username:user.username, role:user.role,products});
     } catch (error) {
         return res.status(404).send({msg:"error"})
     }
 }
+export async function getCategories(req,res) {
+    console.log("categories");
+    
+    const products=await productSchema.find({
+            // sellerId: { $not: { $eq: _id} }
+          })
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
 
+    const total = await categorySchema.countDocuments();
+    const categories = await categorySchema.find().skip(skip).limit(limit);
+
+    res.json({
+        categories,
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+        products
+    });
+};
 export async function profile(req,res) {
     try {
         const _id=req.user.userId;
@@ -193,13 +212,17 @@ export async function product(req,res) {
         if(!user)
             return res.status(403).send({msg:"Unauthorized acces"});
         const product=await productSchema.findOne({_id});
+        const relatedProducts = await productSchema.find({
+                        _id: { $ne: product._id },
+                        category: product.category
+                        }).limit(5);
         const check1=await cartSchema.findOne({$and:[{"product._id":_id},{buyerId:id}]});
         const check2=await wishlistSchema.findOne({$and:[{productId:_id},{buyerId:id}] })
         if(check1)
             isOnCart=true;
         if(check2)
             isOnWishlist=true;
-        return res.status(200).send({username:user.username,role:user.role,product,isOnCart,isOnWishlist})
+        return res.status(200).send({username:user.username,role:user.role,product,isOnCart,isOnWishlist,relatedProducts})
         
     } catch (error) {
         return res.status(404).send({msg:"error"})

@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 // Variables
-$primary-color: #d3a222;
+$primary-color: #775602;
 $secondary-color: #f8f9fa;
 $accent-color: #a9a605;
-$text-color: #2c3e50;
+$text-color: #494702;
 $border-color: #e9ecef;
 $hover-color: #c99b1f;
-$footer-bg: #1a1a1a;
-$footer-text: #ffffff;
-$footer-link: #b3b3b3;
-$footer-hover: #d3a222;
+$footer-bg: #f2f4e0;
+$footer-text: #5a5303;
+$footer-link: #615614;
+$footer-hover: #dfa81f;
 $gradient-start: #d3a222;
 $gradient-end: #a9a605;
 
@@ -236,6 +236,7 @@ $gradient-end: #a9a605;
         .top, .bottom {
             grid-template-columns: 1fr;
             gap: 2.5rem;
+            box-sizing: border-box;
         }
         .inputDiv {
             width: 90%;
@@ -263,6 +264,7 @@ $gradient-end: #a9a605;
 
         .top, .bottom {
             width: 89%;
+            box-sizing: border-box;
             padding: 0 1.5rem;
         }
         .section {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import route from '../route';
 import './DProd.scss';
+import { motion } from "framer-motion";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaShoppingCart, FaCreditCard, FaStar } from 'react-icons/fa';
 import Footer from '../footer/Footer';
@@ -11,6 +12,7 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
   const { id } = useParams();
   const value = localStorage.getItem('Auth');
   const [product, setProduct] = useState({});
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [isOnCart, setIsOnCart] = useState(false);
   const [isOnWishlist, setIsOnWishlist] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -39,6 +41,9 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
         setProduct(data.product);
         setIsOnCart(data.isOnCart);
         setIsOnWishlist(data.isOnWishlist);
+        console.log(data.relatedProducts);
+        
+        setRelatedProducts(data.relatedProducts)
       }
     } catch (error) {
       console.error('Error fetching product:', error);
@@ -125,7 +130,6 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
       <div className="product-container">
         {/* Product Images */}
         <div className="product-images">
-          <div className="image-gallery">
             {product.pimages && product.pimages.length > 0 ? (
               <>
                 <div className="main-image">
@@ -146,7 +150,6 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
             ) : (
               <p>No images available</p>
             )}
-          </div>
         </div>
 
         {/* Product Details */}
@@ -220,6 +223,46 @@ const DProd = ({ setUsername, setRole, setLoggedIn }) => {
               <img src="/images/wlist.png" alt="Wishlist" onClick={() => { addToWishlist(product._id) }} />
             )}
         </div>
+      </div>
+      <div className='related-products'>
+        <h2>Related Products</h2>
+        <div className="products-container">
+        {relatedProducts && relatedProducts.length > 0 ? (
+          relatedProducts.map((product, index) => (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+              key={product._id}
+            >
+              <Link
+                to={`/product/${product._id}`}
+                className="product-card"
+              >
+                <div className="product-images">
+                  <motion.img
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                    src={product.pimages[0]}
+                    alt={product.pname}
+                    className="product-image"
+                  />
+                </div>
+                <div className="bottom">
+                  <div className="product-info">
+                    <span className="product-name">{product.pname}</span>
+                  </div>
+                  <div className="product-info">
+                    <span className="product-price">${product.price.toFixed(2)}</span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))
+        ) : (
+          <p>No products available</p>
+        )}
+      </div>
       </div>
       <Footer/>
     </div>

@@ -11,19 +11,24 @@ const Sidebar = ({setProducts}) => {
   const [categories,setCategories] = useState([]);
   const [maxPrice,setPrice]=useState(10000);
   const value=localStorage.getItem("Auth");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 5;
   useEffect(()=>{
+    console.log("sdfsd");
+    
     getDetails();
-  },[])
+  },[page])
   const getDetails=async()=>{
     try {
       if(value!==null){
-      const {data,status}=await axios.get(`${route()}home`,{headers:{"Authorization":`Bearer ${value}`}})
+      const {data,status}=await axios.get(`${route()}categories`,{ params: { page, limit } })
       if (status==200) {
         setSideProducts(data.products);
         const maxPrice = Math.max(...data.products.map(product => product.price));
         setPrice(maxPrice+100)
-
-        setCategories(data.categories);
+        setCategories(data.categories)
+        setTotalPages(data.totalPages);
       }else if(res.status==403){
         setLoggedIn(!loggedIn);
       }
@@ -74,14 +79,34 @@ const Sidebar = ({setProducts}) => {
   return (
     <div className="Sidebar" id='sidebar-container'>
     <div className="category-filter">
-        <button  value="" className={selectedCategory==""&&"selectedCategory"} onClick={()=>{handleCategoryChange("")}}>
-          All
+        <div className='categories'>
+            <button  value="" className={selectedCategory==""&&"selectedCategory"} onClick={()=>{handleCategoryChange("")}}>
+            All
+          </button>
+          {categories.map((cat,ind)=>(
+            <button key={ind} value={cat.category} className={selectedCategory==cat.category&&"selectedCategory"} title={cat.category}  onClick={()=>{handleCategoryChange(cat.category)}}>
+            {cat.category.toUpperCase()}
+          </button>
+          ))}
+        </div>
+      {/* Category Pagination Controls */}
+      <div className="pagination">
+        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          Prev
         </button>
-        {categories.map((cat,ind)=>(
-          <button key={ind} value={cat.category} className={selectedCategory==cat.category&&"selectedCategory"} title={cat.category}  onClick={()=>{handleCategoryChange(cat.category)}}>
-          {cat.category.toUpperCase()}
-        </button>
+        {[...Array(totalPages)].map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setPage(i + 1)}
+            className={page === i + 1 ? "active" : ""}
+          >
+            {i + 1}
+          </button>
         ))}
+        <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+          Next
+        </button>
+      </div>
     </div>  
       <div className="group" >
         <FaSearch className="icon" />

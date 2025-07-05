@@ -44,45 +44,46 @@ const Home = ({setUsername,setRole,setLoggedIn}) => {
           <button > <a href="#sidebar-container">SHOP NOW</a></button>
         </div>
       </div>
-    <Sidebar setProducts={setProducts}/>
-       <div className="products-container">
-  {products && products.length > 0 ? (
-    products.map((product, index) => (
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
-        key={product._id}
-      >
-        <Link
-          to={`/product/${product._id}`}
-          className="product-card"
-        >
-          <div className="product-images">
-            <motion.img
-              whileHover={{ scale: 1.08 }}
-              transition={{ type: "spring", stiffness: 200 }}
-              src={product.pimages[0]}
-              alt={product.pname}
-              className="product-image"
-            />
-          </div>
-          <div className="bottom">
-            <div className="product-info">
-              <span className="product-name">{product.pname}</span>
-            </div>
-            <div className="product-info">
-              <span className="product-price">${product.price.toFixed(2)}</span>
-            </div>
-          </div>
-        </Link>
-      </motion.div>
-    ))
-  ) : (
-    <p>No products available</p>
-  )}
-</div>
-
+      <div className="main-section">
+        <Sidebar setProducts={setProducts}/>
+        <div className="products-container">
+          {products && products.length > 0 ? (
+            products.map((product, index) => (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+                key={product._id}
+              >
+                <Link
+                  to={`/product/${product._id}`}
+                  className="product-card"
+                >
+                  <div className="product-images">
+                    <motion.img
+                      whileHover={{ scale: 1.08 }}
+                      transition={{ type: "spring", stiffness: 200 }}
+                      src={product.pimages[0]}
+                      alt={product.pname}
+                      className="product-image"
+                    />
+                  </div>
+                  <div className="bottom">
+                    <div className="product-info">
+                      <span className="product-name">{product.pname}</span>
+                    </div>
+                    <div className="product-info">
+                      <span className="product-price">${product.price.toFixed(2)}</span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))
+          ) : (
+            <p>No products available</p>
+          )}
+        </div>      
+      </div>
     <div className="recommends">
       <div className="left">
         <div className="headings">

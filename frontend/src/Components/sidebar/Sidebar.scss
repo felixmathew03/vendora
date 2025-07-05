@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 // Variables
-$primary-color: #2c3e50;
+$primary-color: #50502c;
 $secondary-color: #f8f9fa;
 $accent-color: #e74c3c;
 $text-color: #2c3e50;
-$border-color: #e9ecef;
-$hover-color: #3498db;
+$border-color: #cdd40c;
+$hover-color: #d3db34;
 $shadow-color: rgba(0, 0, 0, 0.1);
 $gradient-start: #e9f17f;
 $gradient-end: #beb208;
@@ -23,19 +23,18 @@ $gradient-end: #beb208;
 }
 
 .Sidebar {
-  width: 90%;
-  margin: 2rem auto;
-  padding: 2.5rem;
-  min-height: 250px;
+  width: 25%;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
+  flex-direction: column;
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 20px $shadow-color;
   animation: fadeIn 0.5s ease-out;
-
+  padding:20px;
+  gap: 5%;
   .mobile-filter-toggle {
     display: none;
     align-items: center;
@@ -57,22 +56,13 @@ $gradient-end: #beb208;
     }
   }
 
-  .sidebar-content {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-  }
 
   .category-filter {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    width: 51%;
-    height: 100%;
-    min-height: 180px;
+    width: 100%;
     .categories{
       display: flex;
       gap: 10px;
@@ -96,13 +86,13 @@ $gradient-end: #beb208;
       overflow: hidden;
       text-overflow: ellipsis;
       box-shadow: 0 2px 5px $shadow-color;
-      height: 50px;
+      height: 40px;
 
       &:hover {
         background: linear-gradient(135deg, $gradient-start, $gradient-end);
         border-color: transparent;
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        box-shadow: 0 4px 15px rgba(219, 219, 52, 0.3);
       }
     }
     }
@@ -130,7 +120,7 @@ $gradient-end: #beb208;
       }
 
       &.active {
-        background-color: #0073b1;
+        background-color: #b1a500;
         color: white;
         font-weight: 600;
       }
@@ -152,9 +142,8 @@ $gradient-end: #beb208;
 
   .group {
     position: relative;
-    width: 250px;
+    width: 100%;
     animation: slideIn 0.5s ease-out;
-    height: 100%;
     display: flex;
     align-items: center;
 
@@ -200,10 +189,8 @@ $gradient-end: #beb208;
 .price-filter {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    width: 250px;
+    width: 100%;
     animation: slideIn 0.5s ease-out 0.2s both;
-    height: 100%;
     justify-content: center;
 
     p {
@@ -224,7 +211,7 @@ $gradient-end: #beb208;
         width: 100%;
         height: 8px;
         border-radius: 10px;
-        background: linear-gradient(to right, #0073b1, #2c3e50);
+        background: linear-gradient(to right, #b1a500, #7e7e4f);
         outline: none;
         transition: all 0.3s ease;
 
@@ -307,10 +294,6 @@ $gradient-end: #beb208;
       justify-content: center;
     }
 
-    .sidebar-content {
-      flex-direction: column;
-      gap: 1.5rem;
-    }
 
     .category-filter,
     .group,

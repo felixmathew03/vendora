@@ -73,94 +73,100 @@ $heading-font: 'Montserrat', sans-serif;
       }
     }
   }
-.products-container {
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  padding: 40px 1%;
-  gap: 30px;
-  box-sizing: border-box;
-  width: 80%;
-  .product-card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-    width: 260px;
-    transition: all 0.3s ease;
-    overflow: hidden;
+  .main-section{
+    margin: 2% auto;
     display: flex;
-    flex-direction: column;
-    text-decoration: none;
-     position: relative; // Required for pseudo-element positioning
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -75%;
-    width: 50%;
-    height: 200%;
-    background: linear-gradient(
-      120deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0.1) 100%
-    );
-    transform: rotate(25deg);
-    pointer-events: none;
-    transition: all 0.3s ease;
-    z-index: 2;
-  }
-
-  &:hover::before {
-    left: 125%;
-    transition: left 0.75s ease-in-out;
-  }
-    &:hover {
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
-    }
-
-    .product-images {
-      background: #f9f9f9;
-      width: 100%;
-      height: 300px;
+    justify-content: space-between;
+    width: 95%;
+    .products-container {
+      width: 70%;
       display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .product-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: top;
-        transition: transform 0.3s ease;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+      box-sizing: border-box;
+      height: 95vh;
+      overflow-y: scroll;
+      .product-card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        width: 260px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+         position: relative; // Required for pseudo-element positioning
+      overflow: hidden;
+    
+      &::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -75%;
+        width: 50%;
+        height: 200%;
+        background: linear-gradient(
+          120deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0.4) 50%,
+          rgba(255, 255, 255, 0.1) 100%
+        );
+        transform: rotate(25deg);
+        pointer-events: none;
+        transition: all 0.3s ease;
+        z-index: 2;
       }
-    }
-
-    .bottom {
-      padding: 16px;
-
-      .product-info {
-        margin-bottom: 8px;
-
-        .product-name {
-          font-size: 16px;
-          font-weight: 500;
-          color: #333;
-          text-transform: capitalize;
+    
+      &:hover::before {
+        left: 125%;
+        transition: left 0.75s ease-in-out;
+      }
+        &:hover {
+          box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
         }
-
-        .product-price {
-          font-size: 15px;
-          font-weight: 600;
-          color: #ff5a5f;
+    
+        .product-images {
+          background: #f9f9f9;
+          width: 100%;
+          height: 300px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+    
+          .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.3s ease;
+          }
+        }
+    
+        .bottom {
+          padding: 16px;
+    
+          .product-info {
+            margin-bottom: 8px;
+    
+            .product-name {
+              font-size: 16px;
+              font-weight: 500;
+              color: #333;
+              text-transform: capitalize;
+            }
+    
+            .product-price {
+              font-size: 15px;
+              font-weight: 600;
+              color: #ff5a5f;
+            }
+          }
         }
       }
     }
   }
-}
 
   .recommends{
     
@@ -252,7 +258,11 @@ $heading-font: 'Montserrat', sans-serif;
 // Responsive Design for Smaller Screens
 
 @media (max-width: 1024px) {
+  .main-section{
+    flex-direction: column;
+  }
   .products-container {
+    width: 100%;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Adjust grid columns for tablets
     padding: 15px;
   }
@@ -263,18 +273,6 @@ $heading-font: 'Montserrat', sans-serif;
 
 }
 
-@media (max-width: 768px) {
-  .products-container {
-    padding: 10px;
-  }
-
-  .product-card {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-}
-
 /* Animations */
 @keyframes fadeInUp {
   to {
@@ -283,40 +281,44 @@ $heading-font: 'Montserrat', sans-serif;
   }
 }
 @media (max-width: 768px) {
-  .products-container {
-    justify-content: center;
-
-    .product-card {
-      width: 90%;
-      .bottom {
-        padding: 12px;
+  .main-section{
+    flex-direction: column;
+    .products-container {
+      width: 100%;
+      height: 700px;
+      overflow-x: scroll;
+      .product-card {
+        // width: 90%;
+        .bottom {
+          padding: 12px;
+        }
       }
     }
   }
 }
 
-@media (max-width: 480px) {
-  .products-container {
-    padding: 10px 5px;
-  }
-  .teamservices{
-    padding: 10px;
-  }
-  .product-card {
-    width: 100%;
-    max-width: 100%;
-  }
+// @media (max-width: 480px) {
+//   .products-container {
+//     padding: 10px 5px;
+//   }
+//   .teamservices{
+//     padding: 10px;
+//   }
+//   .product-card {
+//     width: 100%;
+//     max-width: 100%;
+//   }
 
-  .product-info .product-name {
-    font-size: 16px;
-  }
+//   .product-info .product-name {
+//     font-size: 16px;
+//   }
 
-  .product-info .product-price {
-    font-size: 18px;
-  }
+//   .product-info .product-price {
+//     font-size: 18px;
+//   }
 
-  .product-info .product-category {
-    font-size: 12px;
-  }
+//   .product-info .product-category {
+//     font-size: 12px;
+//   }
   
-}
+// }

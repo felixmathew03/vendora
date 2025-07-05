@@ -1,117 +1,127 @@
-// Define Colors
-$primary-color: #cdcdcd;  // Purple color for highlights and buttons
-$secondary-color: #ffffff; // Dark color for main text
-$background-color: #fff;  // White background for the box
-$text-color: #1e0e4b; // Main text color
-$error-color: #e60000; // Error color for input fields (optional)
+// Import Google Fonts in your HTML:
+// <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600&display=swap');
 
-// Main Login Container
+// Variables
+$primary-yellow: #f7c948;
+$yellow-dark: #f0b429;
+$yellow-light: #fff5db;
+$white: #ffffff;
+$gray-dark: #2f2f2f;
+$gray-light: #f9f9f9;
+$error-color: #e60000;
+$facebook-blue: #3b5998;
+$google-red: #db4437;
+
+$font-base: 16px;
+$border-radius: 12px;
+$transition: all 0.3s ease-in-out;
+
+// Global font
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, $yellow-light, $white);
 
   .login-box {
     width: 60%;
     height: 80%;
-    background-color: $background-color;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: $white;
     display: flex;
-    .login-box-left{
-      width: 55%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-image: url('/images/lbg.avif');
-      background-position: top;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    .login-box-left {
+      width: 50%;
+      background: url('/images/woman.jpg') no-repeat center;
       background-size: cover;
+      background-position: right
     }
-    .login-box-right{
-      width: 55%;
-      height: 100%;
+
+    .login-box-right {
+      width: 50%;
+      padding: 3rem 2rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      box-sizing: border-box;
-      padding: 1%;
+      align-items: center;
+      background-color: #ffc743;
+      text-align: center; 
     }
-    // Heading Styles
+
     .title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: $secondary-color;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-weight: 600;
+      color: $gray-dark;
+      margin-bottom: 0.5rem;
 
       .highlight {
-        font-size: 2rem;
-        color: $primary-color;
-        font-family: "Pacifico", serif;
+        color: $yellow-light;
+        font-family: 'Pacifico', cursive;
+        font-size: 2.3rem;
       }
     }
 
     .tagline {
-      font-size: 1rem;
-      color: #020354;
+      font-size: 1.1rem;
+      color: darken($gray-dark, 10%);
       margin-bottom: 2rem;
-      opacity: 0.8;
+      opacity: 0.85;
+      font-weight: 400;
     }
 
-    // Input Field Styling
     .input-group {
-      margin-bottom: 1.5rem;
-      text-align: left;
-      width: 65%;
-      label {
-        font-size: 0.875rem;
-        color: $text-color;
-        font-weight: normal;
-        margin-bottom: 0.5rem;
-      }
-
+      width: 80%;
+      margin-bottom: 1.2rem;
       input {
-        width: 96%;
-        padding: 0 11px;
-        height: 38px;
-        border-radius: 38px;
-        padding-right: 0px;
-        border: 1px solid #9897b6;
-        font-size: 0.875rem;
-        color: $text-color;
-        outline: none;
-        transition: border-color 0.3s ease;
-        
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: $border-radius;
+        font-size: 0.95rem;
+        transition: $transition;
+        color: $gray-dark;
+
+        &::placeholder {
+          color: lighten($gray-dark, 20%);
+        }
+
         &:focus {
-          border-color: $primary-color;
-          box-shadow: 0 0 8px rgba($primary-color, 0.3);
+          border-color: $primary-yellow;
+          box-shadow: 0 0 10px rgba($primary-yellow, 0.3);
+          outline: none;
         }
 
         &.error {
           border-color: $error-color;
         }
-
       }
     }
 
-    // Submit Button
     .login-btn {
-      background-color: #020354;
-      color: white;
-      height: 38px;
-      border-radius: 38px;
-      font-size: 1rem;
+      width: 80%;
+      background: linear-gradient(to right, $primary-yellow, $yellow-dark);
+      color: $white;
+      padding: 0.75rem;
       border: none;
-      width: 65%;
-      cursor: pointer;
+      border-radius: $border-radius;
+      font-size: 1rem;
       text-transform: uppercase;
-      transition: background-color 0.3s ease;
+      font-weight: 600;
+      cursor: pointer;
+      transition: $transition;
+      box-shadow: 0 4px 10px rgba($primary-yellow, 0.3);
 
       &:hover {
-        background-color: #13158f;
+        transform: scale(1.02);
+        background: $yellow-dark;
       }
 
       &:active {
@@ -119,55 +129,58 @@ $error-color: #e60000; // Error color for input fields (optional)
       }
     }
 
-    // Sign Up Link
     .signup-link {
-      font-size: 0.875rem;
-      color: $text-color;
-      margin-top: 1.6rem;
-      
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+      color: $gray-dark;
+
       a {
-        color: #190258;
+        color: $gray-dark;
+        font-weight: 500;
         text-decoration: none;
-        font-weight: 600;
+        transition: $transition;
+
         &:hover {
           text-decoration: underline;
         }
       }
     }
 
-    // Social Media Login Section
     .social-login {
       margin-top: 2rem;
-    
+
       .social-icons {
         display: flex;
         justify-content: center;
-    
+        gap: 1rem;
+
         .social-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
+          width: 42px;
+          height: 42px;
           display: flex;
-          justify-content: center;
           align-items: center;
-          margin: 0 10px;
-          background-color: #ddd;
-          transition: background-color 0.3s ease;
-    
-          &:hover {
-            background-color: #c9c9c9;
+          justify-content: center;
+          border-radius: 50%;
+          color: $white;
+          transition: $transition;
+          cursor: pointer;
+
+          &.facebook {
+            background-color: $facebook-blue;
+            &:hover {
+              background-color: darken($facebook-blue, 10%);
+            }
           }
-    
-          &.facebook {  
-            background-color: #3b5998;
-          }
-    
+
           &.google {
-            background-color: #db4437;
+            background-color: $google-red;
+            &:hover {
+              background-color: darken($google-red, 10%);
+            }
           }
-    
+
           svg {
-            font-size: 1.5rem;  
+            font-size: 1.4rem;
           }
         }
       }
@@ -175,27 +188,24 @@ $error-color: #e60000; // Error color for input fields (optional)
   }
 }
 
-// Media Queries for Responsiveness
+// Responsive layout
 @media (max-width: 768px) {
   .login-container {
     padding: 1rem;
-  }
 
-  .login-box {
-    padding: 1.5rem;
-    width: 90%;
-    max-width: 350px;
-  }
-}
+    .login-box {
+      flex-direction: column;
+      width: 95%;
+      height: auto;
 
-@media (max-width: 480px) {
-  .login-container {
-    padding: 1rem;
-  }
+      .login-box-left {
+        display: none;
+      }
 
-  .login-box {
-    width: 100%;
-    max-width: 300px;
-    padding: 1rem;
+      .login-box-right {
+        width: 100%;
+        padding: 2rem;
+      }
+    }
   }
 }

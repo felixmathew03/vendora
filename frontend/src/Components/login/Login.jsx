@@ -55,12 +55,10 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <div className="login-box-left">
+        <div className="login-box-right">
           <div className="title">
             Welcome to, <br /> <span className="highlight">Vendora</span>
           </div>
-        </div>
-        <div className="login-box-right">
           <div className="tagline">
             Log in to your account
           </div>
@@ -88,6 +86,9 @@ const Login = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="login-box-left">
+          
         </div>
       </div>
     </div>

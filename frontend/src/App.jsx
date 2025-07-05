@@ -2,6 +2,8 @@ import React, { useState, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoadingSpinner from './Components/Loader/LoadingSpinner';
 import Navbar from './Components/nav/Navbar';
+import ProtectedRoute from './Components/ProtectedRoute.jsx';
+
 import './App.css';
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // Lazy load route components
@@ -30,12 +32,18 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      {loggedIn && <Navbar username={username} role={role} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
-      <Suspense fallback={<LoadingSpinner />}>
-        <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/email' element={<Email />} />
-          <Route path='/signup' element={<Signup />} />
+    {loggedIn && <Navbar username={username} role={role} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+    <Suspense fallback={<LoadingSpinner />}>
+      <Routes>
+
+        {/* Public Routes */}
+        <Route path='/login' element={<Login />} />
+        <Route path='/email' element={<Email />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/emailsuccess' element={<EmailVerificationSuccess />} />
+
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
           <Route path='/' element={<Home setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn} />} />
           <Route path='/profile' element={<Profile setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn} />} />
           <Route path='/company' element={<Company setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn} />} />
@@ -49,10 +57,12 @@ const App = () => {
           <Route path='/myorders' element={<Orders setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn} />} />
           <Route path='/placedorders' element={<PlacedOrders setUsername={setUsername} setRole={setRole} setLoggedIn={setLoggedIn} />} />
           <Route path='/purchasecompleted' element={<PurchaseCompleted />} />
-          <Route path='/emailsuccess' element={<EmailVerificationSuccess />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+        </Route>
+
+      </Routes>
+    </Suspense>
+  </BrowserRouter>
+
   );
 };
 

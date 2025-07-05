@@ -13,7 +13,7 @@ const Sidebar = ({setProducts}) => {
   const value=localStorage.getItem("Auth");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 5;
+  const limit = 4;
   useEffect(()=>{
     console.log("sdfsd");
     
@@ -78,11 +78,19 @@ const Sidebar = ({setProducts}) => {
   };
   return (
     <div className="Sidebar" id='sidebar-container'>
+    
+      <div className="group" >
+        <FaSearch className="icon" />
+        <input className="input" type="search" 
+          id="search"
+          value={searchTerm}
+          onChange={handleSearchChange} placeholder="Search" />
+      </div>
     <div className="category-filter">
         <div className='categories'>
-            <button  value="" className={selectedCategory==""&&"selectedCategory"} onClick={()=>{handleCategoryChange("")}}>
+            {page==1&&<button  value="" className={selectedCategory==""&&"selectedCategory"} onClick={()=>{handleCategoryChange("")}}>
             All
-          </button>
+          </button>}
           {categories.map((cat,ind)=>(
             <button key={ind} value={cat.category} className={selectedCategory==cat.category&&"selectedCategory"} title={cat.category}  onClick={()=>{handleCategoryChange(cat.category)}}>
             {cat.category.toUpperCase()}
@@ -108,14 +116,6 @@ const Sidebar = ({setProducts}) => {
         </button>
       </div>
     </div>  
-      <div className="group" >
-        <FaSearch className="icon" />
-        <input className="input" type="search" 
-          id="search"
-          value={searchTerm}
-          onChange={handleSearchChange} placeholder="Search" />
-      </div>
-
       <div className="price-filter">
         <p id="rangeValue">{"Price: Under $"+maxPrice}</p>
         <div className="range-container">

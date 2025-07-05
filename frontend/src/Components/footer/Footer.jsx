@@ -39,7 +39,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="footer">
+    <footer className="footer" id="footer">
       <motion.div 
         className="top"
         initial="hidden"
@@ -141,7 +141,7 @@ const Footer = () => {
         </motion.div>
 
         <motion.div className="section" variants={itemVariants}>
-          <div className="content">
+          <div className="content" id='contactus'>
             <h3>Contact Us</h3>
             <ul>
               <li>

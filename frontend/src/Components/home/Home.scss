@@ -36,15 +36,8 @@ $heading-font: 'Montserrat', sans-serif;
     background-size: cover;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
-    h1{
-      text-align: center;
-       font-family: 'Poppins', system-ui, sans-serif;
-      font-size: 50px;
-      color: white;
-      text-shadow: 2px 2px 2px #000000;
-    }
     .hfoot{
       height: 50%;
     display: flex;
